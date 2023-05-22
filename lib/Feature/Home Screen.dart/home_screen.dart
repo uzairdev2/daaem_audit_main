@@ -6,7 +6,6 @@ import 'package:daaem_reports/Core/Controller/controller_detail.dart';
 import 'package:daaem_reports/Core/Routes/routes_name.dart';
 import 'package:daaem_reports/Core/Utils/sizebox.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -33,6 +32,8 @@ class _HomeScreenState extends State<HomeScreen> {
     final logPro = Provider.of<ApiClass>(context);
     // ignore: avoid_print
     print("hi");
+    String customerid = '';
+
     return GetX<HomeScreenController>(
         init: controller,
         builder: (_) {
@@ -46,7 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   hint: 'Select a Retailer',
                   isDense: true,
                   isExpanded: true,
-                  value: controller.selectedRetailer.value,
                   items: logPro.reatilerlist
                       .map((item) => DropdownMenuItem<String>(
                             onTap: () async {
@@ -111,10 +111,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TitleText(title: 'Store Names'),
+                      TitleText(title: 'Branch Names'),
                       10.h.ph,
                       CustomDropdown(
-                        hint: 'Select a Store',
+                        hint: 'Select a Branch',
                         isDense: true,
                         isExpanded: true,
                         onChanged: (String? newValue) {
@@ -160,7 +160,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                 },
                                 items: logPro.customerList
                                     .map((item) => DropdownMenuItem<String>(
-                                          onTap: () {},
+                                          onTap: () async {
+                                            customerid =
+                                                item.customerId.toString();
+                                            // await logPro.getCategoryData(
+                                            //     customerid:
+                                            //         item.customerId.toString());
+                                            // print(
+                                            //     'Customer id: ${item.customerId}');
+                                            print(customerid);
+                                          },
                                           value: item.customerName,
                                           child: Text(
                                             item.customerName.toString(),
@@ -202,8 +211,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         width: 155.w,
                         height: 46.h,
                         name: "Instore",
-                        ontap: () {
-                          Get.toNamed(RoutesName.categoryScreen);
+                        ontap: () async {
+                          print('Customer Id: $customerid');
+                          await logPro
+                              .getCategoryData(customerid: customerid)
+                              .then((value) {
+                            return Get.toNamed(RoutesName.categoryScreen);
+                          });
+
+                          logPro.categoryList.clear();
                         },
                       )
                     ],

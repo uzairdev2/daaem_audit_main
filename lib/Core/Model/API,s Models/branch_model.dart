@@ -1,10 +1,10 @@
-class branch_model {
+class BranchModel {
   String? branchId;
   String? branchName;
 
-  branch_model({this.branchId, this.branchName});
+  BranchModel({this.branchId, this.branchName});
 
-  branch_model.fromJson(Map<String, dynamic> json) {
+  BranchModel.fromJson(Map<String, dynamic> json) {
     branchId = json['branch_id'];
     branchName = json['branch_name'];
   }

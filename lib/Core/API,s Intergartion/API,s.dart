@@ -1,21 +1,22 @@
 import 'dart:convert';
-import 'dart:developer';
 
-import 'package:daaem_reports/Core/Model/API,s%20Models/Retailer_model.dart';
+import 'package:daaem_reports/Core/Model/API,s%20Models/retailer_model.dart';
 import 'package:daaem_reports/Core/Model/API,s%20Models/branch_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../Model/API,s Models/category_model.dart';
 import '../Model/API,s Models/customer_model.dart';
 
 class ApiClass with ChangeNotifier {
   // reatiler_model firstmodel = reatiler_model();
-  List<reatiler_model> reatilerlist = [];
-  List<branch_model> branchList = [];
+  List<RetailerModel> reatilerlist = [];
+  List<BranchModel> branchList = [];
   List<CustomerModel> customerList = [];
+  List<CategoryModel> categoryList = [];
 
   var Data = "";
-  List<reatiler_model> firstlist = [];
+  List<RetailerModel> firstlist = [];
 
   againsearch() {
     branchList = [];
@@ -34,7 +35,7 @@ class ApiClass with ChangeNotifier {
       final List<dynamic> responseData = json.decode(response.body);
 
       for (var i = 0; i < responseData.length; i++) {
-        reatilerlist.add(reatiler_model.fromJson(responseData[i]));
+        reatilerlist.add(RetailerModel.fromJson(responseData[i]));
         notifyListeners();
       }
 
@@ -59,7 +60,7 @@ class ApiClass with ChangeNotifier {
       final List<dynamic> responseData = json.decode(response.body);
 
       for (var i = 0; i < responseData.length; i++) {
-        branchList.add(branch_model.fromJson(responseData[i]));
+        branchList.add(BranchModel.fromJson(responseData[i]));
         notifyListeners();
       }
       notifyListeners();
@@ -90,6 +91,31 @@ class ApiClass with ChangeNotifier {
       notifyListeners();
 
       print(customerList.length.toString());
+      // log("here is data ${responseData[0]["retailer_name"]}");
+      // log("here is data ${firstmodel.retailerName!.length}");
+    } else {
+      // API request failed
+      print('Request failed with status: ${response.statusCode}');
+    }
+  }
+
+  Future<void> getCategoryData({required String customerid}) async {
+    final url = Uri.parse(
+        'https://www.daaemsolutions.com/test/audit_api/category/?customer_id=$customerid'); // Replace with your API endpoint
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      Data = response.body;
+
+      final List<dynamic> responseData = json.decode(response.body);
+
+      for (var i = 0; i < responseData.length; i++) {
+        categoryList.add(CategoryModel.fromJson(responseData[i]));
+        notifyListeners();
+      }
+      notifyListeners();
+
+      print('Category List: ${categoryList.length.toString()}');
       // log("here is data ${responseData[0]["retailer_name"]}");
       // log("here is data ${firstmodel.retailerName!.length}");
     } else {

@@ -8,7 +8,6 @@ import 'Core/Constant/Colors/colors.dart';
 import 'package:provider/provider.dart';
 
 import 'Core/Routes/routes.dart';
-import 'Feature/example.dart';
 
 void main() {
   runApp(const MyApp());

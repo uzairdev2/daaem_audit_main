@@ -1,10 +1,10 @@
-class reatiler_model {
+class RetailerModel {
   String? retailerId;
   String? retailerName;
 
-  reatiler_model({this.retailerId, this.retailerName});
+  RetailerModel({this.retailerId, this.retailerName});
 
-  reatiler_model.fromJson(Map<String, dynamic> json) {
+  RetailerModel.fromJson(Map<String, dynamic> json) {
     retailerId = json['retailer_id'];
     retailerName = json['retailer_name'];
   }
