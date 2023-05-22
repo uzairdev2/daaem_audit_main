@@ -24,9 +24,9 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(const Duration(seconds: 0), () async {
       ApiClass dataProvider = Provider.of<ApiClass>(context, listen: false);
 
-      await dataProvider.getRetailerData();
-
-      Get.offAndToNamed(RoutesName.SignIn);
+      await dataProvider.getRetailerData().then((value) {
+        return Get.offAndToNamed(RoutesName.SignIn);
+      });
     });
     super.didChangeDependencies();
   }

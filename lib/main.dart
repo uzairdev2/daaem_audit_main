@@ -8,6 +8,7 @@ import 'Core/Constant/Colors/colors.dart';
 import 'package:provider/provider.dart';
 
 import 'Core/Routes/routes.dart';
+import 'Feature/example.dart';
 
 void main() {
   runApp(const MyApp());
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
               ),
               debugShowCheckedModeBanner: false,
               getPages: AppRoutes.appRoutes(),
-              // home: const ScannerScreen(),
+              // home: MyWidget(),
             )),
       ),
     );

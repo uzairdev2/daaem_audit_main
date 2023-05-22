@@ -55,12 +55,12 @@ class CommonDialog {
                     () => SizedBox(
                       height: 40.h,
                       width: 80.w,
-                      child: Radio(
-                        value: true,
+                      child: Radio<String>(
+                        value: "Yes",
                         activeColor: white,
-                        groupValue: checkController.isYesSelected.value,
+                        groupValue: checkController.selectRadioBtnVal.value,
                         onChanged: (value) {
-                          checkController.selectYes();
+                          checkController.handleYesorNoChange(value!);
                         },
                       ),
                     ),
@@ -80,10 +80,10 @@ class CommonDialog {
                       width: 80.w,
                       child: Radio(
                         activeColor: white,
-                        value: false,
-                        groupValue: checkController.isYesSelected.value,
+                        value: "No",
+                        groupValue: checkController.selectRadioBtnVal.value,
                         onChanged: (value) {
-                          checkController.selectNo();
+                          checkController.handleYesorNoChange(value!);
                         },
                       ),
                     ),
@@ -161,12 +161,12 @@ class CameraWIdget extends StatelessWidget {
               ),
               borderRadius: BorderRadius.circular(10.r)),
           child: Center(
-            child: checkController.imageFile != null
+            child: imageContoller.imageFile != null
                 ? Obx(() {
-                    log("${checkController.imageFile!.value}");
+                    log("${imageContoller.imageFile.value}");
 
                     return Image.file(
-                      checkController.imageFile!.value,
+                      imageContoller.imageFile.value!,
                       width: 30.w,
                       height: 30.h,
                     );
@@ -181,7 +181,7 @@ class CameraWIdget extends StatelessWidget {
         10.w.pw,
         InkWell(
           onTap: () async {
-            await checkController.proFile();
+            await imageContoller.proFile();
           },
           child: CustomText(
             name: "Take a Picture",

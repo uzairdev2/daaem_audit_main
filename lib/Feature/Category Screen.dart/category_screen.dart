@@ -284,28 +284,26 @@ class CategoryScreen extends StatelessWidget {
                                   name: "5. Items",
                                   ontap: () {},
                                 ),
-                                checkController.imageFile == null
-                                    ? InkWell(
-                                        onTap: () async {
-                                          await checkController.proFile();
-                                        },
-                                        child: CustomText(
-                                          name: "Take a Picture",
-                                          color: black,
-                                          size: 12.sp,
-                                          alignment: TextAlign.center,
-                                          weightFont: FontWeight.w700,
-                                        ),
-                                      )
-                                    : Obx(() {
-                                        log("${checkController.imageFile!.value}");
-
-                                        return Image.file(
-                                          checkController.imageFile!.value,
-                                          width: 50.w,
-                                          height: 50.h,
-                                        );
-                                      }),
+                                InkWell(
+                                  onTap: () async {
+                                    await imageContoller.proFile();
+                                  },
+                                  child: Obx(
+                                    () => imageContoller.imageFile.value == null
+                                        ? CustomText(
+                                            name: "Take a Picture",
+                                            color: Colors.black,
+                                            size: 12.sp,
+                                            alignment: TextAlign.center,
+                                            weightFont: FontWeight.w700,
+                                          )
+                                        : Image.file(
+                                            imageContoller.imageFile.value!,
+                                            width: 50.w,
+                                            height: 50.h,
+                                          ),
+                                  ),
+                                )
                               ],
                             ),
                             10.h.ph,

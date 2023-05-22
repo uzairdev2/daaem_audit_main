@@ -122,9 +122,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                         items: logPro.branchList
                             .map((item) => DropdownMenuItem<String>(
-                                  onTap: () {
+                                  onTap: () async {
                                     print('heeee ${item.branchName}');
                                     // print("here is ${item.branchId}");
+                                    await logPro.getCustomerData();
                                     //call your Scond api here
                                     // await logPro.getBranchData(
                                     //     retailerid: item.retailerId.toString());
@@ -157,20 +158,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                   controller.selectedStore.value = newValue;
                                   controller.showButtons.value = true;
                                 },
-                                items: const [
-                                  DropdownMenuItem<String>(
-                                    value: 'Panda',
-                                    child: Text(' Baja'),
-                                  ),
-                                  DropdownMenuItem<String>(
-                                    value: 'Nesto',
-                                    child: Text(' Halawani'),
-                                  ),
-                                  DropdownMenuItem<String>(
-                                    value: 'Othaim',
-                                    child: Text('  Entaj'),
-                                  ),
-                                ],
+                                items: logPro.customerList
+                                    .map((item) => DropdownMenuItem<String>(
+                                          onTap: () {},
+                                          value: item.customerName,
+                                          child: Text(
+                                            item.customerName.toString(),
+                                            style: TextStyle(
+                                              fontSize: 14.sp,
+                                            ),
+                                          ),
+                                        ))
+                                    .toList(),
                               ),
                             ]),
                       ),

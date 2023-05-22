@@ -6,10 +6,13 @@ import 'package:daaem_reports/Core/Model/API,s%20Models/branch_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../Model/API,s Models/customer_model.dart';
+
 class ApiClass with ChangeNotifier {
   // reatiler_model firstmodel = reatiler_model();
   List<reatiler_model> reatilerlist = [];
   List<branch_model> branchList = [];
+  List<CustomerModel> customerList = [];
 
   var Data = "";
   List<reatiler_model> firstlist = [];
@@ -62,6 +65,31 @@ class ApiClass with ChangeNotifier {
       notifyListeners();
 
       print(branchList.length.toString());
+      // log("here is data ${responseData[0]["retailer_name"]}");
+      // log("here is data ${firstmodel.retailerName!.length}");
+    } else {
+      // API request failed
+      print('Request failed with status: ${response.statusCode}');
+    }
+  }
+
+  Future<void> getCustomerData() async {
+    final url = Uri.parse(
+        'https://www.daaemsolutions.com/test/audit_api/customers/'); // Replace with your API endpoint
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      Data = response.body;
+
+      final List<dynamic> responseData = json.decode(response.body);
+
+      for (var i = 0; i < responseData.length; i++) {
+        customerList.add(CustomerModel.fromJson(responseData[i]));
+        notifyListeners();
+      }
+      notifyListeners();
+
+      print(customerList.length.toString());
       // log("here is data ${responseData[0]["retailer_name"]}");
       // log("here is data ${firstmodel.retailerName!.length}");
     } else {
