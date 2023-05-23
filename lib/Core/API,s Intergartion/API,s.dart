@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 
 import '../Model/API,s Models/category_model.dart';
 import '../Model/API,s Models/customer_model.dart';
+import '../Model/API,s Models/product_model.dart';
 
 class ApiClass with ChangeNotifier {
   // reatiler_model firstmodel = reatiler_model();
@@ -14,6 +15,7 @@ class ApiClass with ChangeNotifier {
   List<BranchModel> branchList = [];
   List<CustomerModel> customerList = [];
   List<CategoryModel> categoryList = [];
+  List<ProductModel> productList = [];
 
   var Data = "";
   List<RetailerModel> firstlist = [];
@@ -99,7 +101,7 @@ class ApiClass with ChangeNotifier {
     }
   }
 
-  Future<void> getCategoryData({required String customerid}) async {
+  Future<void> getProductData({required String customerid}) async {
     final url = Uri.parse(
         'https://www.daaemsolutions.com/test/audit_api/category/?customer_id=$customerid'); // Replace with your API endpoint
     final response = await http.get(url);
@@ -118,6 +120,29 @@ class ApiClass with ChangeNotifier {
       print('Category List: ${categoryList.length.toString()}');
       // log("here is data ${responseData[0]["retailer_name"]}");
       // log("here is data ${firstmodel.retailerName!.length}");
+    } else {
+      // API request failed
+      print('Request failed with status: ${response.statusCode}');
+    }
+  }
+
+  Future<void> getCategoryData({required String categoryid}) async {
+    final url = Uri.parse(
+        'https://www.daaemsolutions.com/test/audit_api/products/?category_id=$categoryid'); // Replace with your API endpoint
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      Data = response.body;
+
+      final List<dynamic> responseData = json.decode(response.body);
+
+      for (var i = 0; i < responseData.length; i++) {
+        productList.add(ProductModel.fromJson(responseData[i]));
+        notifyListeners();
+      }
+      notifyListeners();
+
+      print('Product List: ${productList.length.toString()}');
     } else {
       // API request failed
       print('Request failed with status: ${response.statusCode}');

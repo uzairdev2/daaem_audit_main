@@ -1,5 +1,5 @@
 import 'package:daaem_reports/Core/Routes/routes_name.dart';
-import 'package:daaem_reports/Feature/QR%20Code%20Scanner%20Screen/scanner_screen.dart';
+import 'package:daaem_reports/Feature/Scanner%20Screen/scanner_screen.dart';
 import 'package:daaem_reports/Feature/Sign%20In/sign_in.dart';
 import 'package:get/get.dart';
 

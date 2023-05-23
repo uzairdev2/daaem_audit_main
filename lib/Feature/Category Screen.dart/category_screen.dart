@@ -32,6 +32,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String categoryId = '';
     final logPro = Provider.of<ApiClass>(context);
     return Scaffold(
         appBar: AppBar(
@@ -81,7 +82,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
               items: logPro.categoryList
                   .map((item) => DropdownMenuItem<String>(
                         onTap: () async {
+                          categoryId = item.categoryId.toString();
+                          await logPro.getProductData(customerid: categoryId);
                           print('heeee ${item.categoryName}');
+                          print('Category Id: $categoryId');
                         },
                         value: item.categoryName,
                         child: Text(
@@ -326,7 +330,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             ],
                           ),
                           10.h.ph,
-                          Row(
+                          Wrap(
                             children: [
                               CustomButton(
                                 width: 68.w,
@@ -370,6 +374,22 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 ontap: () {
                                   controller.commonDialog.value.showPopCustom(
                                     title: stockLevelPopText,
+                                    btn1Name: "Yes",
+                                    btn2Name: "No",
+                                    btn1Ontap: () {},
+                                    btn2Ontap: () {},
+                                    submitOntap: () {},
+                                  );
+                                },
+                              ),
+                              CustomButton(
+                                width: 68.w,
+                                height: 46.h,
+                                name: "OSA",
+                                size: 12.sp,
+                                ontap: () {
+                                  controller.commonDialog.value.showPopCustom(
+                                    title: sOAPopText,
                                     btn1Name: "Yes",
                                     btn2Name: "No",
                                     btn1Ontap: () {},

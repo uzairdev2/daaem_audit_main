@@ -214,7 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ontap: () async {
                           print('Customer Id: $customerid');
                           await logPro
-                              .getCategoryData(customerid: customerid)
+                              .getProductData(customerid: customerid)
                               .then((value) {
                             return Get.toNamed(RoutesName.categoryScreen);
                           });
