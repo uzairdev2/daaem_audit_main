@@ -55,6 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               logPro.againsearch();
                               await logPro.getBranchData(
                                   retailerid: item.retailerId.toString());
+                              controller.selectedRetailer.value = "newValue";
                               // setState(() {});
                             },
                             value: item.retailerName,
@@ -101,8 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                   ),
                   onChanged: (String? newValue) {
-                    controller.selectedRetailer.value = newValue;
-                    controller.selectedStore.value = null;
+                    // controller.selectedStore.value = null;
                     // controller.sele.value = null;
                   },
                 ),
@@ -118,15 +118,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         hint: 'Select a Branch',
                         isDense: true,
                         isExpanded: true,
-                        onChanged: (String? newValue) {
-                          controller.selectedStore.value = newValue;
-                        },
+                        onChanged: (String? newValue) {},
                         items: logPro.branchList
                             .map((item) => DropdownMenuItem<String>(
                                   onTap: () async {
                                     print('heeee ${item.branchName}');
                                     // print("here is ${item.branchId}");
                                     await logPro.getCustomerData();
+                                    controller.selectedStore.value = "true";
                                     //call your Scond api here
                                     // await logPro.getBranchData(
                                     //     retailerid: item.retailerId.toString());
@@ -159,33 +158,37 @@ class _HomeScreenState extends State<HomeScreen> {
                                   controller.selectedStore.value = newValue;
                                   controller.showButtons.value = true;
                                 },
-                                items: logPro.customerList
-                                    .map((item) => DropdownMenuItem<String>(
-                                          onTap: () async {
-                                            // customerid =
-                                            //     item.customerId.toString();
+                                items: logPro.customerList == null ||
+                                        logPro.customerList.isEmpty
+                                    ? []
+                                    : logPro.customerList
+                                        .map((item) => DropdownMenuItem<String>(
+                                              onTap: () async {
+                                                // customerid =
+                                                //     item.customerId.toString();
 
-                                            SharedPreferences prefs =
-                                                await SharedPreferences
-                                                    .getInstance();
-                                            await prefs.setString('customerid',
-                                                item.customerId.toString());
-                                            // await logPro.getCategoryData(
-                                            //     customerid:
-                                            //         item.customerId.toString());
-                                            // print(
-                                            //     'Customer id: ${item.customerId}');
-                                            // print(customerid);
-                                          },
-                                          value: item.customerName,
-                                          child: Text(
-                                            item.customerName.toString(),
-                                            style: TextStyle(
-                                              fontSize: 14.sp,
-                                            ),
-                                          ),
-                                        ))
-                                    .toList(),
+                                                SharedPreferences prefs =
+                                                    await SharedPreferences
+                                                        .getInstance();
+                                                await prefs.setString(
+                                                    'customerid',
+                                                    item.customerId.toString());
+                                                // await logPro.getCategoryData(
+                                                //     customerid:
+                                                //         item.customerId.toString());
+                                                // print(
+                                                //     'Customer id: ${item.customerId}');
+                                                // print(customerid);
+                                              },
+                                              value: item.customerName,
+                                              child: Text(
+                                                item.customerName.toString(),
+                                                style: TextStyle(
+                                                  fontSize: 14.sp,
+                                                ),
+                                              ),
+                                            ))
+                                        .toList(),
                               ),
                             ]),
                       ),

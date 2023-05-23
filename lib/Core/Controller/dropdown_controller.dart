@@ -72,10 +72,10 @@ class HomeScreenController extends GetxController {
     selectedStore.value = newValue;
   }
 
-  void onStoreChanged(String? newValue) {
-    selectedStore.value = newValue;
-    showButtons.value = true;
-  }
+  // void onStoreChanged(String? newValue) {
+  //   selectedStore.value = newValue;
+  //   showButtons.value = true;
+  // }
 }
 
 class CategorySelctedController extends GetxController {

@@ -115,6 +115,7 @@ class CommonDialog {
   showPopwithCustom({
     required String name,
     required Widget colum,
+    imagestate = 0,
   }) {
     Get.dialog(AlertDialog(
       backgroundColor: white,
