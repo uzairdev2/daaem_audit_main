@@ -15,11 +15,15 @@ class CustomButton extends StatelessWidget {
       this.color,
       this.size,
       required this.ontap,
+      this.changeStatus = 1,
+      this.customWidget = const SizedBox.shrink(),
       super.key});
   final String name;
   double? width;
   double? size;
   Color? color;
+  int changeStatus;
+  Widget customWidget;
   double? height;
   final VoidCallback ontap;
   @override
@@ -41,12 +45,14 @@ class CustomButton extends StatelessWidget {
           ),
         ], color: color ?? red, borderRadius: BorderRadius.circular(10.r)),
         child: Center(
-          child: CustomText(
-              name: name,
-              size: size ?? 14.sp,
-              color: white,
-              familyFont: 'Montserrat',
-              weightFont: FontWeight.w700),
+          child: changeStatus == 1
+              ? CustomText(
+                  name: name,
+                  size: size ?? 14.sp,
+                  color: white,
+                  familyFont: 'Montserrat',
+                  weightFont: FontWeight.w700)
+              : customWidget,
         ),
       ),
     );

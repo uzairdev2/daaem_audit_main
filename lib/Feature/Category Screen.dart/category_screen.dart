@@ -318,8 +318,33 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                             children: [
                                               CustomButton(
                                                 color: aquamarine,
-                                                width: 111.w,
-                                                height: 36.h,
+                                                width: 230.w,
+                                                height: 46.h,
+                                                changeStatus: 2,
+                                                customWidget: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                          "${logPro.productList[index].productName}",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 12.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600)),
+                                                      Text(
+                                                          "${logPro.productList[index].barcode}",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 12.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600)),
+                                                    ]),
                                                 // name: "Item ${index + 1}",
                                                 name:
                                                     "${logPro.productList[index].productName}",
@@ -339,8 +364,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                               .value ==
                                                           null
                                                       ? CustomText(
-                                                          name:
-                                                              "Take a Picture",
+                                                          name: "Picture",
                                                           color: Colors.black,
                                                           size: 12.sp,
                                                           alignment:
