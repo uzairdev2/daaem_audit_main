@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Core/API,s Intergartion/API,s.dart';
 import '../../Core/Controller/dropdown_controller.dart';
@@ -32,7 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
     final logPro = Provider.of<ApiClass>(context);
     // ignore: avoid_print
     print("hi");
-    String customerid = '';
 
     return GetX<HomeScreenController>(
         init: controller,
@@ -103,6 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   onChanged: (String? newValue) {
                     controller.selectedRetailer.value = newValue;
                     controller.selectedStore.value = null;
+                    // controller.sele.value = null;
                   },
                 ),
                 20.h.ph,
@@ -161,14 +162,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                 items: logPro.customerList
                                     .map((item) => DropdownMenuItem<String>(
                                           onTap: () async {
-                                            customerid =
-                                                item.customerId.toString();
+                                            // customerid =
+                                            //     item.customerId.toString();
+
+                                            SharedPreferences prefs =
+                                                await SharedPreferences
+                                                    .getInstance();
+                                            await prefs.setString('customerid',
+                                                item.customerId.toString());
                                             // await logPro.getCategoryData(
                                             //     customerid:
                                             //         item.customerId.toString());
                                             // print(
                                             //     'Customer id: ${item.customerId}');
-                                            print(customerid);
+                                            // print(customerid);
                                           },
                                           value: item.customerName,
                                           child: Text(
@@ -212,9 +219,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: 46.h,
                         name: "Instore",
                         ontap: () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          String? customerid = prefs.getString('customerid');
+
                           print('Customer Id: $customerid');
                           await logPro
-                              .getProductData(customerid: customerid)
+                              .getProductData(customerid: customerid!)
                               .then((value) {
                             return Get.toNamed(RoutesName.categoryScreen);
                           });

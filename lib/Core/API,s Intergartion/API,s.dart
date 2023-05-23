@@ -143,6 +143,9 @@ class ApiClass with ChangeNotifier {
       notifyListeners();
 
       print('Product List: ${productList.length.toString()}');
+      print('Product List1: ${productList[0].productName}');
+      print('Product List2: ${productList[0].barcode}');
+      print('Product List3: ${productList[0].productId}');
     } else {
       // API request failed
       print('Request failed with status: ${response.statusCode}');

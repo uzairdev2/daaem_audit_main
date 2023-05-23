@@ -1,5 +1,7 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:developer';
+
 import 'package:daaem_reports/Core/Utils/sizebox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -32,7 +34,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String categoryId = '';
+    // String categoryId = '';
     final logPro = Provider.of<ApiClass>(context);
     return Scaffold(
         appBar: AppBar(
@@ -67,389 +69,427 @@ class _CategoryScreenState extends State<CategoryScreen> {
         ),
         body: Padding(
           padding: EdgeInsets.only(left: 16.w, top: 15.h, right: 16.w),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            TitleText(title: 'Category'),
-            10.h.ph,
-            CustomDropdown(
-              hint: 'Select a Category',
-              isDense: true,
-              isExpanded: true,
-              onChanged: (String? newValue) {
-                selectedCategory = newValue;
-                setState(() {});
-              },
-              items: logPro.categoryList
-                  .map((item) => DropdownMenuItem<String>(
-                        onTap: () async {
-                          categoryId = item.categoryId.toString();
-                          await logPro.getProductData(customerid: categoryId);
-                          print('heeee ${item.categoryName}');
-                          print('Category Id: $categoryId');
-                        },
-                        value: item.categoryName,
-                        child: Text(
-                          item.categoryName.toString(),
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                          ),
-                        ),
-                      ))
-                  .toList(),
-            ),
-            20.h.ph,
-            Visibility(
-              visible: selectedCategory != null,
-              child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: CustomText(
-                      name: "Categories",
-                      size: 14.sp,
-                      weightFont: FontWeight.w700,
-                      color: black,
-                    ),
-                  ),
-                  10.h.ph,
-                  Row(
-                    children: [
-                      CustomButton(
-                        width: 155.w,
-                        height: 46.h,
-                        name: "Planogram",
-                        ontap: () {
-                          controller.commonDialog.value.showPopCustom(
-                            title: planogramPopText,
-                            customwidget: SizedBox(
-                              width: double.infinity,
-                              height: 100.h,
-                              child: Image.asset(logoAndname),
+          child: SingleChildScrollView(
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              TitleText(title: 'Category'),
+              10.h.ph,
+              CustomDropdown(
+                hint: 'Select a Category',
+                isDense: true,
+                isExpanded: true,
+                onChanged: (String? newValue) {
+                  selectedCategory = newValue;
+                  setState(() {});
+                },
+                items: logPro.categoryList
+                    .map((item) => DropdownMenuItem<String>(
+                          onTap: () async {
+                            logPro.productList.clear();
+                            await logPro.getCategoryData(
+                                categoryid: item.categoryId.toString());
+                            log('heeee ${item.categoryName}');
+
+                            print('Category Id: ${item.categoryId}');
+                          },
+                          value: item.categoryName,
+                          child: Text(
+                            item.categoryName.toString(),
+                            style: TextStyle(
+                              fontSize: 14.sp,
                             ),
-                            btn1Name: "Yes",
-                            btn2Name: "No",
-                            imageStatus: 1,
-                            btn1Ontap: () {},
-                            btn2Ontap: () {},
-                            submitOntap: () {
-                              Get.back();
-                            },
-                          );
-                        },
+                          ),
+                        ))
+                    .toList(),
+              ),
+              20.h.ph,
+              Visibility(
+                visible: selectedCategory != null,
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: CustomText(
+                        name: "Categories",
+                        size: 14.sp,
+                        weightFont: FontWeight.w700,
+                        color: black,
                       ),
-                      16.w.pw,
-                      CustomButton(
-                        width: 155.w,
-                        height: 46.h,
-                        name: "Cleanness",
-                        ontap: () {
-                          controller.commonDialog.value.showPopCustom(
-                            title: cleannessPopText,
-                            btn1Name: "Yes",
-                            btn2Name: "No",
-                            btn1Ontap: () {},
-                            btn2Ontap: () {},
-                            submitOntap: () {},
-                          );
-                        },
-                      )
-                    ],
-                  ),
-                  22.h.ph,
-                  Row(
-                    children: [
-                      CustomButton(
-                        width: 155.w,
-                        height: 46.h,
-                        name: "SOS",
-                        ontap: () {
-                          controller.commonDialog.value.showPopCustom(
-                            title: sOSPopText,
-                            btn1Name: "Yes",
-                            btn2Name: "No",
-                            btn1Ontap: () {},
-                            btn2Ontap: () {},
-                            submitOntap: () {},
-                          );
-                        },
-                      ),
-                      16.w.pw,
-                      CustomButton(
-                        width: 155.w,
-                        height: 46.h,
-                        name: "Neighbors ",
-                        ontap: () {
-                          controller.commonDialog.value.showPopwithCustom(
-                              name: neighborsPopText,
-                              colum: Column(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 10.w),
-                                    child: Row(
-                                      children: [
-                                        TextDropdown(
-                                            width: 110.w,
-                                            size: 12.sp,
-                                            height: 40.h,
-                                            color: grey,
-                                            hint: "Select",
-                                            textColor: white,
-                                            name: "Left Side",
-                                            countries: item),
-                                        5.w.pw,
-                                        TextDropdown(
-                                            size: 12.sp,
-                                            color: grey,
-                                            width: 99.w,
-                                            textColor: white,
-                                            hint: "Select",
-                                            height: 40.h,
-                                            name: "Right Side",
-                                            countries: item),
-                                      ],
+                    ),
+                    10.h.ph,
+                    Row(
+                      children: [
+                        CustomButton(
+                          width: 155.w,
+                          height: 46.h,
+                          name: "Planogram",
+                          ontap: () {
+                            controller.commonDialog.value.showPopCustom(
+                              title: planogramPopText,
+                              customwidget: SizedBox(
+                                width: double.infinity,
+                                height: 100.h,
+                                child: Image.asset(logoAndname),
+                              ),
+                              btn1Name: "Yes",
+                              btn2Name: "No",
+                              imageStatus: 1,
+                              btn1Ontap: () {},
+                              btn2Ontap: () {},
+                              submitOntap: () {
+                                Get.back();
+                              },
+                            );
+                          },
+                        ),
+                        16.w.pw,
+                        CustomButton(
+                          width: 155.w,
+                          height: 46.h,
+                          name: "Cleanness",
+                          ontap: () {
+                            controller.commonDialog.value.showPopCustom(
+                              title: cleannessPopText,
+                              btn1Name: "Yes",
+                              btn2Name: "No",
+                              btn1Ontap: () {},
+                              btn2Ontap: () {},
+                              submitOntap: () {},
+                            );
+                          },
+                        )
+                      ],
+                    ),
+                    22.h.ph,
+                    Row(
+                      children: [
+                        CustomButton(
+                          width: 155.w,
+                          height: 46.h,
+                          name: "SOS",
+                          ontap: () {
+                            controller.commonDialog.value.showPopCustom(
+                              title: sOSPopText,
+                              btn1Name: "Yes",
+                              btn2Name: "No",
+                              btn1Ontap: () {},
+                              btn2Ontap: () {},
+                              submitOntap: () {},
+                            );
+                          },
+                        ),
+                        16.w.pw,
+                        CustomButton(
+                          width: 155.w,
+                          height: 46.h,
+                          name: "Neighbors ",
+                          ontap: () {
+                            controller.commonDialog.value.showPopwithCustom(
+                                name: neighborsPopText,
+                                colum: Column(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 10.w),
+                                      child: Row(
+                                        children: [
+                                          TextDropdown(
+                                              width: 110.w,
+                                              size: 12.sp,
+                                              height: 40.h,
+                                              color: grey,
+                                              hint: "Select",
+                                              textColor: white,
+                                              name: "Left Side",
+                                              countries: item),
+                                          5.w.pw,
+                                          TextDropdown(
+                                              size: 12.sp,
+                                              color: grey,
+                                              width: 99.w,
+                                              textColor: white,
+                                              hint: "Select",
+                                              height: 40.h,
+                                              name: "Right Side",
+                                              countries: item),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  20.h.ph,
-                                  Row(
-                                    children: [
-                                      Container(
-                                        width: 47.w,
-                                        height: 47.h,
-                                        decoration: BoxDecoration(
-                                            color: Colors.transparent,
-                                            border: Border.all(
-                                              color: aquamarine,
+                                    20.h.ph,
+                                    Row(
+                                      children: [
+                                        Container(
+                                          width: 47.w,
+                                          height: 47.h,
+                                          decoration: BoxDecoration(
+                                              color: Colors.transparent,
+                                              border: Border.all(
+                                                color: aquamarine,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.r)),
+                                          child: Center(
+                                            child: Image.asset(
+                                              camera,
+                                              width: 22.w,
+                                              height: 20.h,
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(10.r)),
-                                        child: Center(
-                                          child: Image.asset(
-                                            camera,
-                                            width: 22.w,
-                                            height: 20.h,
                                           ),
                                         ),
-                                      ),
-                                      10.w.pw,
-                                      CustomText(
-                                        name: "Take a Picture",
-                                        color: black,
-                                        size: 12.sp,
-                                        alignment: TextAlign.center,
-                                        weightFont: FontWeight.w700,
-                                      ),
-                                    ],
-                                  ),
-                                  Align(
-                                    alignment: Alignment.bottomRight,
-                                    child: CustomButton(
-                                      width: 87.w,
-                                      height: 40.h,
-                                      color: aquamarine,
-                                      name: "Submit",
-                                      ontap: () {},
-                                    ),
-                                  )
-                                ],
-                              ));
-                        },
-                      )
-                    ],
-                  ),
-                  20.h.ph,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Image.asset(pricingIcon, width: 24.w, height: 24.h),
-                          10.w.pw,
-                          CustomText(
-                            name: "Products",
-                            size: 16.sp,
-                            weightFont: FontWeight.w600,
-                            color: black,
-                          ),
-                        ],
-                      ),
-                      InkWell(
-                        onTap: () {
-                          categoryController.visibilityTrue2();
-                        },
-                        child: Container(
-                          width: 24.w,
-                          height: 24.h,
-                          decoration: BoxDecoration(
-                              color: white,
-                              borderRadius: BorderRadius.circular(5.r)),
-                          child: const Center(
-                              child: Icon(
-                            Icons.arrow_drop_down,
-                            color: grey,
-                          )),
-                        ),
-                      )
-                    ],
-                  ),
-                  19.h.ph,
-                  Obx(() {
-                    return Visibility(
-                      visible: categoryController.visibilityValue2.value,
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              CustomButton(
-                                color: aquamarine,
-                                width: 111.w,
-                                height: 36.h,
-                                name: "5. Items",
-                                ontap: () {},
-                              ),
-                              InkWell(
-                                onTap: () async {
-                                  await imageContoller.proFile();
-                                },
-                                child: Obx(
-                                  () => imageContoller.imageFile.value == null
-                                      ? CustomText(
+                                        10.w.pw,
+                                        CustomText(
                                           name: "Take a Picture",
-                                          color: Colors.black,
+                                          color: black,
                                           size: 12.sp,
                                           alignment: TextAlign.center,
                                           weightFont: FontWeight.w700,
-                                        )
-                                      : Image.file(
-                                          imageContoller.imageFile.value!,
-                                          width: 50.w,
-                                          height: 50.h,
                                         ),
-                                ),
-                              )
-                            ],
+                                      ],
+                                    ),
+                                    Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: CustomButton(
+                                        width: 87.w,
+                                        height: 40.h,
+                                        color: aquamarine,
+                                        name: "Submit",
+                                        ontap: () {},
+                                      ),
+                                    )
+                                  ],
+                                ));
+                          },
+                        )
+                      ],
+                    ),
+                    20.h.ph,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Image.asset(pricingIcon, width: 24.w, height: 24.h),
+                            10.w.pw,
+                            CustomText(
+                              name: "Products",
+                              size: 16.sp,
+                              weightFont: FontWeight.w600,
+                              color: black,
+                            ),
+                          ],
+                        ),
+                        InkWell(
+                          onTap: () {
+                            categoryController.visibilityTrue2();
+                          },
+                          child: Container(
+                            width: 24.w,
+                            height: 24.h,
+                            decoration: BoxDecoration(
+                                color: white,
+                                borderRadius: BorderRadius.circular(5.r)),
+                            child: const Center(
+                                child: Icon(
+                              Icons.arrow_drop_down,
+                              color: grey,
+                            )),
                           ),
-                          10.h.ph,
-                          Wrap(
-                            children: [
-                              CustomButton(
-                                width: 68.w,
-                                height: 46.h,
-                                name: "OSA",
-                                size: 12.sp,
-                                ontap: () {
-                                  controller.commonDialog.value.showPopCustom(
-                                    title: sOAPopText,
-                                    btn1Name: "Yes",
-                                    btn2Name: "No",
-                                    btn1Ontap: () {},
-                                    btn2Ontap: () {},
-                                    submitOntap: () {},
-                                  );
-                                },
-                              ),
-                              12.w.pw,
-                              CustomButton(
-                                width: 74.w,
-                                height: 46.h,
-                                size: 12.sp,
-                                name: "Pricing",
-                                ontap: () {
-                                  controller.commonDialog.value.showPopCustom(
-                                    title: pricePopText,
-                                    btn1Name: "Yes",
-                                    btn2Name: "No",
-                                    btn1Ontap: () {},
-                                    btn2Ontap: () {},
-                                    submitOntap: () {},
-                                  );
-                                },
-                              ),
-                              10.w.pw,
-                              CustomButton(
-                                width: 78.w,
-                                height: 46.h,
-                                size: 12.sp,
-                                name: "Stock level",
-                                ontap: () {
-                                  controller.commonDialog.value.showPopCustom(
-                                    title: stockLevelPopText,
-                                    btn1Name: "Yes",
-                                    btn2Name: "No",
-                                    btn1Ontap: () {},
-                                    btn2Ontap: () {},
-                                    submitOntap: () {},
-                                  );
-                                },
-                              ),
-                              CustomButton(
-                                width: 68.w,
-                                height: 46.h,
-                                name: "OSA",
-                                size: 12.sp,
-                                ontap: () {
-                                  controller.commonDialog.value.showPopCustom(
-                                    title: sOAPopText,
-                                    btn1Name: "Yes",
-                                    btn2Name: "No",
-                                    btn1Ontap: () {},
-                                    btn2Ontap: () {},
-                                    submitOntap: () {},
-                                  );
-                                },
-                              ),
-                              7.w.pw,
-                              CustomButton(
-                                width: 79.w,
-                                height: 46.h,
-                                size: 12.sp,
-                                name: "Accessible ",
-                                ontap: () {
-                                  controller.commonDialog.value.showPopCustom(
-                                    title: accessPopText,
-                                    btn1Name: "Yes",
-                                    btn2Name: "No",
-                                    btn1Ontap: () {},
-                                    btn2Ontap: () {},
-                                    submitOntap: () {},
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    );
-                  }),
-                  20.h.ph,
-                  Row(
-                    children: [
-                      CustomButton(
-                        width: 155.w,
-                        color: aquamarine,
-                        height: 46.h,
-                        name: "Promotion",
-                        ontap: () {
-                          Get.toNamed(RoutesName.planogramScreen);
-                        },
-                      ),
-                      16.w.pw,
-                      CustomButton(
-                        width: 155.w,
-                        color: aquamarine,
-                        height: 46.h,
-                        name: "Competitors",
-                        ontap: () {
-                          Get.toNamed(RoutesName.competitorsScreen);
-                        },
-                      ),
-                    ],
-                  ),
-                  20.h.ph,
-                ],
+                        )
+                      ],
+                    ),
+                    19.h.ph,
+                    Obx(() {
+                      return Visibility(
+                        visible: categoryController.visibilityValue2.value,
+                        child: Column(
+                          children: [
+                            logPro.productList.isEmpty
+                                ? SizedBox.shrink()
+                                : ListView.builder(
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemCount: logPro.productList.length,
+                                    itemBuilder: (context, index) {
+                                      return Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              CustomButton(
+                                                color: aquamarine,
+                                                width: 111.w,
+                                                height: 36.h,
+                                                // name: "Item ${index + 1}",
+                                                name:
+                                                    "${logPro.productList[index].productName}",
+                                                ontap: () {
+                                                  log("here is product id ${logPro.productList[index].productId}");
+                                                  log("here is product name ${logPro.productList[index].productName}");
+                                                  log("here is product barcode ${logPro.productList[index].barcode}");
+                                                },
+                                              ),
+                                              InkWell(
+                                                onTap: () async {
+                                                  await imageContoller
+                                                      .proFile();
+                                                },
+                                                child: Obx(
+                                                  () => imageContoller.imageFile
+                                                              .value ==
+                                                          null
+                                                      ? CustomText(
+                                                          name:
+                                                              "Take a Picture",
+                                                          color: Colors.black,
+                                                          size: 12.sp,
+                                                          alignment:
+                                                              TextAlign.center,
+                                                          weightFont:
+                                                              FontWeight.w700,
+                                                        )
+                                                      : Image.file(
+                                                          imageContoller
+                                                              .imageFile.value!,
+                                                          width: 50.w,
+                                                          height: 50.h,
+                                                        ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          10.h.ph,
+                                          Wrap(
+                                            children: [
+                                              CustomButton(
+                                                width: 68.w,
+                                                height: 46.h,
+                                                name: "OSA",
+                                                size: 12.sp,
+                                                ontap: () {
+                                                  controller.commonDialog.value
+                                                      .showPopCustom(
+                                                    title: sOAPopText,
+                                                    btn1Name: "Yes",
+                                                    btn2Name: "No",
+                                                    btn1Ontap: () {},
+                                                    btn2Ontap: () {},
+                                                    submitOntap: () {},
+                                                  );
+                                                },
+                                              ),
+                                              12.w.pw,
+                                              CustomButton(
+                                                width: 74.w,
+                                                height: 46.h,
+                                                size: 12.sp,
+                                                name: "Pricing",
+                                                ontap: () {
+                                                  controller.commonDialog.value
+                                                      .showPopCustom(
+                                                    title: pricePopText,
+                                                    btn1Name: "Yes",
+                                                    btn2Name: "No",
+                                                    btn1Ontap: () {},
+                                                    btn2Ontap: () {},
+                                                    submitOntap: () {},
+                                                  );
+                                                },
+                                              ),
+                                              10.w.pw,
+                                              CustomButton(
+                                                width: 78.w,
+                                                height: 46.h,
+                                                size: 12.sp,
+                                                name: "Stock level",
+                                                ontap: () {
+                                                  controller.commonDialog.value
+                                                      .showPopCustom(
+                                                    title: stockLevelPopText,
+                                                    btn1Name: "Yes",
+                                                    btn2Name: "No",
+                                                    btn1Ontap: () {},
+                                                    btn2Ontap: () {},
+                                                    submitOntap: () {},
+                                                  );
+                                                },
+                                              ),
+                                              // CustomButton(
+                                              //   width: 68.w,
+                                              //   height: 46.h,
+                                              //   name: "OSA",
+                                              //   size: 12.sp,
+                                              //   ontap: () {
+                                              //     controller.commonDialog.value
+                                              //         .showPopCustom(
+                                              //       title: sOAPopText,
+                                              //       btn1Name: "Yes",
+                                              //       btn2Name: "No",
+                                              //       btn1Ontap: () {},
+                                              //       btn2Ontap: () {},
+                                              //       submitOntap: () {},
+                                              //     );
+                                              //   },
+                                              // ),
+
+                                              7.w.pw,
+                                              CustomButton(
+                                                width: 79.w,
+                                                height: 46.h,
+                                                size: 12.sp,
+                                                name: "Accessible ",
+                                                ontap: () {
+                                                  controller.commonDialog.value
+                                                      .showPopCustom(
+                                                    title: accessPopText,
+                                                    btn1Name: "Yes",
+                                                    btn2Name: "No",
+                                                    btn1Ontap: () {},
+                                                    btn2Ontap: () {},
+                                                    submitOntap: () {},
+                                                  );
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                          13.h.ph,
+                                        ],
+                                      );
+                                    }),
+                          ],
+                        ),
+                      );
+                    }),
+                    20.h.ph,
+                    Row(
+                      children: [
+                        CustomButton(
+                          width: 155.w,
+                          color: aquamarine,
+                          height: 46.h,
+                          name: "Promotion",
+                          ontap: () {
+                            Get.toNamed(RoutesName.planogramScreen);
+                          },
+                        ),
+                        16.w.pw,
+                        CustomButton(
+                          width: 155.w,
+                          color: aquamarine,
+                          height: 46.h,
+                          name: "Competitors",
+                          ontap: () {
+                            Get.toNamed(RoutesName.competitorsScreen);
+                          },
+                        ),
+                      ],
+                    ),
+                    20.h.ph,
+                  ],
+                ),
               ),
-            ),
-          ]),
+            ]),
+          ),
         ));
   }
 }

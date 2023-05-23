@@ -165,8 +165,13 @@ class CameraWIdget extends StatelessWidget {
                 ? Obx(() {
                     log("${imageContoller.imageFile.value}");
 
-                    return Image.file(
-                      imageContoller.imageFile.value!,
+                    // return Image.file(
+                    //   imageContoller.imageFile.value!,
+                    //   width: 30.w,
+                    //   height: 30.h,
+                    // );
+                    return Image.asset(
+                      camera,
                       width: 30.w,
                       height: 30.h,
                     );
