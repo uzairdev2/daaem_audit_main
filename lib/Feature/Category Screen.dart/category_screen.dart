@@ -4,6 +4,7 @@ import 'dart:developer';
 
 import 'package:daaem_reports/Core/Utils/sizebox.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -31,6 +32,31 @@ class _CategoryScreenState extends State<CategoryScreen> {
   List<String> item = ["Coffee", "Grean Tea", "Pepesi", "Milk"];
 
   String? selectedCategory;
+
+  String barcode = '';
+
+  Future<void> scanBarcode() async {
+    String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+      '#FF0000', // Custom color for the scanner overlay
+      'Cancel', // Text for the cancel button
+      true, // Enable flash option
+
+      ScanMode
+          .DEFAULT, // Scan mode (barcode, QR code, or all supported formats)
+    );
+
+    if (!mounted) return;
+
+    setState(() {
+      if (barcodeScanRes != '-1') {
+        // Barcode successfully scanned
+        barcode = barcodeScanRes;
+      } else {
+        // No barcode scanned
+        barcode = 'Barcode cannot be scanned';
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -150,6 +176,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           ontap: () {
                             controller.commonDialog.value.showPopCustom(
                               title: cleannessPopText,
+                              imageStatus: 0,
                               btn1Name: "Yes",
                               btn2Name: "No",
                               btn1Ontap: () {},
@@ -215,36 +242,37 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                       ),
                                     ),
                                     20.h.ph,
-                                    Row(
-                                      children: [
-                                        Container(
-                                          width: 47.w,
-                                          height: 47.h,
-                                          decoration: BoxDecoration(
-                                              color: Colors.transparent,
-                                              border: Border.all(
-                                                color: aquamarine,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(10.r)),
-                                          child: Center(
-                                            child: Image.asset(
-                                              camera,
-                                              width: 22.w,
-                                              height: 20.h,
-                                            ),
-                                          ),
-                                        ),
-                                        10.w.pw,
-                                        CustomText(
-                                          name: "Take a Picture",
-                                          color: black,
-                                          size: 12.sp,
-                                          alignment: TextAlign.center,
-                                          weightFont: FontWeight.w700,
-                                        ),
-                                      ],
-                                    ),
+                                    // Row(
+                                    //   children: [
+                                    //     Container(
+                                    //       width: 47.w,
+                                    //       height: 47.h,
+                                    //       decoration: BoxDecoration(
+                                    //           color: Colors.transparent,
+                                    //           border: Border.all(
+                                    //             color: aquamarine,
+                                    //           ),
+                                    //           borderRadius:
+                                    //               BorderRadius.circular(10.r)),
+                                    //       child: Center(
+                                    //         child: Image.asset(
+                                    //           camera,
+                                    //           width: 22.w,
+                                    //           height: 20.h,
+                                    //         ),
+                                    //       ),
+                                    //     ),
+                                    //     10.w.pw,
+                                    //     CustomText(
+                                    //       name: "Take a Picture",
+                                    //       color: black,
+                                    //       size: 12.sp,
+                                    //       alignment: TextAlign.center,
+                                    //       weightFont: FontWeight.w700,
+                                    //     ),
+                                    //   ],
+                                    // ),
+
                                     Align(
                                       alignment: Alignment.bottomRight,
                                       child: CustomButton(
@@ -318,33 +346,37 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                             children: [
                                               CustomButton(
                                                 color: aquamarine,
-                                                width: 230.w,
-                                                height: 46.h,
+                                                width: 250.w,
+                                                height: 55.h,
                                                 changeStatus: 2,
-                                                customWidget: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Text(
-                                                          "${logPro.productList[index].productName}",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 12.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600)),
-                                                      Text(
-                                                          "${logPro.productList[index].barcode}",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 12.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600)),
-                                                    ]),
+                                                customWidget: Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 5.w),
+                                                  child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Text(
+                                                            "${logPro.productList[index].productName}",
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 12.sp,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600)),
+                                                        Text(
+                                                            "${logPro.productList[index].barcode}",
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 12.sp,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600)),
+                                                      ]),
+                                                ),
                                                 // name: "Item ${index + 1}",
                                                 name:
                                                     "${logPro.productList[index].productName}",
@@ -393,10 +425,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                 ontap: () {
                                                   controller.commonDialog.value
                                                       .showPopCustom(
+                                                    // barcode: barcode,
                                                     title: sOAPopText,
+                                                    imageStatus: 1,
                                                     btn1Name: "Yes",
                                                     btn2Name: "No",
-                                                    btn1Ontap: () {},
+                                                    btn1Ontap: () {
+                                                      scanBarcode();
+                                                    },
                                                     btn2Ontap: () {},
                                                     submitOntap: () {},
                                                   );

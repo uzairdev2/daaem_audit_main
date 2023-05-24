@@ -17,11 +17,12 @@ class CommonDialog {
       required String btn1Name,
       required String btn2Name,
       Color? color,
+      // String? barcode,
       required VoidCallback btn1Ontap,
       required VoidCallback btn2Ontap,
       required VoidCallback submitOntap,
       Widget customwidget = const SizedBox.shrink(),
-      imageStatus = 0}) {
+      imageStatus = 1}) {
     Get.dialog(AlertDialog(
       backgroundColor: white,
       title: Padding(
@@ -94,6 +95,7 @@ class CommonDialog {
                 ),
               ],
             ),
+            // CustomText(name: barcode!),
             20.h.ph,
             imageStatus == 0 ? const CameraWIdget() : const SizedBox.shrink(),
             Align(

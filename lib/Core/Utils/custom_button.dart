@@ -25,6 +25,7 @@ class CustomButton extends StatelessWidget {
   int changeStatus;
   Widget customWidget;
   double? height;
+
   final VoidCallback ontap;
   @override
   Widget build(BuildContext context) {
@@ -95,22 +96,26 @@ class CustomButtonCheckBox extends StatelessWidget {
               offset: Offset(0, 0),
             ),
           ], color: color ?? red, borderRadius: BorderRadius.circular(10.r)),
-          child: Row(
+          child: Column(
             children: [
-              Expanded(
-                flex: 4,
-                child: CustomText(
-                    name: name,
-                    size: size ?? 14.sp,
-                    color: white,
-                    familyFont: 'Montserrat',
-                    weightFont: FontWeight.w700),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 4,
+                    child: CustomText(
+                        name: name,
+                        size: size ?? 14.sp,
+                        color: white,
+                        familyFont: 'Montserrat',
+                        weightFont: FontWeight.w700),
+                  ),
+                  10.w.pw,
+                  Expanded(
+                      flex: 6,
+                      child: Align(
+                          alignment: Alignment.centerLeft, child: checkbox)),
+                ],
               ),
-              10.w.pw,
-              Expanded(
-                  flex: 6,
-                  child:
-                      Align(alignment: Alignment.centerLeft, child: checkbox)),
             ],
           ),
         ));
