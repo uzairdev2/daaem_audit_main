@@ -22,6 +22,7 @@ class CommonDialog {
       required VoidCallback btn2Ontap,
       required VoidCallback submitOntap,
       Widget customwidget = const SizedBox.shrink(),
+      barcodeStatus = 1,
       imageStatus = 1}) {
     Get.dialog(AlertDialog(
       backgroundColor: white,
@@ -95,7 +96,18 @@ class CommonDialog {
                 ),
               ],
             ),
-            // CustomText(name: barcode!),
+            15.h.ph,
+            barcodeStatus == 0
+                ? Align(
+                    alignment: Alignment.centerLeft,
+                    child: Obx(() {
+                      return CustomText(
+                        name: "BarCode:${scanController.barcode.value}",
+                        size: 16.sp,
+                      );
+                    }),
+                  )
+                : const SizedBox.shrink(),
             20.h.ph,
             imageStatus == 0 ? const CameraWIdget() : const SizedBox.shrink(),
             Align(

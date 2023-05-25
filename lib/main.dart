@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'Core/API,s Intergartion/API,s.dart';
 import 'Core/Constant/Colors/colors.dart';
 
 import 'package:provider/provider.dart';
 
+import 'Core/Local DB/model.dart';
 import 'Core/Routes/routes.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  var directory = await getApplicationDocumentsDirectory();
+  Hive.init(directory.path);
+  Hive.registerAdapter(ModelHiveAdapter());
+  await Hive.openBox<ModelHive>("IdDataBase");
+
   runApp(const MyApp());
 }
 

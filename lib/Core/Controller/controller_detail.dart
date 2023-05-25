@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import 'bar_code_ftn.dart';
 import 'checkbox_controller.dart';
 import 'dropdown_controller.dart';
 import 'image_controller.dart';
@@ -9,3 +10,4 @@ ImageContoller imageContoller = Get.put(ImageContoller());
 HomeScreenController controller = Get.put(HomeScreenController());
 CategorySelctedController categoryController =
     Get.put(CategorySelctedController());
+ScanController scanController = Get.put(ScanController());

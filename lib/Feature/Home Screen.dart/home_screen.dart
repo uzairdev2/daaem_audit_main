@@ -14,6 +14,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Core/API,s Intergartion/API,s.dart';
 import '../../Core/Controller/dropdown_controller.dart';
+import '../../Core/Local DB/model.dart';
+import '../../Core/Local DB/openBox.dart';
 import '../../Core/Utils/common_scaffold.dart';
 import '../../Core/Utils/custom_button.dart';
 import 'Common Widgets/custom_dropdown_button.dart';
@@ -56,6 +58,15 @@ class _HomeScreenState extends State<HomeScreen> {
                               await logPro.getBranchData(
                                   retailerid: item.retailerId.toString());
                               controller.selectedRetailer.value = "newValue";
+                              final storedata = ModelHive(
+                                retailerId: item.retailerId.toString(),
+                              );
+                              final boxes = Boxes.getData();
+                              boxes.add(storedata).then((value) {
+                                print("idsave");
+                              }).onError((error, stackTrace) {
+                                Get.snackbar("Error", error.toString());
+                              });
                               // setState(() {});
                             },
                             value: item.retailerName,
@@ -126,9 +137,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                     // print("here is ${item.branchId}");
                                     await logPro.getCustomerData();
                                     controller.selectedStore.value = "true";
-                                    //call your Scond api here
-                                    // await logPro.getBranchData(
-                                    //     retailerid: item.retailerId.toString());
+                                    final storedata = ModelHive(
+                                      branchId: item.branchId.toString(),
+                                    );
+                                    final boxes = Boxes.getData();
+                                    boxes.add(storedata).then((value) {
+                                      print("idsave");
+                                    }).onError((error, stackTrace) {
+                                      Get.snackbar("Error", error.toString());
+                                    });
                                   },
                                   value: item.branchName,
                                   child: Text(
@@ -206,14 +223,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         name: "Backdoor",
                         ontap: () {
                           Get.toNamed(RoutesName.scannerScreen);
-                          // controller.commonDialog.value.showPopCustom(
-                          //   title: cleannessPopText,
-                          //   btn1Name: "Yes",
-                          //   btn2Name: "No",
-                          //   btn1Ontap: () {},
-                          //   btn2Ontap: () {},
-                          //   submitOntap: () {},
-                          // );
                         },
                       ),
                       16.w.pw,
@@ -226,7 +235,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               await SharedPreferences.getInstance();
                           String? customerid = prefs.getString('customerid');
 
-                          print('Customer Id: $customerid');
                           await logPro
                               .getProductData(customerid: customerid!)
                               .then((value) {
@@ -234,16 +242,20 @@ class _HomeScreenState extends State<HomeScreen> {
                           });
 
                           logPro.categoryList.clear();
+                          final storedata = ModelHive(
+                            custmoreId: customerid.toString(),
+                          );
+                          final boxes = Boxes.getData();
+                          boxes.add(storedata).then((value) {
+                            print("idsave");
+                          }).onError((error, stackTrace) {
+                            Get.snackbar("Error", error.toString());
+                          });
                         },
                       )
                     ],
                   ),
                 ),
-                // Obx(() => Image.file(
-                //       checkController.imageFile!.value,
-                //       width: 30.w,
-                //       height: 30.h,
-                //     ))
               ],
             ),
           );

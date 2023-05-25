@@ -6,11 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../Core/Controller/controller_detail.dart';
-import '../../Core/Utils/checkbox.dart';
+import '../../Core/Routes/routes_name.dart';
 import '../../Core/Utils/common_dialogue.dart';
 import '../../Core/Utils/custom_text.dart';
-import '../../Core/Utils/dropdown.dart';
 
 // ignore: must_be_immutable
 class PromotionScreen extends StatelessWidget {
@@ -73,65 +71,7 @@ class PromotionScreen extends StatelessWidget {
               CustomButton(
                 name: "Secondary place",
                 ontap: () {
-                  commonDialog.showPopwithCustom(
-                      name: secondaryplacePopText,
-                      colum: Column(
-                        children: [
-                          Row(
-                            children: [
-                              CustomButtonCheckBox(
-                                width: 90.w,
-                                height: 40.h,
-                                size: 12.sp,
-                                color: grey,
-                                checkbox: CustomCheckBox(
-                                    value: checkController.yesValue),
-                                name: "Gandula",
-                                ontap: () {},
-                              ),
-                              5.w.pw,
-                              CustomButtonCheckBox(
-                                width: 120.w,
-                                height: 40.h,
-                                size: 12.sp,
-                                color: grey,
-                                checkbox: CustomCheckBox(
-                                    value: checkController.noValue),
-                                name: "Floor Display",
-                                ontap: () {},
-                              ),
-                            ],
-                          ),
-                          10.h.ph,
-                          CustomDropdownButton(
-                            hint: "Nothing selected",
-                            items: countries,
-                            width: 195.w,
-                            size: 12.sp,
-                            color: white,
-                            backgroundColor: grey,
-                            height: 46.h,
-                            iconsizes: 24,
-                            onChanged: (value) {},
-                          ),
-                          10.h.ph,
-                          const Align(
-                            alignment: Alignment.bottomLeft,
-                            child: CameraWIdget(),
-                          ),
-                          10.h.ph,
-                          Align(
-                            alignment: Alignment.bottomRight,
-                            child: CustomButton(
-                              width: 87.w,
-                              height: 40.h,
-                              color: aquamarine,
-                              name: "Submit",
-                              ontap: () {},
-                            ),
-                          )
-                        ],
-                      ));
+                  Get.toNamed(RoutesName.secondaryplace);
                 },
               ),
               39.h.ph,
