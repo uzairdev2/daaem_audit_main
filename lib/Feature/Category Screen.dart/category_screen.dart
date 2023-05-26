@@ -13,8 +13,6 @@ import '../../Core/Constant/Colors/colors.dart';
 import '../../Core/Constant/Images/images.dart';
 import '../../Core/Constant/Text/text.dart';
 import '../../Core/Controller/controller_detail.dart';
-import '../../Core/Local DB/model.dart';
-import '../../Core/Local DB/openBox.dart';
 import '../../Core/Routes/routes_name.dart';
 import '../../Core/Utils/text_and_dropdown.dart';
 import '../../Core/Utils/custom_button.dart';
@@ -90,17 +88,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             logPro.productList.clear();
                             await logPro.getCategoryData(
                                 categoryid: item.categoryId.toString());
-                            log('heeee ${item.categoryName}');
-                            final storedata = ModelHive(
-                              categoryId: item.categoryId.toString(),
-                            );
-                            final boxes = Boxes.getData();
-                            boxes.add(storedata).then((value) {
-                              print("idsave");
-                            }).onError((error, stackTrace) {
-                              Get.snackbar("Error", error.toString());
-                            });
-                            print('Category Id: ${item.categoryId}');
+
+                            storingIDController.categoryid.value =
+                                item.categoryId!;
+                            storingIDController.storingData();
                           },
                           value: item.categoryName,
                           child: Text(
@@ -319,15 +310,16 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w600)),
-                                                        Text(
-                                                            "${logPro.productList[index].barcode}",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontSize: 12.sp,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600)),
+                                                        CustomText(
+                                                          name: logPro
+                                                              .productList[
+                                                                  index]
+                                                              .barcode
+                                                              .toString(),
+                                                          color: white,
+                                                          weightFont:
+                                                              FontWeight.w600,
+                                                        ),
                                                       ]),
                                                 ),
                                                 // name: "Item ${index + 1}",

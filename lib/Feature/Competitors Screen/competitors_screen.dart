@@ -24,7 +24,7 @@ class CompetitorsScreen extends StatelessWidget {
           backgroundColor: Colors.transparent,
           elevation: 0,
           title: CustomText(
-            name: "Promotion",
+            name: "Competitor",
             size: 18.sp,
             weightFont: FontWeight.w700,
           ),
@@ -112,8 +112,6 @@ class CompetitorsScreen extends StatelessWidget {
                             width: 303.w,
                             height: 61.h,
                           ),
-                          15.h.ph,
-                          const CameraWIdget(),
                           10.h.ph,
                           Align(
                             alignment: Alignment.bottomRight,
@@ -137,7 +135,6 @@ class CompetitorsScreen extends StatelessWidget {
                       name: moreSpacePopText,
                       colum: Column(
                         children: [
-                          const CameraWIdget(),
                           15.h.ph,
                           Align(
                             alignment: Alignment.bottomLeft,
@@ -234,10 +231,6 @@ class CompetitorsScreen extends StatelessWidget {
                             height: 46.h,
                           ),
                           10.h.ph,
-                          const Align(
-                            alignment: Alignment.centerLeft,
-                            child: CameraWIdget(),
-                          ),
                           Align(
                             alignment: Alignment.bottomRight,
                             child: CustomButton(

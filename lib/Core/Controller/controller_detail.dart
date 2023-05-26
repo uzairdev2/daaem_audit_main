@@ -1,3 +1,4 @@
+import 'package:daaem_reports/Core/Controller/storing_id_controller.dart';
 import 'package:get/get.dart';
 
 import 'bar_code_ftn.dart';
@@ -11,3 +12,4 @@ HomeScreenController controller = Get.put(HomeScreenController());
 CategorySelctedController categoryController =
     Get.put(CategorySelctedController());
 ScanController scanController = Get.put(ScanController());
+StoringIDController storingIDController = Get.put(StoringIDController());

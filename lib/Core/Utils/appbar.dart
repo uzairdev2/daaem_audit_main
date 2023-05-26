@@ -1,5 +1,9 @@
+import 'package:daaem_reports/Core/Controller/controller_detail.dart';
+import 'package:daaem_reports/Core/Utils/customButton.dart';
+import 'package:daaem_reports/Feature/Fetching%20Data/fetchingdata.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import '../Constant/Images/images.dart';
 import 'custom_text.dart';
@@ -34,6 +38,17 @@ class CustomAppBar extends StatelessWidget {
         weightFont: FontWeight.w700,
       ),
       centerTitle: true,
+      actions: [
+        CustomButton(
+          name: "Async",
+          size: 14.sp,
+          width: 45.w,
+          height: 20,
+          ontap: () {
+            Get.to(HiveData());
+          },
+        )
+      ],
     );
   }
 }

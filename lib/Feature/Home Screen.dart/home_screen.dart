@@ -14,8 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Core/API,s Intergartion/API,s.dart';
 import '../../Core/Controller/dropdown_controller.dart';
-import '../../Core/Local DB/model.dart';
-import '../../Core/Local DB/openBox.dart';
+
 import '../../Core/Utils/common_scaffold.dart';
 import '../../Core/Utils/custom_button.dart';
 import 'Common Widgets/custom_dropdown_button.dart';
@@ -33,9 +32,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final logPro = Provider.of<ApiClass>(context);
-    // ignore: avoid_print
-    print("hi");
-
     return GetX<HomeScreenController>(
         init: controller,
         builder: (_) {
@@ -58,16 +54,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               await logPro.getBranchData(
                                   retailerid: item.retailerId.toString());
                               controller.selectedRetailer.value = "newValue";
-                              final storedata = ModelHive(
-                                retailerId: item.retailerId.toString(),
-                              );
-                              final boxes = Boxes.getData();
-                              boxes.add(storedata).then((value) {
-                                print("idsave");
-                              }).onError((error, stackTrace) {
-                                Get.snackbar("Error", error.toString());
-                              });
-                              // setState(() {});
+                              storingIDController.retailerid.value =
+                                  item.retailerId!;
                             },
                             value: item.retailerName,
                             child: Text(
@@ -133,19 +121,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         items: logPro.branchList
                             .map((item) => DropdownMenuItem<String>(
                                   onTap: () async {
-                                    print('heeee ${item.branchName}');
-                                    // print("here is ${item.branchId}");
                                     await logPro.getCustomerData();
                                     controller.selectedStore.value = "true";
-                                    final storedata = ModelHive(
-                                      branchId: item.branchId.toString(),
-                                    );
-                                    final boxes = Boxes.getData();
-                                    boxes.add(storedata).then((value) {
-                                      print("idsave");
-                                    }).onError((error, stackTrace) {
-                                      Get.snackbar("Error", error.toString());
-                                    });
+                                    storingIDController.branchid.value =
+                                        item.branchId!;
                                   },
                                   value: item.branchName,
                                   child: Text(
@@ -181,21 +160,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                     : logPro.customerList
                                         .map((item) => DropdownMenuItem<String>(
                                               onTap: () async {
-                                                // customerid =
-                                                //     item.customerId.toString();
-
                                                 SharedPreferences prefs =
                                                     await SharedPreferences
                                                         .getInstance();
                                                 await prefs.setString(
                                                     'customerid',
                                                     item.customerId.toString());
-                                                // await logPro.getCategoryData(
-                                                //     customerid:
-                                                //         item.customerId.toString());
-                                                // print(
-                                                //     'Customer id: ${item.customerId}');
-                                                // print(customerid);
+                                                storingIDController.custmoreid
+                                                    .value = item.customerId!;
                                               },
                                               value: item.customerName,
                                               child: Text(
@@ -242,15 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           });
 
                           logPro.categoryList.clear();
-                          final storedata = ModelHive(
-                            custmoreId: customerid.toString(),
-                          );
-                          final boxes = Boxes.getData();
-                          boxes.add(storedata).then((value) {
-                            print("idsave");
-                          }).onError((error, stackTrace) {
-                            Get.snackbar("Error", error.toString());
-                          });
+                          storingIDController.custmoreid.value = customerid;
                         },
                       )
                     ],
