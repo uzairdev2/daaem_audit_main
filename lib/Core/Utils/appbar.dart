@@ -1,4 +1,3 @@
-import 'package:daaem_reports/Core/Controller/controller_detail.dart';
 import 'package:daaem_reports/Core/Utils/customButton.dart';
 import 'package:daaem_reports/Feature/Fetching%20Data/fetchingdata.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +44,7 @@ class CustomAppBar extends StatelessWidget {
           width: 45.w,
           height: 20,
           ontap: () {
-            Get.to(HiveData());
+            Get.to(const HiveData());
           },
         )
       ],

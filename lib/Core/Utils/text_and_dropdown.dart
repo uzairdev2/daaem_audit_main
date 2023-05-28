@@ -17,6 +17,8 @@ class TextDropdown extends StatelessWidget {
       this.size,
       this.textColor,
       this.hint,
+      this.dropvalue,
+      required this.onChanged,
       this.color});
 
   final List<String> countries;
@@ -25,8 +27,10 @@ class TextDropdown extends StatelessWidget {
   final double? height;
   final double? size;
   String? hint;
+  String? dropvalue;
   final Color? color;
   final Color? textColor;
+  final ValueChanged<String?>? onChanged;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -44,11 +48,12 @@ class TextDropdown extends StatelessWidget {
           items: countries,
           width: width ?? 343.w,
           size: 12.sp,
+          dropvalue: dropvalue,
           color: textColor ?? black,
           backgroundColor: color ?? white,
           height: height ?? 58.h,
           iconsizes: 24,
-          onChanged: (value) {},
+          onChanged: onChanged,
         ),
       ],
     );

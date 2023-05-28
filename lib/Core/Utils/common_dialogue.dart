@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'dart:developer';
 
 import 'package:daaem_reports/Core/Constant/Colors/colors.dart';
@@ -41,9 +43,6 @@ class CommonDialog {
                 weightFont: FontWeight.w500,
               ),
             ),
-            customwidget == const SizedBox()
-                ? const SizedBox.shrink()
-                : customwidget,
             20.h.ph,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -98,15 +97,15 @@ class CommonDialog {
             ),
             15.h.ph,
             barcodeStatus == 0
-                ? Align(
-                    alignment: Alignment.centerLeft,
-                    child: Obx(() {
-                      return CustomText(
-                        name: "BarCode:${scanController.barcode.value}",
-                        size: 16.sp,
-                      );
-                    }),
-                  )
+                ? Obx(() => Column(children: [
+                      scanController.barValueCheck.value == false
+                          ? InkWell(
+                              onTap: () {
+                                scanController.scanBarcode("4796007317504");
+                              },
+                              child: CustomText(name: "Try Agian 😔"))
+                          : CustomText(name: "Matched ☺ ")
+                    ]))
                 : const SizedBox.shrink(),
             20.h.ph,
             imageStatus == 0 ? const CameraWIdget() : const SizedBox.shrink(),

@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, unnecessary_null_comparison
 
 import 'dart:developer';
 
@@ -31,7 +31,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
   List<String> item = ["Coffee", "Grean Tea", "Pepesi", "Milk"];
 
   String? selectedCategory;
-
+  String? leftCategory;
+  String? rightCategory;
+  bool barValueCheck = false;
   @override
   Widget build(BuildContext context) {
     // String categoryId = '';
@@ -91,7 +93,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
                             storingIDController.categoryid.value =
                                 item.categoryId!;
-                            storingIDController.storingData();
                           },
                           value: item.categoryName,
                           child: Text(
@@ -138,7 +139,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               btn1Ontap: () {},
                               btn2Ontap: () {},
                               submitOntap: () {
-                                Get.back();
+                                if (checkController.selectRadioBtnVal != null) {
+                                  storingIDController.planogramFtnStoringID();
+                                  checkController.selectRadioBtnVal.value = "";
+                                  Get.back();
+                                }
                               },
                             );
                           },
@@ -154,9 +159,17 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               imageStatus: 0,
                               btn1Name: "Yes",
                               btn2Name: "No",
-                              btn1Ontap: () {},
+                              btn1Ontap: () {
+                                checkController.handleYesorNoChange("Yes");
+                              },
                               btn2Ontap: () {},
-                              submitOntap: () {},
+                              submitOntap: () {
+                                if (checkController.selectRadioBtnVal != null) {
+                                  storingIDController.cleaningFtnStoringID();
+                                  checkController.selectRadioBtnVal.value = "";
+                                  Get.back();
+                                }
+                              },
                             );
                           },
                         )
@@ -195,11 +208,15 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                       child: Row(
                                         children: [
                                           TextDropdown(
+                                              dropvalue: leftCategory,
+                                              onChanged: (value) {
+                                                leftCategory = value;
+                                              },
                                               width: 110.w,
                                               size: 12.sp,
                                               height: 40.h,
                                               color: grey,
-                                              hint: "Select",
+                                              hint: "leftCategory",
                                               textColor: white,
                                               name: "Left Side",
                                               countries: item),
@@ -208,8 +225,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                               size: 12.sp,
                                               color: grey,
                                               width: 99.w,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  rightCategory = value;
+                                                });
+                                              },
                                               textColor: white,
-                                              hint: "Select",
+                                              dropvalue: rightCategory,
+                                              hint: "select",
                                               height: 40.h,
                                               name: "Right Side",
                                               countries: item),
@@ -224,7 +247,17 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                         height: 40.h,
                                         color: aquamarine,
                                         name: "Submit",
-                                        ontap: () {},
+                                        ontap: () {
+                                          if (leftCategory != null &&
+                                              rightCategory != null) {
+                                            storingIDController
+                                                .neighborsFtnStoringID(
+                                                    leftCategory!,
+                                                    rightCategory!);
+
+                                            Get.back();
+                                          }
+                                        },
                                       ),
                                     )
                                   ],
@@ -322,7 +355,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                         ),
                                                       ]),
                                                 ),
-                                                // name: "Item ${index + 1}",
                                                 name:
                                                     "${logPro.productList[index].productName}",
                                                 ontap: () {
@@ -370,19 +402,57 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                 ontap: () {
                                                   controller.commonDialog.value
                                                       .showPopCustom(
-                                                    // barcode: barcode,
-                                                    title: sOAPopText,
-                                                    imageStatus: 1,
-                                                    barcodeStatus: 0,
-                                                    btn1Name: "Yes",
-                                                    btn2Name: "No",
-                                                    btn1Ontap: () {
-                                                      scanController
-                                                          .scanBarcode();
-                                                    },
-                                                    btn2Ontap: () {},
-                                                    submitOntap: () {},
-                                                  );
+                                                          title: sOAPopText,
+                                                          imageStatus: 1,
+                                                          barcodeStatus: 0,
+                                                          btn1Name: "Yes",
+                                                          btn2Name: "No",
+                                                          btn1Ontap: () {
+                                                            scanController
+                                                                .scanBarcode(logPro
+                                                                    .productList[
+                                                                        index]
+                                                                    .barcode
+                                                                    .toString());
+                                                          },
+                                                          btn2Ontap: () {},
+                                                          submitOntap: () {
+                                                            if (checkController
+                                                                    .selectRadioBtnVal
+                                                                    .value !=
+                                                                null) {
+                                                              storingIDController
+                                                                  .osaFtnStoringID([
+                                                                {
+                                                                  "retailerid":
+                                                                      storingIDController
+                                                                          .retailerid
+                                                                          .value,
+                                                                  "branchid":
+                                                                      storingIDController
+                                                                          .branchid
+                                                                          .value,
+                                                                  "custmoreid":
+                                                                      storingIDController
+                                                                          .custmoreid
+                                                                          .value,
+                                                                  "categoryid":
+                                                                      storingIDController
+                                                                          .categoryid
+                                                                          .value,
+                                                                  "productId": logPro
+                                                                      .productList[
+                                                                          index]
+                                                                      .productId
+                                                                      .toString(),
+                                                                  "osaValue":
+                                                                      checkController
+                                                                          .selectRadioBtnVal
+                                                                          .value,
+                                                                }
+                                                              ]);
+                                                            }
+                                                          });
                                                 },
                                               ),
                                               12.w.pw,
@@ -421,24 +491,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                   );
                                                 },
                                               ),
-                                              // CustomButton(
-                                              //   width: 68.w,
-                                              //   height: 46.h,
-                                              //   name: "OSA",
-                                              //   size: 12.sp,
-                                              //   ontap: () {
-                                              //     controller.commonDialog.value
-                                              //         .showPopCustom(
-                                              //       title: sOAPopText,
-                                              //       btn1Name: "Yes",
-                                              //       btn2Name: "No",
-                                              //       btn1Ontap: () {},
-                                              //       btn2Ontap: () {},
-                                              //       submitOntap: () {},
-                                              //     );
-                                              //   },
-                                              // ),
-
                                               7.w.pw,
                                               CustomButton(
                                                 width: 79.w,

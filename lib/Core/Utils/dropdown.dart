@@ -7,7 +7,7 @@ class CustomDropdownButton extends StatelessWidget {
   final String hint;
 
   final List<String> items;
-  final String? value;
+  final String? dropvalue;
   final ValueChanged<String?>? onChanged;
   Color? backgroundColor;
   Color? color;
@@ -23,7 +23,7 @@ class CustomDropdownButton extends StatelessWidget {
     this.color,
     required this.items,
     required this.onChanged,
-    this.value,
+    this.dropvalue,
     required this.iconsizes,
     this.backgroundColor = white,
     this.size = 16,
@@ -46,7 +46,7 @@ class CustomDropdownButton extends StatelessWidget {
         child: DropdownButtonHideUnderline(
           child: DropdownButton<String>(
             menuMaxHeight: 200,
-            value: value,
+            value: dropvalue,
             focusColor: backgroundColor,
             dropdownColor: white,
             iconEnabledColor: color,

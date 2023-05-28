@@ -1,10 +1,12 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:get/get.dart';
 
 class ScanController extends GetxController {
   RxString barcode = ''.obs;
+  RxBool barValueCheck = false.obs;
 
-  Future<void> scanBarcode() async {
+  Future<void> scanBarcode(String apiBarcode) async {
     String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
       '#FF0000', // Custom color for the scanner overlay
       'Cancel', // Text for the cancel button
@@ -14,8 +16,13 @@ class ScanController extends GetxController {
     );
 
     if (barcodeScanRes != '-1') {
-      // Barcode successfully scanned
       barcode.value = barcodeScanRes;
+      if (barcode == apiBarcode) {
+        barValueCheck.value = true;
+      } else {
+        barValueCheck.value = true;
+      }
+
       update();
     } else {
       // No barcode scanned

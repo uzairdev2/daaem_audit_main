@@ -83,6 +83,17 @@ class CategorySelctedController extends GetxController {
   final selectedRetailer = Rx<String?>(null);
   var visibilityValue = false.obs;
   var visibilityValue2 = true.obs;
+  RxString leftselectedCategory = ''.obs;
+
+  void leftselectCategory(String category) {
+    leftselectedCategory.value = category;
+  }
+
+  RxString rightselectedCategory = ''.obs;
+
+  void rightselectCategory(String category) {
+    rightselectedCategory.value = category;
+  }
 
   void updateSelectedValue(String value) {
     selectedValue.value = value;
