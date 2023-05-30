@@ -62,6 +62,8 @@ class CommonDialog {
                         groupValue: checkController.selectRadioBtnVal.value,
                         onChanged: (value) {
                           checkController.handleYesorNoChange(value!);
+                          log("here is inside common dialog value $value");
+                          log("here is inside common dialog value ${checkController.selectRadioBtnVal.value}");
                         },
                       ),
                     ),
@@ -85,6 +87,8 @@ class CommonDialog {
                         groupValue: checkController.selectRadioBtnVal.value,
                         onChanged: (value) {
                           checkController.handleYesorNoChange(value!);
+                          log("here is inside common dialog value $value");
+                          log("here is inside common dialog value ${checkController.selectRadioBtnVal.value}");
                         },
                       ),
                     ),

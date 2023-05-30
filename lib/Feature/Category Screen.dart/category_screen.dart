@@ -30,13 +30,14 @@ class CategoryScreen extends StatefulWidget {
 class _CategoryScreenState extends State<CategoryScreen> {
   List<String> item = ["Coffee", "Grean Tea", "Pepesi", "Milk"];
 
+  String base64iamge = "";
+
   String? selectedCategory;
   String? leftCategory;
   String? rightCategory;
   bool barValueCheck = false;
   @override
   Widget build(BuildContext context) {
-    // String categoryId = '';
     final logPro = Provider.of<ApiClass>(context);
     return Scaffold(
         appBar: AppBar(
@@ -140,8 +141,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               btn2Ontap: () {},
                               submitOntap: () {
                                 if (checkController.selectRadioBtnVal != null) {
+                                  log("here is check value ${checkController.selectRadioBtnVal.value}");
                                   storingIDController.planogramFtnStoringID();
+                                  storingIDController.planogramFtnGetingIDs();
+
                                   checkController.selectRadioBtnVal.value = "";
+
                                   Get.back();
                                 }
                               },
@@ -449,8 +454,19 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                                       checkController
                                                                           .selectRadioBtnVal
                                                                           .value,
+                                                                  "barcode": logPro
+                                                                      .productList[
+                                                                          index]
+                                                                      .barcode
+                                                                      .toString(),
+                                                                  "imagedata":
+                                                                      base64iamge
                                                                 }
                                                               ]);
+
+                                                              storingIDController
+                                                                  .osaFtnGetingID();
+                                                              Get.back();
                                                             }
                                                           });
                                                 },
@@ -469,7 +485,44 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                     btn2Name: "No",
                                                     btn1Ontap: () {},
                                                     btn2Ontap: () {},
-                                                    submitOntap: () {},
+                                                    submitOntap: () {
+                                                      storingIDController
+                                                          .PricingPutData([
+                                                        {
+                                                          "retailerid":
+                                                              storingIDController
+                                                                  .retailerid
+                                                                  .value,
+                                                          "branchid":
+                                                              storingIDController
+                                                                  .branchid
+                                                                  .value,
+                                                          "custmoreid":
+                                                              storingIDController
+                                                                  .custmoreid
+                                                                  .value,
+                                                          "categoryid":
+                                                              storingIDController
+                                                                  .categoryid
+                                                                  .value,
+                                                          "productId": logPro
+                                                              .productList[
+                                                                  index]
+                                                              .productId
+                                                              .toString(),
+                                                          "pricevalue":
+                                                              checkController
+                                                                  .selectRadioBtnVal
+                                                                  .value,
+                                                          "imagedata":
+                                                              base64iamge
+                                                        }
+                                                      ]);
+
+                                                      storingIDController
+                                                          .pricingGetData();
+                                                      Get.back();
+                                                    },
                                                   );
                                                 },
                                               ),
@@ -487,7 +540,44 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                     btn2Name: "No",
                                                     btn1Ontap: () {},
                                                     btn2Ontap: () {},
-                                                    submitOntap: () {},
+                                                    submitOntap: () {
+                                                      storingIDController
+                                                          .stockLevelPutData([
+                                                        {
+                                                          "retailerid":
+                                                              storingIDController
+                                                                  .retailerid
+                                                                  .value,
+                                                          "branchid":
+                                                              storingIDController
+                                                                  .branchid
+                                                                  .value,
+                                                          "custmoreid":
+                                                              storingIDController
+                                                                  .custmoreid
+                                                                  .value,
+                                                          "categoryid":
+                                                              storingIDController
+                                                                  .categoryid
+                                                                  .value,
+                                                          "productId": logPro
+                                                              .productList[
+                                                                  index]
+                                                              .productId
+                                                              .toString(),
+                                                          "stockLevelValue":
+                                                              checkController
+                                                                  .selectRadioBtnVal
+                                                                  .value,
+                                                          "imagedata":
+                                                              base64iamge
+                                                        }
+                                                      ]);
+
+                                                      storingIDController
+                                                          .stockLevelGetData();
+                                                      Get.back();
+                                                    },
                                                   );
                                                 },
                                               ),
@@ -505,7 +595,44 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                     btn2Name: "No",
                                                     btn1Ontap: () {},
                                                     btn2Ontap: () {},
-                                                    submitOntap: () {},
+                                                    submitOntap: () {
+                                                      storingIDController
+                                                          .accessiblePutData([
+                                                        {
+                                                          "retailerid":
+                                                              storingIDController
+                                                                  .retailerid
+                                                                  .value,
+                                                          "branchid":
+                                                              storingIDController
+                                                                  .branchid
+                                                                  .value,
+                                                          "custmoreid":
+                                                              storingIDController
+                                                                  .custmoreid
+                                                                  .value,
+                                                          "categoryid":
+                                                              storingIDController
+                                                                  .categoryid
+                                                                  .value,
+                                                          "productId": logPro
+                                                              .productList[
+                                                                  index]
+                                                              .productId
+                                                              .toString(),
+                                                          "accessibleValue":
+                                                              checkController
+                                                                  .selectRadioBtnVal
+                                                                  .value,
+                                                          "imagedata":
+                                                              base64iamge
+                                                        }
+                                                      ]);
+
+                                                      storingIDController
+                                                          .accessibleGetData();
+                                                      Get.back();
+                                                    },
                                                   );
                                                 },
                                               ),

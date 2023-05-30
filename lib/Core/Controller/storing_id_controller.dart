@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:daaem_reports/Core/Controller/controller_detail.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -7,7 +9,61 @@ class StoringIDController extends GetxController {
   RxString branchid = "".obs;
   RxString custmoreid = "".obs;
   RxString categoryid = "".obs;
+  RxString leftvalue = "".obs;
+  RxString rightvalue = "".obs;
+  List osaList = [];
+  List pricing = [];
+  List stockLevel = [];
+  List accessible = [];
 
+  RxString planogaramValue = "".obs;
+  RxString cleanessValue = "".obs;
+  RxString nabiursValue = "".obs;
+
+  clearBoxData() async {
+    final box = await Hive.openBox('planogramData');
+    final box2 = await Hive.openBox('cleaningData');
+    final box3 = await Hive.openBox('naboursData');
+    final box4 = await Hive.openBox('osaData');
+    final box5 = await Hive.openBox('pricingData');
+    final box6 = await Hive.openBox('stockLevelData');
+    final box7 = await Hive.openBox('accessibleData');
+
+    box.clear();
+    box2.clear();
+    box3.clear();
+    box4.clear();
+    box5.clear();
+    box6.clear();
+    box7.clear();
+
+    await box.close();
+    await box2.close();
+    await box3.close();
+    await box4.close();
+    await box5.close();
+    await box6.close();
+    await box7.close();
+
+    log("clear all data");
+  }
+
+  // fixvalue() async {
+  //   final boxname = await Hive.openBox("fixvalue");
+
+  //   boxname.put("planogram", retailerid.value);
+  //   boxname.put("cleanness", branchid.value);
+  //   boxname.put("naboius", custmoreid.value);
+
+  //   planogaramValue.value = boxname.get("planogram");
+  //   cleanessValue.value = boxname.get("cleanness");
+  //   nabiursValue.value = boxname.get("naboius");
+
+  // }
+
+  ///////////////////////////////// Planogram /////////////////////////
+  ///
+  ///
   Future<void> planogramFtnStoringID() async {
     final boxname = await Hive.openBox("planogramData");
 
@@ -20,6 +76,24 @@ class StoringIDController extends GetxController {
       checkController.selectRadioBtnVal.value,
     );
   }
+
+  planogramFtnGetingIDs() async {
+    final boxname = await Hive.openBox("planogramData");
+
+    retailerid.value = boxname.get("retailerid");
+    branchid.value = boxname.get("branchid");
+    custmoreid.value = boxname.get("custmoreid");
+    categoryid.value = boxname.get("categoryid");
+    checkController.selectRadioBtnVal.value = boxname.get("planogramValue");
+
+    log("here is retailer id $retailerid");
+    log("here is branch id $branchid");
+    log("here is custmore id $custmoreid");
+    log("here is category id $categoryid");
+    log("here is planogram value ${checkController.selectRadioBtnVal.value}");
+  }
+
+/////////////////////// Cleaning /////////////////////////
 
   Future<void> cleaningFtnStoringID() async {
     final boxname = await Hive.openBox("cleaningData");
@@ -34,6 +108,24 @@ class StoringIDController extends GetxController {
     );
   }
 
+  Future<void> cleaningFtnGetingID() async {
+    final boxname = await Hive.openBox("cleaningData");
+
+    retailerid.value = boxname.get("retailerid");
+    branchid.value = boxname.get("branchid");
+    custmoreid.value = boxname.get("custmoreid");
+    categoryid.value = boxname.get("categoryid");
+    checkController.selectRadioBtnVal.value = boxname.get("cleaningValue");
+
+    log("here is retailer id $retailerid");
+    log("here is branch id $branchid");
+    log("here is custmore id $custmoreid");
+    log("here is category id $categoryid");
+    log("here is cleaning value ${checkController.selectRadioBtnVal.value}");
+  }
+
+/////////////////// Neighbors //////////////////////
+
   Future<void> neighborsFtnStoringID(
       String leftdropValue, String rightDropVlaue) async {
     final boxname = await Hive.openBox("neighborsData");
@@ -46,9 +138,118 @@ class StoringIDController extends GetxController {
     boxname.put("rightDropVaalue", rightDropVlaue);
   }
 
+  Future<void> neighborsFtnGetingID() async {
+    final boxname = await Hive.openBox("neighborsData");
+
+    retailerid.value = boxname.get("retailerid");
+    branchid.value = boxname.get("branchid");
+    custmoreid.value = boxname.get("custmoreid");
+    categoryid.value = boxname.get("categoryid");
+    leftvalue.value = boxname.get("leftDropValue");
+    rightvalue.value = boxname.get("rightDropVaalue");
+
+    log("here is retailer id $retailerid");
+    log("here is branch id $branchid");
+    log("here is custmore id $custmoreid");
+    log("here is category id $categoryid");
+    log("here is left drop value ${leftvalue.value}");
+    log("here is right drop value ${rightvalue.value}");
+  }
+
+/////////////////////////////// OSA ////////////////////////////////////////
   Future<void> osaFtnStoringID(List<Map<String, dynamic>> dataList) async {
     final boxname = await Hive.openBox("osaData");
 
-    boxname.put("OsadataList", dataList);
+    boxname.add(dataList);
+  }
+
+  Future<Box> openBox() async {
+    final box = await Hive.openBox('osaData');
+    return box;
+  }
+
+  Future<void> osaFtnGetingID() async {
+    final box = await openBox();
+    // List dataList = [];
+    // boxname.addAll(dataList);
+
+    // osaList.add(box.values.first);
+
+    log("here is box value first ${box.values.first}");
+    log("here is box value  ${box.values}");
+    log("here is box value length ${box.values.length}");
+
+    osaList = box.values.toList();
+    log("here is data list $osaList");
+
+    log("here box ${box.length}");
+  }
+
+///////////price/////////
+
+  Future<void> PricingPutData(List<Map<String, dynamic>> dataList) async {
+    final boxname = await Hive.openBox("pricingData");
+
+    boxname.addAll(dataList);
+  }
+
+  Future<Box> priceopenBox() async {
+    final box = await Hive.openBox('pricingData');
+    return box;
+  }
+
+  Future<void> pricingGetData() async {
+    final box = await priceopenBox();
+
+    pricing = box.values.toList();
+
+    log("here is price data list ${pricing.length}");
+    log("here is price data list ${pricing}");
+  }
+
+////////// stock //////////
+
+  Future<void> stockLevelPutData(List<Map<String, dynamic>> dataList) async {
+    final boxname = await Hive.openBox("stockLevel");
+
+    boxname.addAll(dataList);
+  }
+
+  Future<Box> stockLevelopenBox() async {
+    final box = await Hive.openBox('stockLevel');
+    return box;
+  }
+
+  Future<void> stockLevelGetData() async {
+    final box = await stockLevelopenBox();
+
+    stockLevel = box.values.toList();
+
+    log("here is price data list ${stockLevel.length}");
+    log("here is price data list ${stockLevel}");
+  }
+
+  Future<void> accessiblePutData(List<Map<String, dynamic>> dataList) async {
+    final boxname = await Hive.openBox("accessible");
+
+    boxname.addAll(dataList);
+  }
+
+  Future<Box> accessibleopenBox() async {
+    final box = await Hive.openBox('accessible');
+    return box;
+  }
+
+  Future<void> accessibleGetData() async {
+    // final boxname = await Hive.openBox("osaData");
+
+    // final box1 = Hive.openBox('osaData');
+    final box = await accessibleopenBox();
+    // List dataList = [];
+
+    accessible = box.values.toList();
+
+    log("here is osa data list ${accessible.length}");
+    log("here is osa data list ${accessible}");
   }
 }
