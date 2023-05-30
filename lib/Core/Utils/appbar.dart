@@ -1,9 +1,7 @@
 import 'package:daaem_reports/Core/Utils/customButton.dart';
 import 'package:daaem_reports/Core/Utils/sizebox.dart';
-import 'package:daaem_reports/Feature/Fetching%20Data/fetchingdata.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
 import '../Constant/Images/images.dart';
 import '../Controller/controller_detail.dart';

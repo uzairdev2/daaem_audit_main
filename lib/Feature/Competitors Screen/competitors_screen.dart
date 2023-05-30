@@ -51,17 +51,27 @@ class CompetitorsScreen extends StatelessWidget {
           ),
         ),
         body: Padding(
-            padding: EdgeInsets.only(left: 16.w, right: 16.w),
+            padding: EdgeInsets.only(left: 5.w, right: 5.w),
             child: Column(children: [
               90.h.ph,
               CustomButton(
                 name: "Promotion",
                 ontap: () {
                   commonDialog.showPopCustom(
-                    btn1Ontap: () {},
-                    btn2Ontap: () {},
-                    submitOntap: () {},
+                    btn1Ontap: () {
+                      checkController.handleYesButtonClick("Regular");
+                    },
+                    btn2Ontap: () {
+                      checkController.handleNoButtonClick("Promotional");
+                    },
+                    submitOntap: () {
+                      storingIDController.promotionFtnStoringID();
+                      storingIDController.promotionFtnGetingIDs();
+                      Get.back();
+                    },
                     color: grey,
+                    value1: "Regular",
+                    value2: "Promotional",
                     btn1Name: "Regular",
                     btn2Name: "Promotional",
                     title: promotionPopText,
@@ -80,6 +90,9 @@ class CompetitorsScreen extends StatelessWidget {
                             hintext: "Enter item name",
                             bgcolor: lightgrey,
                             width: 303.w,
+                            onchanged: (value) {
+                              storingIDController.itemName.value = value;
+                            },
                             height: 46.h,
                           ),
                           10.h.ph,
@@ -88,6 +101,9 @@ class CompetitorsScreen extends StatelessWidget {
                             bgcolor: lightgrey,
                             width: 303.w,
                             height: 46.h,
+                            onchanged: (value) {
+                              storingIDController.itemPrice.value = value;
+                            },
                           ),
                           10.h.ph,
                           CustomTextfield(
@@ -95,6 +111,9 @@ class CompetitorsScreen extends StatelessWidget {
                             bgcolor: lightgrey,
                             width: 303.w,
                             height: 46.h,
+                            onchanged: (value) {
+                              storingIDController.expiryItem.value = value;
+                            },
                           ),
                           10.h.ph,
                           Align(
@@ -107,8 +126,12 @@ class CompetitorsScreen extends StatelessWidget {
                           ),
                           10.h.ph,
                           CustomTextfield(
-                            hintext: "Enter Expiry of the item",
+                            hintext: "Enter Discription of the item",
                             bgcolor: lightgrey,
+                            onchanged: (value) {
+                              storingIDController.discriptionOfitem.value =
+                                  value;
+                            },
                             width: 303.w,
                             height: 61.h,
                           ),
@@ -120,7 +143,11 @@ class CompetitorsScreen extends StatelessWidget {
                               height: 40.h,
                               color: aquamarine,
                               name: "Submit",
-                              ontap: () {},
+                              ontap: () {
+                                storingIDController.newItemFtnStoringID();
+                                storingIDController.newItemFtnGetingIDs();
+                                Get.back();
+                              },
                             ),
                           )
                         ],
@@ -149,6 +176,9 @@ class CompetitorsScreen extends StatelessWidget {
                             hintext: "Enter Expiry of the item",
                             bgcolor: lightgrey,
                             width: 303.w,
+                            onchanged: (value) {
+                              storingIDController.morespaceExpire.value = value;
+                            },
                             height: 61.h,
                           ),
                           10.h.ph,
@@ -159,7 +189,11 @@ class CompetitorsScreen extends StatelessWidget {
                               height: 40.h,
                               color: aquamarine,
                               name: "Submit",
-                              ontap: () {},
+                              ontap: () {
+                                storingIDController.moreSpaceFtnStoringID();
+                                storingIDController.moreSpaceFtnGetingIDs();
+                                Get.back();
+                              },
                             ),
                           )
                         ],
@@ -181,7 +215,7 @@ class CompetitorsScreen extends StatelessWidget {
                                 size: 12.sp,
                                 color: grey,
                                 checkbox: CustomCheckBox(
-                                    value: checkController.yesValue),
+                                    value: checkController.CheckValue2),
                                 name: "Gandula",
                                 ontap: () {},
                               ),
@@ -192,7 +226,7 @@ class CompetitorsScreen extends StatelessWidget {
                                 size: 12.sp,
                                 color: grey,
                                 checkbox: CustomCheckBox(
-                                    value: checkController.noValue),
+                                    value: checkController.CheckValue1),
                                 name: "Floor Display",
                                 ontap: () {},
                               ),
@@ -213,6 +247,9 @@ class CompetitorsScreen extends StatelessWidget {
                             bgcolor: lightgrey,
                             width: 303.w,
                             height: 55.h,
+                            onchanged: (value) {
+                              storingIDController.text.value = value;
+                            },
                           ),
                           10.h.ph,
                           Align(
@@ -229,6 +266,9 @@ class CompetitorsScreen extends StatelessWidget {
                             bgcolor: lightgrey,
                             width: 303.w,
                             height: 46.h,
+                            onchanged: (value) {
+                              storingIDController.nameOfpromosite.value = value;
+                            },
                           ),
                           10.h.ph,
                           Align(
@@ -238,7 +278,11 @@ class CompetitorsScreen extends StatelessWidget {
                               height: 40.h,
                               color: aquamarine,
                               name: "Submit",
-                              ontap: () {},
+                              ontap: () {
+                                storingIDController.saleMaterialFtnStoringID();
+                                storingIDController.saleMaterialFtnGetingIDs();
+                                Get.back();
+                              },
                             ),
                           )
                         ]));

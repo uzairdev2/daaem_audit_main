@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_null_comparison
+// ignore_for_file: unnecessary_null_comparison, avoid_init_to_null
 
 import 'dart:developer';
 
@@ -23,6 +23,8 @@ class CommonDialog {
       required VoidCallback btn1Ontap,
       required VoidCallback btn2Ontap,
       required VoidCallback submitOntap,
+      value1 = null,
+      value2 = null,
       Widget customwidget = const SizedBox.shrink(),
       barcodeStatus = 1,
       imageStatus = 1}) {
@@ -47,55 +49,56 @@ class CommonDialog {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CustomButtonCheckBox(
-                  width: 80.w,
-                  height: 40.h,
-                  size: 12.sp,
-                  color: color ?? aquamarine,
-                  checkbox: Obx(
-                    () => SizedBox(
+                Obx(
+                  () => CustomButtonCheckBox(
+                    width: 80.w,
+                    height: 40.h,
+                    size: 12.sp,
+                    color: color ?? aquamarine,
+                    checkbox: SizedBox(
                       height: 40.h,
                       width: 80.w,
-                      child: Radio<String>(
-                        value: "Yes",
+                      child: Radio(
+                        value: value1 ?? "Yes",
                         activeColor: white,
                         groupValue: checkController.selectRadioBtnVal.value,
                         onChanged: (value) {
-                          checkController.handleYesorNoChange(value!);
+                          checkController.handleYesButtonClick(value!);
                           log("here is inside common dialog value $value");
                           log("here is inside common dialog value ${checkController.selectRadioBtnVal.value}");
                         },
                       ),
                     ),
+                    name: btn1Name,
+                    ontap: btn1Ontap,
                   ),
-                  name: btn1Name,
-                  ontap: btn1Ontap,
                 ),
                 5.w.pw,
-                CustomButtonCheckBox(
-                  width: 80.w,
-                  height: 40.h,
-                  size: 12.sp,
-                  color: color ?? red,
-                  checkbox: Obx(
-                    () => SizedBox(
+                Obx(
+                  () => CustomButtonCheckBox(
+                    width: 80.w,
+                    height: 40.h,
+                    size: 12.sp,
+                    color: color ?? red,
+                    checkbox: SizedBox(
                       height: 40.h,
                       width: 80.w,
                       child: Radio(
                         activeColor: white,
-                        value: "No",
+                        value: value2 ?? "No",
                         groupValue: checkController.selectRadioBtnVal.value,
                         onChanged: (value) {
-                          checkController.handleYesorNoChange(value!);
+                          checkController.handleNoButtonClick(value!);
                           log("here is inside common dialog value $value");
                           log("here is inside common dialog value ${checkController.selectRadioBtnVal.value}");
                         },
                       ),
                     ),
+
+                    // CustomCheckBox(value: checkController.noValue),
+                    name: btn2Name,
+                    ontap: btn2Ontap,
                   ),
-                  // CustomCheckBox(value: checkController.noValue),
-                  name: "No",
-                  ontap: btn1Ontap,
                 ),
               ],
             ),

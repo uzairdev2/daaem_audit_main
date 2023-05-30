@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../Core/Controller/controller_detail.dart';
 import '../../Core/Routes/routes_name.dart';
 import '../../Core/Utils/common_dialogue.dart';
 import '../../Core/Utils/custom_text.dart';
@@ -61,9 +62,17 @@ class PromotionScreen extends StatelessWidget {
                     title: priceLabelPopText,
                     btn1Name: "Yes",
                     btn2Name: "No",
-                    btn1Ontap: () {},
-                    btn2Ontap: () {},
-                    submitOntap: () {},
+                    btn1Ontap: () {
+                      checkController.handleYesButtonClick("Yes");
+                    },
+                    btn2Ontap: () {
+                      checkController.handleNoButtonClick("No");
+                    },
+                    submitOntap: () {
+                      storingIDController.priceLabelFtnStoringID();
+                      storingIDController.priceLabelFtnGetingIDs();
+                      Get.back();
+                    },
                   );
                 },
               ),
@@ -82,17 +91,16 @@ class PromotionScreen extends StatelessWidget {
                     title: locationPopText,
                     btn1Name: "Yes",
                     btn2Name: "No",
-                    btn1Ontap: () {},
-                    btn2Ontap: () {},
+                    btn1Ontap: () {
+                      checkController.handleYesButtonClick("Yes");
+                    },
+                    btn2Ontap: () {
+                      checkController.handleNoButtonClick("No");
+                    },
                     submitOntap: () {
-                      commonDialog.showPopCustom(
-                        title: locationPopText,
-                        btn1Name: "Yes",
-                        btn2Name: "No",
-                        btn1Ontap: () {},
-                        btn2Ontap: () {},
-                        submitOntap: () {},
-                      );
+                      storingIDController.locationFtnStoringID();
+                      storingIDController.locationFtnGetingIDs();
+                      Get.back();
                     },
                   );
                 },

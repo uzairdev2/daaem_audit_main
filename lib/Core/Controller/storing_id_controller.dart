@@ -19,6 +19,17 @@ class StoringIDController extends GetxController {
   RxString planogaramValue = "".obs;
   RxString cleanessValue = "".obs;
   RxString nabiursValue = "".obs;
+  RxString itemName = "".obs;
+  RxString text = "".obs;
+  RxString nameOfpromosite = "".obs;
+
+  RxString itemPrice = "".obs;
+  RxString expiryItem = "".obs;
+  RxString morespaceExpire = "".obs;
+  RxString discriptionOfitem = "".obs;
+  RxString pricelabelValue = "".obs;
+  RxString locationValue = "".obs;
+  RxString promotionValue = "".obs;
 
   clearBoxData() async {
     final box = await Hive.openBox('planogramData');
@@ -84,7 +95,7 @@ class StoringIDController extends GetxController {
     branchid.value = boxname.get("branchid");
     custmoreid.value = boxname.get("custmoreid");
     categoryid.value = boxname.get("categoryid");
-    checkController.selectRadioBtnVal.value = boxname.get("planogramValue");
+    planogaramValue = boxname.get("planogramValue");
 
     log("here is retailer id $retailerid");
     log("here is branch id $branchid");
@@ -115,7 +126,7 @@ class StoringIDController extends GetxController {
     branchid.value = boxname.get("branchid");
     custmoreid.value = boxname.get("custmoreid");
     categoryid.value = boxname.get("categoryid");
-    checkController.selectRadioBtnVal.value = boxname.get("cleaningValue");
+    cleanessValue = boxname.get("cleaningValue");
 
     log("here is retailer id $retailerid");
     log("here is branch id $branchid");
@@ -251,5 +262,134 @@ class StoringIDController extends GetxController {
 
     log("here is osa data list ${accessible.length}");
     log("here is osa data list ${accessible}");
+  }
+
+  Future<void> priceLabelFtnStoringID() async {
+    final boxname = await Hive.openBox("priceLabelData");
+
+    boxname.put("retailerid", retailerid.value);
+    boxname.put("branchid", branchid.value);
+    boxname.put("custmoreid", custmoreid.value);
+    boxname.put("categoryid", categoryid.value);
+    boxname.put(
+      "priceLabelValue",
+      checkController.selectRadioBtnVal.value,
+    );
+  }
+
+  priceLabelFtnGetingIDs() async {
+    final boxname = await Hive.openBox("priceLabelData");
+
+    retailerid.value = boxname.get("retailerid");
+    branchid.value = boxname.get("branchid");
+    custmoreid.value = boxname.get("custmoreid");
+    categoryid.value = boxname.get("categoryid");
+    pricelabelValue = boxname.get("priceLabelValue");
+
+    log("here is retailer id $retailerid");
+    log("here is branch id $branchid");
+    log("here is custmore id $custmoreid");
+    log("here is category id $categoryid");
+    log("here is priceLabel value ${checkController.selectRadioBtnVal.value}");
+  }
+
+  Future<void> locationFtnStoringID() async {
+    final boxname = await Hive.openBox("locationData");
+    boxname.put("retailerid", retailerid.value);
+    boxname.put("branchid", branchid.value);
+    boxname.put("custmoreid", custmoreid.value);
+    boxname.put("categoryid", categoryid.value);
+    boxname.put(
+      "locationValue",
+      checkController.selectRadioBtnVal.value,
+    );
+  }
+
+  locationFtnGetingIDs() async {
+    final boxname = await Hive.openBox("locationData");
+    retailerid.value = boxname.get("retailerid");
+    branchid.value = boxname.get("branchid");
+    custmoreid.value = boxname.get("custmoreid");
+    categoryid.value = boxname.get("categoryid");
+    locationValue = boxname.get("locationValue");
+
+    log("here is retailer id $retailerid");
+    log("here is branch id $branchid");
+    log("here is custmore id $custmoreid");
+    log("here is category id $categoryid");
+    log("here is location value ${checkController.selectRadioBtnVal.value}");
+  }
+
+  Future<void> promotionFtnStoringID() async {
+    final boxname = await Hive.openBox("promotionData");
+    boxname.put("retailerid", retailerid.value);
+    boxname.put("branchid", branchid.value);
+    boxname.put("custmoreid", custmoreid.value);
+    boxname.put("categoryid", categoryid.value);
+    boxname.put(
+      "promotionValue",
+      checkController.selectRadioBtnVal.value,
+    );
+  }
+
+  promotionFtnGetingIDs() async {
+    final boxname = await Hive.openBox("promotionData");
+    retailerid.value = boxname.get("retailerid");
+    branchid.value = boxname.get("branchid");
+    custmoreid.value = boxname.get("custmoreid");
+    categoryid.value = boxname.get("categoryid");
+    promotionValue = boxname.get("promotionValue");
+
+    log("here is retailer id $retailerid");
+    log("here is branch id $branchid");
+    log("here is custmore id $custmoreid");
+    log("here is category id $categoryid");
+    log("here is promotion value ${checkController.selectRadioBtnVal.value}");
+  }
+
+  Future<void> newItemFtnStoringID() async {
+    final boxname = await Hive.openBox("newItemData");
+    boxname.put("itemName", itemName.value);
+    boxname.put("itemPrice", itemPrice.value);
+    boxname.put("itemExpiry", expiryItem.value);
+    boxname.put("itemDiscription", discriptionOfitem.value);
+  }
+
+  newItemFtnGetingIDs() async {
+    final boxname = await Hive.openBox("newItemData");
+    itemName.value = boxname.get("itemName");
+    itemPrice.value = boxname.get("itemPrice");
+    expiryItem.value = boxname.get("itemExpiry");
+    discriptionOfitem.value = boxname.get("itemDiscription");
+
+    log("here is itemName  $itemName");
+    log("here is itemPrice  $itemPrice");
+    log("here is expiryItem  $expiryItem");
+    log("here is discriptionOfitem  $discriptionOfitem");
+  }
+
+  Future<void> moreSpaceFtnStoringID() async {
+    final boxname = await Hive.openBox("moreSpaceData");
+    boxname.put("moreSpaceExpiry", morespaceExpire.value);
+  }
+
+  moreSpaceFtnGetingIDs() async {
+    final boxname = await Hive.openBox("moreSpaceData");
+    itemName.value = boxname.get("moreSpaceExpiry");
+    log("here is More space Expiry  $morespaceExpire");
+  }
+
+  Future<void> saleMaterialFtnStoringID() async {
+    final boxname = await Hive.openBox("saleMaterialData");
+    boxname.put("text", text.value);
+    boxname.put("nameOfpromosite", nameOfpromosite.value);
+  }
+
+  saleMaterialFtnGetingIDs() async {
+    final boxname = await Hive.openBox("saleMaterialData");
+    text.value = boxname.get("text");
+    nameOfpromosite.value = boxname.get("nameOfpromosite");
+    log("here isText  $text");
+    log("here is name Of promosite $morespaceExpire");
   }
 }

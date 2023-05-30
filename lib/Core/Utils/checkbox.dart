@@ -20,20 +20,13 @@ class CustomCheckBox extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.transparent,
             border: Border.all(color: white, width: 1.w),
-            boxShadow: const [
-              BoxShadow(
-                color: Color(0x40000000),
-                blurRadius: 5,
-                offset: Offset(0, 0),
-              ),
-            ],
           ),
           child: value.value
               ? Center(
                   child: Icon(
                     Icons.check,
                     size: 14.sp,
-                    color: black,
+                    color: white,
                   ),
                 )
               : const SizedBox(),

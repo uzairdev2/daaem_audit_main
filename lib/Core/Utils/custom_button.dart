@@ -101,7 +101,7 @@ class CustomButtonCheckBox extends StatelessWidget {
               Row(
                 children: [
                   Expanded(
-                    flex: 4,
+                    flex: 5,
                     child: CustomText(
                         name: name,
                         size: size ?? 14.sp,
@@ -109,7 +109,7 @@ class CustomButtonCheckBox extends StatelessWidget {
                         familyFont: 'Montserrat',
                         weightFont: FontWeight.w700),
                   ),
-                  10.w.pw,
+                  5.w.pw,
                   Expanded(
                       flex: 6,
                       child: Align(

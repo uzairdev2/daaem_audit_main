@@ -137,8 +137,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               btn1Name: "Yes",
                               btn2Name: "No",
                               imageStatus: 1,
-                              btn1Ontap: () {},
-                              btn2Ontap: () {},
+                              btn1Ontap: () {
+                                checkController.handleYesButtonClick("Yes");
+                              },
+                              btn2Ontap: () {
+                                checkController.handleNoButtonClick("No");
+                              },
                               submitOntap: () {
                                 if (checkController.selectRadioBtnVal != null) {
                                   log("here is check value ${checkController.selectRadioBtnVal.value}");
@@ -165,9 +169,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               btn1Name: "Yes",
                               btn2Name: "No",
                               btn1Ontap: () {
-                                checkController.handleYesorNoChange("Yes");
+                                checkController.handleYesButtonClick("Yes");
                               },
-                              btn2Ontap: () {},
+                              btn2Ontap: () {
+                                checkController.handleNoButtonClick("No");
+                              },
                               submitOntap: () {
                                 if (checkController.selectRadioBtnVal != null) {
                                   storingIDController.cleaningFtnStoringID();
@@ -192,8 +198,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               title: sOSPopText,
                               btn1Name: "Yes",
                               btn2Name: "No",
-                              btn1Ontap: () {},
-                              btn2Ontap: () {},
+                              btn1Ontap: () {
+                                checkController.handleYesButtonClick("Yes");
+                              },
+                              btn2Ontap: () {
+                                checkController.handleNoButtonClick("No");
+                              },
                               submitOntap: () {},
                             );
                           },
@@ -413,6 +423,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                           btn1Name: "Yes",
                                                           btn2Name: "No",
                                                           btn1Ontap: () {
+                                                            checkController
+                                                                .handleYesButtonClick(
+                                                                    "Yes");
                                                             scanController
                                                                 .scanBarcode(logPro
                                                                     .productList[
@@ -420,7 +433,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                                     .barcode
                                                                     .toString());
                                                           },
-                                                          btn2Ontap: () {},
+                                                          btn2Ontap: () {
+                                                            checkController
+                                                                .handleNoButtonClick(
+                                                                    "No");
+                                                          },
                                                           submitOntap: () {
                                                             if (checkController
                                                                     .selectRadioBtnVal
@@ -483,8 +500,16 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                     title: pricePopText,
                                                     btn1Name: "Yes",
                                                     btn2Name: "No",
-                                                    btn1Ontap: () {},
-                                                    btn2Ontap: () {},
+                                                    btn1Ontap: () {
+                                                      checkController
+                                                          .handleYesButtonClick(
+                                                              "Yes");
+                                                    },
+                                                    btn2Ontap: () {
+                                                      checkController
+                                                          .handleNoButtonClick(
+                                                              "No");
+                                                    },
                                                     submitOntap: () {
                                                       storingIDController
                                                           .PricingPutData([
@@ -536,10 +561,20 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                   controller.commonDialog.value
                                                       .showPopCustom(
                                                     title: stockLevelPopText,
-                                                    btn1Name: "Yes",
-                                                    btn2Name: "No",
-                                                    btn1Ontap: () {},
-                                                    btn2Ontap: () {},
+                                                    btn1Name: "Normal",
+                                                    btn2Name: "Low",
+                                                    value1: "Normal",
+                                                    value2: "Low",
+                                                    btn1Ontap: () {
+                                                      checkController
+                                                          .handleYesButtonClick(
+                                                              "Normal");
+                                                    },
+                                                    btn2Ontap: () {
+                                                      checkController
+                                                          .handleNoButtonClick(
+                                                              "Low");
+                                                    },
                                                     submitOntap: () {
                                                       storingIDController
                                                           .stockLevelPutData([
@@ -593,8 +628,16 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                     title: accessPopText,
                                                     btn1Name: "Yes",
                                                     btn2Name: "No",
-                                                    btn1Ontap: () {},
-                                                    btn2Ontap: () {},
+                                                    btn1Ontap: () {
+                                                      checkController
+                                                          .handleYesButtonClick(
+                                                              "Yes");
+                                                    },
+                                                    btn2Ontap: () {
+                                                      checkController
+                                                          .handleNoButtonClick(
+                                                              "No");
+                                                    },
                                                     submitOntap: () {
                                                       storingIDController
                                                           .accessiblePutData([
