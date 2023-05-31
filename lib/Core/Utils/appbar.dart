@@ -46,7 +46,9 @@ class CustomAppBar extends StatelessWidget {
           ontap: () async {
             // await storingIDController.clearBoxData();
             await storingIDController.osaFtnGetingID();
+
             await storingIDController.stockLevelGetData();
+
             // Get.to(const HiveData());
           },
         ),

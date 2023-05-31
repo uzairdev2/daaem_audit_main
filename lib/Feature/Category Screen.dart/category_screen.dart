@@ -143,10 +143,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               btn2Ontap: () {
                                 checkController.handleNoButtonClick("No");
                               },
-                              submitOntap: () {
+                              submitOntap: () async {
                                 if (checkController.selectRadioBtnVal != null) {
                                   log("here is check value ${checkController.selectRadioBtnVal.value}");
-                                  storingIDController.planogramFtnStoringID();
+                                  await storingIDController
+                                      .planogramFtnStoringID();
                                   storingIDController.planogramFtnGetingIDs();
 
                                   checkController.selectRadioBtnVal.value = "";
@@ -174,9 +175,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               btn2Ontap: () {
                                 checkController.handleNoButtonClick("No");
                               },
-                              submitOntap: () {
+                              submitOntap: () async {
                                 if (checkController.selectRadioBtnVal != null) {
-                                  storingIDController.cleaningFtnStoringID();
+                                  await storingIDController
+                                      .cleaningFtnStoringID(
+                                          imagedata: "dummyimage");
+                                  storingIDController.cleaningFtnGetingID();
                                   checkController.selectRadioBtnVal.value = "";
                                   Get.back();
                                 }
@@ -269,6 +273,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                 .neighborsFtnStoringID(
                                                     leftCategory!,
                                                     rightCategory!);
+
+                                            storingIDController
+                                                .neighborsFtnGetingID();
 
                                             Get.back();
                                           }

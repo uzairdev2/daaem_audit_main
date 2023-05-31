@@ -9,6 +9,7 @@ class StoringIDController extends GetxController {
   RxString branchid = "".obs;
   RxString custmoreid = "".obs;
   RxString categoryid = "".obs;
+
   RxString leftvalue = "".obs;
   RxString rightvalue = "".obs;
   List osaList = [];
@@ -16,7 +17,7 @@ class StoringIDController extends GetxController {
   List stockLevel = [];
   List accessible = [];
 
-  RxString planogaramValue = "".obs;
+  String planogaramValue = "";
   RxString cleanessValue = "".obs;
   RxString nabiursValue = "".obs;
   RxString itemName = "".obs;
@@ -27,8 +28,8 @@ class StoringIDController extends GetxController {
   RxString expiryItem = "".obs;
   RxString morespaceExpire = "".obs;
   RxString discriptionOfitem = "".obs;
-  RxString pricelabelValue = "".obs;
-  RxString locationValue = "".obs;
+  String pricelabelValue = "";
+  String locationValue = "";
   RxString promotionValue = "".obs;
 
   clearBoxData() async {
@@ -62,27 +63,27 @@ class StoringIDController extends GetxController {
   // fixvalue() async {
   //   final boxname = await Hive.openBox("fixvalue");
 
-  //   boxname.put("planogram", retailerid.value);
-  //   boxname.put("cleanness", branchid.value);
-  //   boxname.put("naboius", custmoreid.value);
+  // await  boxname.put("planogramvalue", checkController.selectRadioBtnVal.value);
+  //   // boxname.put("cleanness", branchid.value);
+  // boxname.put("naboius", custmoreid.value);
 
-  //   planogaramValue.value = boxname.get("planogram");
-  //   cleanessValue.value = boxname.get("cleanness");
-  //   nabiursValue.value = boxname.get("naboius");
+  // planogaramValue = boxname.get("planogram");
+  // cleanessValue.value = boxname.get("cleanness");
+  // nabiursValue.value = boxname.get("naboius");
 
   // }
 
   ///////////////////////////////// Planogram /////////////////////////
   ///
   ///
-  Future<void> planogramFtnStoringID() async {
+  planogramFtnStoringID() async {
     final boxname = await Hive.openBox("planogramData");
 
     boxname.put("retailerid", retailerid.value);
     boxname.put("branchid", branchid.value);
     boxname.put("custmoreid", custmoreid.value);
     boxname.put("categoryid", categoryid.value);
-    boxname.put(
+    await boxname.put(
       "planogramValue",
       checkController.selectRadioBtnVal.value,
     );
@@ -101,18 +102,19 @@ class StoringIDController extends GetxController {
     log("here is branch id $branchid");
     log("here is custmore id $custmoreid");
     log("here is category id $categoryid");
-    log("here is planogram value ${checkController.selectRadioBtnVal.value}");
+    log("here is planogram value $planogaramValue");
   }
 
 /////////////////////// Cleaning /////////////////////////
 
-  Future<void> cleaningFtnStoringID() async {
+  cleaningFtnStoringID({required String imagedata}) async {
     final boxname = await Hive.openBox("cleaningData");
 
     boxname.put("retailerid", retailerid.value);
     boxname.put("branchid", branchid.value);
     boxname.put("custmoreid", custmoreid.value);
     boxname.put("categoryid", categoryid.value);
+    boxname.put("imagedata", imagedata);
     boxname.put(
       "cleaningValue",
       checkController.selectRadioBtnVal.value,
