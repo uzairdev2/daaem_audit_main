@@ -27,7 +27,8 @@ class CommonDialog {
       value2 = null,
       Widget customwidget = const SizedBox.shrink(),
       barcodeStatus = 1,
-      imageStatus = 1}) {
+      imageStatus = 1,
+      takePictureStatus = 1}) {
     Get.dialog(AlertDialog(
       backgroundColor: white,
       title: Padding(
@@ -46,6 +47,19 @@ class CommonDialog {
               ),
             ),
             20.h.ph,
+            takePictureStatus == 0
+                ? Obx(
+                    () => imageContoller.takeBase64Image.value != null
+                        ? Image.file(
+                            imageContoller.takeimageFile.value!,
+                            fit: BoxFit.fitWidth,
+                            width: 50,
+                            height: 50.h,
+                          )
+                        : 0.ph,
+                  )
+                : 0.ph,
+            15.h.ph,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -181,33 +195,23 @@ class CameraWIdget extends StatelessWidget {
                 color: aquamarine,
               ),
               borderRadius: BorderRadius.circular(10.r)),
-          child: Center(
-            child: imageContoller.imageFile != null
-                ? Obx(() {
-                    log("${imageContoller.imageFile.value}");
-
-                    // return Image.file(
-                    //   imageContoller.imageFile.value!,
-                    //   width: 30.w,
-                    //   height: 30.h,
-                    // );
-                    return Image.asset(
-                      camera,
-                      width: 30.w,
-                      height: 30.h,
-                    );
-                  })
+          child: Center(child: Obx(() {
+            return imageContoller.valueCheck.value != false
+                ? Image.file(
+                    imageContoller.cleanimageFile.value!,
+                    fit: BoxFit.fitWidth,
+                  )
                 : Image.asset(
                     camera,
                     width: 22.w,
                     height: 20.h,
-                  ),
-          ),
+                  );
+          })),
         ),
         10.w.pw,
         InkWell(
           onTap: () async {
-            await imageContoller.proFile();
+            await imageContoller.cleanessImage();
           },
           child: CustomText(
             name: "Take a Picture",

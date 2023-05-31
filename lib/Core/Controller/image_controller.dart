@@ -1,14 +1,38 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 class ImageContoller extends GetxController {
-  Rx<File?> imageFile = Rx<File?>(null);
-
-  Future<void> proFile() async {
+  Rx<File?> cleanimageFile = Rx<File?>(null);
+  RxString cleanBase64Image = ''.obs;
+  RxBool valueCheck = false.obs;
+  RxBool valueCheck2 = false.obs;
+  Future<void> cleanessImage() async {
     final image = await ImagePicker().getImage(source: ImageSource.camera);
     if (image != null) {
-      imageFile.value = File(image.path);
+      cleanimageFile.value = File(image.path);
+      update();
+      List<int> imageBytes = await cleanimageFile.value!.readAsBytes();
+      cleanBase64Image.value = base64Encode(imageBytes);
+      valueCheck.value = true;
+    } else {
+      // Handle case when no image is captured
+    }
+  }
+
+  Rx<File?> takeimageFile = Rx<File?>(null);
+  RxString takeBase64Image = ''.obs;
+
+  Future<void> takeImage() async {
+    final image = await ImagePicker().getImage(source: ImageSource.camera);
+    if (image != null) {
+      takeimageFile.value = File(image.path);
+      update();
+      List<int> imageBytes = await takeimageFile.value!.readAsBytes();
+      takeBase64Image.value = base64Encode(imageBytes);
+      valueCheck2.value = true;
     } else {
       // Handle case when no image is captured
     }

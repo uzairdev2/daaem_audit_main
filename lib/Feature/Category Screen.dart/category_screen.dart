@@ -176,13 +176,20 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 checkController.handleNoButtonClick("No");
                               },
                               submitOntap: () async {
-                                if (checkController.selectRadioBtnVal != null) {
+                                if (checkController.selectRadioBtnVal != null &&
+                                    imageContoller.cleanBase64Image.value !=
+                                        null) {
                                   await storingIDController
                                       .cleaningFtnStoringID(
-                                          imagedata: "dummyimage");
+                                          imagedata: imageContoller
+                                              .cleanBase64Image.value);
                                   storingIDController.cleaningFtnGetingID();
                                   checkController.selectRadioBtnVal.value = "";
                                   Get.back();
+                                } else {
+                                  Get.snackbar("Picture Required ",
+                                      "Please take a picture ",
+                                      snackPosition: SnackPosition.BOTTOM);
                                 }
                               },
                             );
@@ -345,7 +352,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                             children: [
                                               CustomButton(
                                                 color: aquamarine,
-                                                width: 250.w,
+                                                width: 200.w,
                                                 height: 55.h,
                                                 changeStatus: 2,
                                                 customWidget: Padding(
@@ -388,28 +395,29 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                               InkWell(
                                                 onTap: () async {
                                                   await imageContoller
-                                                      .proFile();
+                                                      .takeImage();
                                                 },
-                                                child: Obx(
-                                                  () => imageContoller.imageFile
-                                                              .value ==
-                                                          null
-                                                      ? CustomText(
-                                                          name: "Picture",
-                                                          color: Colors.black,
-                                                          size: 12.sp,
-                                                          alignment:
-                                                              TextAlign.center,
-                                                          weightFont:
-                                                              FontWeight.w700,
-                                                        )
-                                                      : Image.file(
-                                                          imageContoller
-                                                              .imageFile.value!,
-                                                          width: 50.w,
-                                                          height: 50.h,
-                                                        ),
-                                                ),
+                                                child: Obx(() => imageContoller
+                                                            .valueCheck2
+                                                            .value ==
+                                                        false
+                                                    ? CustomText(
+                                                        name: "Picture",
+                                                        color: Colors.black,
+                                                        size: 12.sp,
+                                                        alignment:
+                                                            TextAlign.center,
+                                                        weightFont:
+                                                            FontWeight.w700,
+                                                      )
+                                                    : Image.file(
+                                                        imageContoller
+                                                            .takeimageFile
+                                                            .value!,
+                                                        fit: BoxFit.fitWidth,
+                                                        width: 50,
+                                                        height: 50.h,
+                                                      )),
                                               )
                                             ],
                                           ),
@@ -429,6 +437,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                           barcodeStatus: 0,
                                                           btn1Name: "Yes",
                                                           btn2Name: "No",
+                                                          takePictureStatus: 0,
                                                           btn1Ontap: () {
                                                             checkController
                                                                 .handleYesButtonClick(
@@ -484,7 +493,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                                       .barcode
                                                                       .toString(),
                                                                   "imagedata":
-                                                                      base64iamge
+                                                                      imageContoller
+                                                                          .takeBase64Image
+                                                                          .value
                                                                 }
                                                               ]);
 
@@ -512,6 +523,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                           .handleYesButtonClick(
                                                               "Yes");
                                                     },
+                                                    takePictureStatus: 0,
                                                     btn2Ontap: () {
                                                       checkController
                                                           .handleNoButtonClick(
@@ -547,7 +559,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                                   .selectRadioBtnVal
                                                                   .value,
                                                           "imagedata":
-                                                              base64iamge
+                                                              imageContoller
+                                                                  .takeBase64Image
+                                                                  .value
                                                         }
                                                       ]);
 
@@ -569,6 +583,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                       .showPopCustom(
                                                     title: stockLevelPopText,
                                                     btn1Name: "Normal",
+                                                    takePictureStatus: 0,
                                                     btn2Name: "Low",
                                                     value1: "Normal",
                                                     value2: "Low",
@@ -612,7 +627,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                                   .selectRadioBtnVal
                                                                   .value,
                                                           "imagedata":
-                                                              base64iamge
+                                                              imageContoller
+                                                                  .takeBase64Image
+                                                                  .value
                                                         }
                                                       ]);
 
@@ -635,6 +652,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                     title: accessPopText,
                                                     btn1Name: "Yes",
                                                     btn2Name: "No",
+                                                    takePictureStatus: 0,
                                                     btn1Ontap: () {
                                                       checkController
                                                           .handleYesButtonClick(
@@ -675,7 +693,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                                   .selectRadioBtnVal
                                                                   .value,
                                                           "imagedata":
-                                                              base64iamge
+                                                              imageContoller
+                                                                  .takeBase64Image
+                                                                  .value
                                                         }
                                                       ]);
 
