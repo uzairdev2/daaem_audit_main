@@ -2,6 +2,7 @@
 
 import 'dart:developer';
 
+import 'package:daaem_reports/Core/Constant/Colors/colors.dart';
 import 'package:daaem_reports/Core/Controller/controller_detail.dart';
 import 'package:daaem_reports/Core/Routes/routes_name.dart';
 import 'package:daaem_reports/Core/Utils/sizebox.dart';
@@ -121,6 +122,35 @@ class _HomeScreenState extends State<HomeScreen> {
                         items: logPro.branchList
                             .map((item) => DropdownMenuItem<String>(
                                   onTap: () async {
+                                    print("here is ${item.branchId}");
+                                    log("here is ${item.coordinates}");
+
+                                    String coordinates = item.coordinates!;
+                                    List<String> coordinateList =
+                                        coordinates.split(", ");
+
+                                    String latitude =
+                                        coordinateList[0]; // 24.746207
+                                    String longitude =
+                                        coordinateList[1]; // 46.775707
+
+                                    print("here is latitude $latitude");
+                                    print("here is longitude $longitude");
+
+                                    double lat = double.parse(latitude);
+                                    double long = double.parse(longitude);
+
+                                    // await checkController.getDistance(
+                                    //     lat: lat,
+                                    //     lon: long,
+                                    //     onConfirm: () async {
+                                    //       await logPro.getCustomerData();
+                                    //       controller.selectedStore.value =
+                                    //           "true";
+                                    //       storingIDController.branchid.value =
+                                    //           item.branchId!;
+                                    //     });
+
                                     await logPro.getCustomerData();
                                     controller.selectedStore.value = "true";
                                     storingIDController.branchid.value =
@@ -137,6 +167,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             .toList(),
                       ),
                       20.h.ph,
+                      Align(
+                        alignment: Alignment.center,
+                        child: Visibility(
+                            visible: checkController.visable.value == true,
+                            child: CircularProgressIndicator(
+                              color: red,
+                            )),
+                      ),
                       Visibility(
                         visible: controller.selectedStore.value != null,
                         child: Column(

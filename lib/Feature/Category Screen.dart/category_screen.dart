@@ -400,7 +400,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                               InkWell(
                                                 onTap: () async {
                                                   await imageContoller
-                                                      .takeImage(index);
+                                                      .takeImage();
                                                   imageContoller
                                                       .imagevalue[index]
                                                       .value = true;
@@ -421,8 +421,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                       )
                                                     : Image.file(
                                                         imageContoller
-                                                            .takeimageFile[
-                                                                index]
+                                                            .takeimageFile
                                                             .value!,
                                                         fit: BoxFit.fitWidth,
                                                         width: 50,

@@ -53,7 +53,7 @@ class CommonDialog {
                 ? Obx(
                     () => imageContoller.takeBase64Image.value != null
                         ? Image.file(
-                            imageContoller.takeimageFile[index].value!,
+                            imageContoller.takeimageFile.value!,
                             fit: BoxFit.fitWidth,
                             width: 50,
                             height: 50.h,
