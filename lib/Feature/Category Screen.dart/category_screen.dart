@@ -344,6 +344,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                         const NeverScrollableScrollPhysics(),
                                     itemCount: logPro.productList.length,
                                     itemBuilder: (context, index) {
+                                      for (int i = 0; i <= index; i++) {
+                                        imageContoller.imagevalue
+                                            .add(false.obs);
+                                      }
+
                                       return Column(
                                         children: [
                                           Row(
@@ -395,11 +400,15 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                               InkWell(
                                                 onTap: () async {
                                                   await imageContoller
-                                                      .takeImage();
+                                                      .takeImage(index);
+                                                  imageContoller
+                                                      .imagevalue[index]
+                                                      .value = true;
                                                 },
+                                                // ignore: unrelated_type_equality_checks
                                                 child: Obx(() => imageContoller
-                                                            .valueCheck2
-                                                            .value ==
+                                                                .imagevalue[
+                                                            index] ==
                                                         false
                                                     ? CustomText(
                                                         name: "Picture",
@@ -412,7 +421,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                       )
                                                     : Image.file(
                                                         imageContoller
-                                                            .takeimageFile
+                                                            .takeimageFile[
+                                                                index]
                                                             .value!,
                                                         fit: BoxFit.fitWidth,
                                                         width: 50,

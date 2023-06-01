@@ -14,21 +14,23 @@ import 'custom_button.dart';
 import 'custom_text.dart';
 
 class CommonDialog {
-  showPopCustom(
-      {required String title,
-      required String btn1Name,
-      required String btn2Name,
-      Color? color,
-      // String? barcode,
-      required VoidCallback btn1Ontap,
-      required VoidCallback btn2Ontap,
-      required VoidCallback submitOntap,
-      value1 = null,
-      value2 = null,
-      Widget customwidget = const SizedBox.shrink(),
-      barcodeStatus = 1,
-      imageStatus = 1,
-      takePictureStatus = 1}) {
+  showPopCustom({
+    required String title,
+    required String btn1Name,
+    required String btn2Name,
+    Color? color,
+    // String? barcode,
+    required VoidCallback btn1Ontap,
+    required VoidCallback btn2Ontap,
+    required VoidCallback submitOntap,
+    value1 = null,
+    value2 = null,
+    Widget customwidget = const SizedBox.shrink(),
+    barcodeStatus = 1,
+    imageStatus = 1,
+    takePictureStatus = 1,
+    index = 0,
+  }) {
     Get.dialog(AlertDialog(
       backgroundColor: white,
       title: Padding(
@@ -51,7 +53,7 @@ class CommonDialog {
                 ? Obx(
                     () => imageContoller.takeBase64Image.value != null
                         ? Image.file(
-                            imageContoller.takeimageFile.value!,
+                            imageContoller.takeimageFile[index].value!,
                             fit: BoxFit.fitWidth,
                             width: 50,
                             height: 50.h,

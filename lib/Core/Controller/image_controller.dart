@@ -9,8 +9,9 @@ class ImageContoller extends GetxController {
   RxString cleanBase64Image = ''.obs;
   RxBool valueCheck = false.obs;
   RxBool valueCheck2 = false.obs;
+  List<RxBool> imagevalue = [];
   Future<void> cleanessImage() async {
-    final image = await ImagePicker().getImage(source: ImageSource.camera);
+    final image = await ImagePicker().pickImage(source: ImageSource.camera);
     if (image != null) {
       cleanimageFile.value = File(image.path);
       update();
@@ -22,15 +23,18 @@ class ImageContoller extends GetxController {
     }
   }
 
-  Rx<File?> takeimageFile = Rx<File?>(null);
+  //  takeimageFile = Rx<File?>(null);
+
+  List<Rx<File?>> takeimageFile = [];
   RxString takeBase64Image = ''.obs;
 
-  Future<void> takeImage() async {
-    final image = await ImagePicker().getImage(source: ImageSource.camera);
+  Future<void> takeImage(int index) async {
+    final image = await ImagePicker().pickImage(source: ImageSource.camera);
     if (image != null) {
-      takeimageFile.value = File(image.path);
+      takeimageFile.add(File(image.path) as Rx<File?>);
+      takeimageFile[index].value = File(image.path);
       update();
-      List<int> imageBytes = await takeimageFile.value!.readAsBytes();
+      List<int> imageBytes = await takeimageFile[index].value!.readAsBytes();
       takeBase64Image.value = base64Encode(imageBytes);
       valueCheck2.value = true;
     } else {
