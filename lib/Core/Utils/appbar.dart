@@ -2,7 +2,9 @@ import 'package:daaem_reports/Core/Utils/customButton.dart';
 import 'package:daaem_reports/Core/Utils/sizebox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
+import '../Constant/Colors/colors.dart';
 import '../Constant/Images/images.dart';
 import '../Controller/controller_detail.dart';
 import 'custom_text.dart';
@@ -38,19 +40,23 @@ class CustomAppBar extends StatelessWidget {
       ),
       centerTitle: true,
       actions: [
-        CustomButton(
-          name: "Send ",
-          size: 14.sp,
-          width: 65.w,
-          height: 30.h,
-          ontap: () async {
-            // await storingIDController.clearBoxData();
-            await storingIDController.osaFtnGetingID();
+        Obx(
+          () => CustomButton(
+            name: "Send ",
+            size: 14.sp,
+            width: 65.w,
+            height: 30.h,
+            color:
+                storingIDController.isDatabaseEmpty.value == false ? grey : red,
+            ontap: () async {
+              // await storingIDController.clearBoxData();
+              await storingIDController.osaFtnGetingID();
 
-            await storingIDController.stockLevelGetData();
+              await storingIDController.stockLevelGetData();
 
-            // Get.to(const HiveData());
-          },
+              // Get.to(const HiveData());
+            },
+          ),
         ),
         10.h.pw
       ],

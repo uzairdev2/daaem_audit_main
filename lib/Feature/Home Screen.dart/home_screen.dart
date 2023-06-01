@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable, unnecessary_null_comparison
+// ignore_for_file: must_be_immutable, unnecessary_null_comparison, unused_local_variable
 
 import 'dart:developer';
 
@@ -30,6 +30,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController search = TextEditingController();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print(storingIDController.isDatabaseEmpty.value);
+    storingIDController.checkingHive();
+  }
+
   @override
   Widget build(BuildContext context) {
     final logPro = Provider.of<ApiClass>(context);

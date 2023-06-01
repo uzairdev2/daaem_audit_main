@@ -46,7 +46,7 @@ class CheckController extends GetxController {
       Get.defaultDialog(
           title: "Warning",
           // content: Text("You are away from location ${awayDistance} KM"),
-          content: Text("You are away from location.."),
+          content: const Text("You are away from location.."),
           textConfirm: "Ok",
           confirmTextColor: Colors.white,
           onConfirm: () {

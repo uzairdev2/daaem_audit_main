@@ -419,13 +419,17 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                         weightFont:
                                                             FontWeight.w700,
                                                       )
-                                                    : Image.file(
-                                                        imageContoller
-                                                            .takeimageFile
-                                                            .value!,
-                                                        fit: BoxFit.fitWidth,
-                                                        width: 50,
+                                                    : Container(
+                                                        width: 75.w,
                                                         height: 50.h,
+                                                        decoration: BoxDecoration(
+                                                            border: Border.all(
+                                                                color: red)),
+                                                        child: Image.file(
+                                                          imageContoller
+                                                              .rowImages[index],
+                                                          fit: BoxFit.fitWidth,
+                                                        ),
                                                       )),
                                               )
                                             ],
@@ -444,6 +448,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                           title: sOAPopText,
                                                           imageStatus: 1,
                                                           barcodeStatus: 0,
+                                                          index: index,
                                                           btn1Name: "Yes",
                                                           btn2Name: "No",
                                                           takePictureStatus: 0,
@@ -525,6 +530,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                   controller.commonDialog.value
                                                       .showPopCustom(
                                                     title: pricePopText,
+                                                    index: index,
                                                     btn1Name: "Yes",
                                                     btn2Name: "No",
                                                     btn1Ontap: () {
@@ -591,6 +597,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                   controller.commonDialog.value
                                                       .showPopCustom(
                                                     title: stockLevelPopText,
+                                                    index: index,
                                                     btn1Name: "Normal",
                                                     takePictureStatus: 0,
                                                     btn2Name: "Low",
@@ -659,6 +666,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                   controller.commonDialog.value
                                                       .showPopCustom(
                                                     title: accessPopText,
+                                                    index: index,
                                                     btn1Name: "Yes",
                                                     btn2Name: "No",
                                                     takePictureStatus: 0,

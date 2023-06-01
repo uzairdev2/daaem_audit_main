@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'dart:developer';
 
 import 'package:daaem_reports/Core/Controller/controller_detail.dart';
@@ -31,6 +33,68 @@ class StoringIDController extends GetxController {
   String pricelabelValue = "";
   String locationValue = "";
   RxString promotionValue = "".obs;
+  final RxBool isDatabaseEmpty = false.obs;
+
+  checkingHive() async {
+    final box = await Hive.openBox('planogramData');
+    final box2 = await Hive.openBox('cleaningData');
+    final box3 = await Hive.openBox('naboursData');
+    final box4 = await Hive.openBox('osaData');
+    final box5 = await Hive.openBox('pricingData');
+    final box6 = await Hive.openBox('stockLevelData');
+    final box7 = await Hive.openBox('accessibleData');
+    final box8 = await Hive.openBox('priceLabelData');
+    final box9 = await Hive.openBox('locationData');
+    final box10 = await Hive.openBox('promotionData');
+    final box11 = await Hive.openBox('newItemData');
+    final box12 = await Hive.openBox('moreSpaceData');
+    final box13 = await Hive.openBox('saleMaterialData');
+
+    if (box.isEmpty && box2.isEmpty
+        //  &&
+        // box3.isEmpty &&
+        // box4.isEmpty &&
+        // box5.isEmpty &&
+        // box6.isEmpty &&
+        // box7.isEmpty &&
+        // box8.isEmpty &&
+        // box9.isEmpty &&
+        // box10.isEmpty &&
+        // box11.isEmpty &&
+        // box12.isEmpty &&
+        // box13.isEmpty
+        ) {
+      await box.close();
+      await box2.close();
+      await box3.close();
+      await box4.close();
+      await box5.close();
+      await box6.close();
+      await box7.close();
+      await box8.close();
+      await box9.close();
+      await box10.close();
+      await box11.close();
+      await box12.close();
+      await box13.close();
+      isDatabaseEmpty.value = true;
+    } else {
+      isDatabaseEmpty.value = false;
+      await box.close();
+      await box2.close();
+      await box3.close();
+      await box4.close();
+      await box5.close();
+      await box6.close();
+      await box7.close();
+      await box8.close();
+      await box9.close();
+      await box10.close();
+      await box11.close();
+      await box12.close();
+      await box13.close();
+    }
+  }
 
   clearBoxData() async {
     final box = await Hive.openBox('planogramData');
@@ -40,6 +104,12 @@ class StoringIDController extends GetxController {
     final box5 = await Hive.openBox('pricingData');
     final box6 = await Hive.openBox('stockLevelData');
     final box7 = await Hive.openBox('accessibleData');
+    final box8 = await Hive.openBox('priceLabelData');
+    final box9 = await Hive.openBox('locationData');
+    final box10 = await Hive.openBox('promotionData');
+    final box11 = await Hive.openBox('newItemData');
+    final box12 = await Hive.openBox('moreSpaceData');
+    final box13 = await Hive.openBox('saleMaterialData');
 
     box.clear();
     box2.clear();
@@ -48,6 +118,12 @@ class StoringIDController extends GetxController {
     box5.clear();
     box6.clear();
     box7.clear();
+    box8.clear();
+    box9.clear();
+    box10.clear();
+    box11.clear();
+    box12.clear();
+    box13.clear();
 
     await box.close();
     await box2.close();
@@ -56,6 +132,12 @@ class StoringIDController extends GetxController {
     await box5.close();
     await box6.close();
     await box7.close();
+    await box8.close();
+    await box9.close();
+    await box10.close();
+    await box11.close();
+    await box12.close();
+    await box13.close();
 
     log("clear all data");
   }

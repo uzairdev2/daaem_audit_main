@@ -51,9 +51,9 @@ class CommonDialog {
             20.h.ph,
             takePictureStatus == 0
                 ? Obx(
-                    () => imageContoller.takeBase64Image.value != null
+                    () => imageContoller.imagevalue[index] != false
                         ? Image.file(
-                            imageContoller.takeimageFile.value!,
+                            imageContoller.rowImages[index],
                             fit: BoxFit.fitWidth,
                             width: 50,
                             height: 50.h,
