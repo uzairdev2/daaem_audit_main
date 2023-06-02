@@ -50,20 +50,19 @@ class StoringIDController extends GetxController {
     final box12 = await Hive.openBox('moreSpaceData');
     final box13 = await Hive.openBox('saleMaterialData');
 
-    if (box.isEmpty && box2.isEmpty
-        //  &&
-        // box3.isEmpty &&
-        // box4.isEmpty &&
-        // box5.isEmpty &&
-        // box6.isEmpty &&
-        // box7.isEmpty &&
-        // box8.isEmpty &&
-        // box9.isEmpty &&
-        // box10.isEmpty &&
-        // box11.isEmpty &&
-        // box12.isEmpty &&
-        // box13.isEmpty
-        ) {
+    if (box.isEmpty &&
+        box2.isEmpty &&
+        box3.isEmpty &&
+        box4.isEmpty &&
+        box5.isEmpty &&
+        box6.isEmpty &&
+        box7.isEmpty &&
+        box8.isEmpty &&
+        box9.isEmpty &&
+        box10.isEmpty &&
+        box11.isEmpty &&
+        box12.isEmpty &&
+        box13.isEmpty) {
       await box.close();
       await box2.close();
       await box3.close();
@@ -77,9 +76,9 @@ class StoringIDController extends GetxController {
       await box11.close();
       await box12.close();
       await box13.close();
-      isDatabaseEmpty.value = true;
-    } else {
       isDatabaseEmpty.value = false;
+    } else {
+      isDatabaseEmpty.value = true;
       await box.close();
       await box2.close();
       await box3.close();
