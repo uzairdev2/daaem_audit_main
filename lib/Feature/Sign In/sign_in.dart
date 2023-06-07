@@ -1,5 +1,6 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, unnecessary_null_comparison, avoid_print
 
+import 'package:daaem_reports/Core/API,s%20Intergartion/Login%20Api/login_api.dart';
 import 'package:daaem_reports/Core/Routes/routes_name.dart';
 import 'package:daaem_reports/Core/Utils/custom_button.dart';
 import 'package:daaem_reports/Core/Utils/custom_text.dart';
@@ -7,8 +8,7 @@ import 'package:daaem_reports/Core/Utils/custom_textfield.dart';
 import 'package:daaem_reports/Core/Utils/sizebox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get_core/get_core.dart';
-import 'package:get/get_navigation/get_navigation.dart';
+import 'package:get/get.dart';
 
 import '../../Core/Constant/Colors/colors.dart';
 import '../../Core/Constant/Images/images.dart';
@@ -17,6 +17,9 @@ class SignIn extends StatelessWidget {
   SignIn({super.key});
 
   bool initialValue = false;
+  String username = "";
+  String password = "";
+  LoginApi loginApi = LoginApi();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +50,12 @@ class SignIn extends StatelessWidget {
               ),
             ),
             10.h.ph,
-            CustomTextfield(hintext: "Enter your user name"),
+            CustomTextfield(
+              hintext: "Enter your user name",
+              onchanged: (value) {
+                username = value;
+              },
+            ),
             24.h.ph,
             Align(
               alignment: Alignment.centerLeft,
@@ -58,7 +66,13 @@ class SignIn extends StatelessWidget {
               ),
             ),
             10.h.ph,
-            CustomTextfield(hintext: "Enter Password"),
+            CustomTextfield(
+              hintext: "Enter Password",
+              color: black,
+              onchanged: (value) {
+                password = value;
+              },
+            ),
             5.h.ph,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -94,6 +108,9 @@ class SignIn extends StatelessWidget {
             CustomButton(
               name: "Login",
               ontap: () {
+                // if (username != null && password != null) {
+                //   loginApi.loginUser(username, password);
+                // }
                 Get.toNamed(RoutesName.homeScreen);
               },
             )

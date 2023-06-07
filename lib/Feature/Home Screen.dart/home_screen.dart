@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Core/API,s Intergartion/API,s.dart';
 import '../../Core/Controller/dropdown_controller.dart';
@@ -59,6 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             onTap: () async {
                               print("here is ${item.retailerId}");
                               //call your Scond api here
+                              logPro.branchList.clear();
                               logPro.againsearch();
                               await logPro.getBranchData(
                                   retailerid: item.retailerId.toString());
@@ -127,59 +127,62 @@ class _HomeScreenState extends State<HomeScreen> {
                         isDense: true,
                         isExpanded: true,
                         onChanged: (String? newValue) {},
-                        items: logPro.branchList
-                            .map((item) => DropdownMenuItem<String>(
-                                  onTap: () async {
-                                    print("here is ${item.branchId}");
-                                    log("here is ${item.coordinates}");
+                        items: logPro.branchList == null ||
+                                logPro.branchList.isEmpty
+                            ? []
+                            : logPro.branchList
+                                .map((item) => DropdownMenuItem<String>(
+                                      onTap: () async {
+                                        print("here is ${item.branchId}");
+                                        log("here is ${item.coordinates}");
 
-                                    String coordinates = item.coordinates!;
-                                    List<String> coordinateList =
-                                        coordinates.split(", ");
+                                        String coordinates = item.coordinates!;
+                                        List<String> coordinateList =
+                                            coordinates.split(", ");
 
-                                    String latitude =
-                                        coordinateList[0]; // 24.746207
-                                    String longitude =
-                                        coordinateList[1]; // 46.775707
+                                        String latitude =
+                                            coordinateList[0]; // 24.746207
+                                        String longitude =
+                                            coordinateList[1]; // 46.775707
 
-                                    print("here is latitude $latitude");
-                                    print("here is longitude $longitude");
+                                        print("here is latitude $latitude");
+                                        print("here is longitude $longitude");
 
-                                    double lat = double.parse(latitude);
-                                    double long = double.parse(longitude);
+                                        double lat = double.parse(latitude);
+                                        double long = double.parse(longitude);
 
-                                    // await checkController.getDistance(
-                                    //     lat: lat,
-                                    //     lon: long,
-                                    //     onConfirm: () async {
-                                    //       await logPro.getCustomerData();
-                                    //       controller.selectedStore.value =
-                                    //           "true";
-                                    //       storingIDController.branchid.value =
-                                    //           item.branchId!;
-                                    //     });
+                                        // await checkController.getDistance(
+                                        //     lat: lat,
+                                        //     lon: long,
+                                        //     onConfirm: () async {
+                                        //       await logPro.getCustomerData();
+                                        //       controller.selectedStore.value =
+                                        //           "true";
+                                        //       storingIDController.branchid.value =
+                                        //           item.branchId!;
+                                        //     });
 
-                                    await logPro.getCustomerData();
-                                    controller.selectedStore.value = "true";
-                                    storingIDController.branchid.value =
-                                        item.branchId!;
-                                  },
-                                  value: item.branchName,
-                                  child: Text(
-                                    item.branchName.toString(),
-                                    style: TextStyle(
-                                      fontSize: 14.sp,
-                                    ),
-                                  ),
-                                ))
-                            .toList(),
+                                        await logPro.getCustomerData();
+                                        controller.selectedStore.value = "true";
+                                        storingIDController.branchid.value =
+                                            item.branchId!;
+                                      },
+                                      value: item.branchName,
+                                      child: Text(
+                                        item.branchName.toString(),
+                                        style: TextStyle(
+                                          fontSize: 14.sp,
+                                        ),
+                                      ),
+                                    ))
+                                .toList(),
                       ),
                       20.h.ph,
                       Align(
                         alignment: Alignment.center,
                         child: Visibility(
                             visible: checkController.visable.value == true,
-                            child: CircularProgressIndicator(
+                            child: const CircularProgressIndicator(
                               color: red,
                             )),
                       ),
@@ -206,12 +209,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                     : logPro.customerList
                                         .map((item) => DropdownMenuItem<String>(
                                               onTap: () async {
-                                                SharedPreferences prefs =
-                                                    await SharedPreferences
-                                                        .getInstance();
-                                                await prefs.setString(
-                                                    'customerid',
-                                                    item.customerId.toString());
                                                 storingIDController.custmoreid
                                                     .value = item.customerId!;
                                               },
@@ -239,8 +236,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         width: 155.w,
                         height: 46.h,
                         name: "Backdoor",
-                        ontap: () {
-                          Get.toNamed(RoutesName.scannerScreen);
+                        ontap: () async {
+                          logPro.scanProduct.clear();
+                          await logPro.scanProducts("43", "1").then((value) {
+                            Get.toNamed(RoutesName.scannerScreen);
+                          });
                         },
                       ),
                       16.w.pw,
@@ -249,18 +249,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: 46.h,
                         name: "Instore",
                         ontap: () async {
-                          SharedPreferences prefs =
-                              await SharedPreferences.getInstance();
-                          String? customerid = prefs.getString('customerid');
-
                           await logPro
-                              .getProductData(customerid: customerid!)
+                              .getProductData(
+                                  customerid:
+                                      storingIDController.custmoreid.value)
                               .then((value) {
                             return Get.toNamed(RoutesName.categoryScreen);
                           });
 
                           logPro.categoryList.clear();
-                          storingIDController.custmoreid.value = customerid;
                         },
                       )
                     ],

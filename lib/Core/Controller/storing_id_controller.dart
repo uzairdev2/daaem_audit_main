@@ -11,6 +11,9 @@ class StoringIDController extends GetxController {
   RxString branchid = "".obs;
   RxString custmoreid = "".obs;
   RxString categoryid = "".obs;
+  RxString productID = "".obs;
+  RxString barcode = "".obs;
+  RxString quantity = "".obs;
 
   RxString leftvalue = "".obs;
   RxString rightvalue = "".obs;
@@ -298,7 +301,7 @@ class StoringIDController extends GetxController {
     pricing = box.values.toList();
 
     log("here is price data list ${pricing.length}");
-    log("here is price data list ${pricing}");
+    log("here is price data list $pricing");
   }
 
 ////////// stock //////////
@@ -320,7 +323,7 @@ class StoringIDController extends GetxController {
     stockLevel = box.values.toList();
 
     log("here is price data list ${stockLevel.length}");
-    log("here is price data list ${stockLevel}");
+    log("here is price data list $stockLevel");
   }
 
   Future<void> accessiblePutData(List<Map<String, dynamic>> dataList) async {
@@ -344,7 +347,7 @@ class StoringIDController extends GetxController {
     accessible = box.values.toList();
 
     log("here is osa data list ${accessible.length}");
-    log("here is osa data list ${accessible}");
+    log("here is osa data list $accessible");
   }
 
   Future<void> priceLabelFtnStoringID() async {
@@ -474,5 +477,32 @@ class StoringIDController extends GetxController {
     nameOfpromosite.value = boxname.get("nameOfpromosite");
     log("here isText  $text");
     log("here is name Of promosite $morespaceExpire");
+  }
+
+  Future<void> scanProduct(String productID, barcode, quantity) async {
+    final boxname = await Hive.openBox("scanProduct");
+    boxname.put("custmorID", "43");
+    boxname.put("branchID", "1");
+
+    boxname.put("productID", productID);
+    boxname.put("barcode", barcode);
+    boxname.put("quantity", quantity);
+  }
+
+  List<Map<String, dynamic>> scannedProducts = [];
+  getscanProduct() async {
+    final boxname = await Hive.openBox("scanProduct");
+    custmoreid.value = boxname.get("custmorID");
+    branchid.value = boxname.get("branchID");
+    productID.value = boxname.get("productID");
+    barcode.value = boxname.get("barcode");
+    quantity.value = boxname.get("quantity");
+    scannedProducts.add({
+      "customerID": custmoreid.value,
+      "branchID": branchid.value,
+      "productID": productID.value,
+      "barcode": barcode.value,
+      "quantity": quantity.value,
+    });
   }
 }

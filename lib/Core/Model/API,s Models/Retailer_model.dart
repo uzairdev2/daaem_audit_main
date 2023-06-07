@@ -10,9 +10,9 @@ class RetailerModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['retailer_id'] = this.retailerId;
-    data['retailer_name'] = this.retailerName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['retailer_id'] = retailerId;
+    data['retailer_name'] = retailerName;
     return data;
   }
 }

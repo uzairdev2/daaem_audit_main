@@ -23,6 +23,7 @@ class CustomTextfield extends StatelessWidget {
     Key? key,
     this.height,
     this.width,
+    this.textType,
   }) : super(key: key);
   final String hintext;
   final String? fontfamily;
@@ -30,6 +31,7 @@ class CustomTextfield extends StatelessWidget {
   final Icon? iconname;
   final Widget? passicon;
   final showtext;
+  final TextInputType? textType;
   final double? width;
   final double? height;
   final double? size;
@@ -61,10 +63,10 @@ class CustomTextfield extends StatelessWidget {
         validator: vlid,
         controller: controller,
         onChanged: onchanged,
-        keyboardType: TextInputType.visiblePassword,
+        keyboardType: textType ?? TextInputType.visiblePassword,
         obscureText: showtext ?? false,
-        style: TextStyle(
-            fontSize: 17.sp, fontFamily: 'Montserrat', color: Colors.white),
+        style:
+            TextStyle(fontSize: 17.sp, fontFamily: 'Montserrat', color: color),
         decoration: InputDecoration(
           filled: true,
           fillColor: bgcolor ?? white,

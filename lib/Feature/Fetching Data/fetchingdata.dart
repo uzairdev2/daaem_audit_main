@@ -2,7 +2,6 @@ import 'package:daaem_reports/Core/Constant/Colors/colors.dart';
 import 'package:daaem_reports/Core/Utils/sizebox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 
 import '../../Core/Local DB/model.dart';

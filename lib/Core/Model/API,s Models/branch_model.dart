@@ -12,10 +12,10 @@ class BranchModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['branch_id'] = this.branchId;
-    data['branch_name'] = this.branchName;
-    data['coordinates'] = this.coordinates;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['branch_id'] = branchId;
+    data['branch_name'] = branchName;
+    data['coordinates'] = coordinates;
     return data;
   }
 }

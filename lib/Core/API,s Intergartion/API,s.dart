@@ -1,7 +1,10 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 
 import 'package:daaem_reports/Core/Model/API,s%20Models/retailer_model.dart';
 import 'package:daaem_reports/Core/Model/API,s%20Models/branch_model.dart';
+import 'package:daaem_reports/Core/Model/API,s%20Models/scan_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -16,6 +19,7 @@ class ApiClass with ChangeNotifier {
   List<CustomerModel> customerList = [];
   List<CategoryModel> categoryList = [];
   List<ProductModel> productList = [];
+  List<ModelScan> scanProduct = [];
 
   var Data = "";
   List<RetailerModel> firstlist = [];
@@ -149,6 +153,38 @@ class ApiClass with ChangeNotifier {
     } else {
       // API request failed
       print('Request failed with status: ${response.statusCode}');
+    }
+  }
+
+  String apiUrl = 'https://www.daaemsolutions.com/daaem/app/msl.php';
+
+  Future<void> scanProducts(String customerid, String branchid) async {
+    print("function is called");
+    try {
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        body: {
+          'customer_id': customerid,
+          'branch_id': branchid,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> responseList = json.decode(response.body);
+        for (var i = 0; i < responseList.length; i++) {
+          scanProduct.add(ModelScan.fromJson(responseList[i]));
+          notifyListeners();
+        }
+        notifyListeners();
+        print(scanProduct.length);
+        print(scanProduct[0].code.toString());
+        print(scanProduct[0].productId.toString());
+      } else {
+        // Login failed
+        print('Login failed. Error: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error during login: $e');
     }
   }
 }

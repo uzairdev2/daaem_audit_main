@@ -34,7 +34,7 @@ class AppRoutes {
         ),
         GetPage(
           name: RoutesName.categoryScreen,
-          page: () => CategoryScreen(),
+          page: () => const CategoryScreen(),
         ),
         GetPage(
           name: RoutesName.scannerScreen,

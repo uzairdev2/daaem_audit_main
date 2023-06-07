@@ -21,7 +21,7 @@ import '../Home Screen.dart/Common Widgets/custom_dropdown_button.dart';
 import '../Home Screen.dart/Common Widgets/title_text.dart';
 
 class CategoryScreen extends StatefulWidget {
-  CategoryScreen({super.key});
+  const CategoryScreen({super.key});
 
   @override
   State<CategoryScreen> createState() => _CategoryScreenState();
@@ -337,7 +337,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         child: Column(
                           children: [
                             logPro.productList.isEmpty
-                                ? SizedBox.shrink()
+                                ? const SizedBox.shrink()
                                 : ListView.builder(
                                     shrinkWrap: true,
                                     physics:
