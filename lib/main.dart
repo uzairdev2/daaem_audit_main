@@ -1,6 +1,8 @@
+import 'package:daaem_reports/Core/Controller/controller_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
@@ -21,7 +23,7 @@ void main() async {
   var directory = await getApplicationDocumentsDirectory();
   Hive.init(directory.path);
   Hive.registerAdapter(ModelHiveAdapter());
-  await Hive.openBox<ModelHive>("IdDataBase");
+  await Hive.openBox<ModelHive>("scanData");
 
   runApp(const MyApp());
 }
@@ -42,6 +44,9 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
         builder: ((context, child) => GetMaterialApp(
               title: 'Daaem Audit',
+              initialBinding: BindingsBuilder(() {
+                Get.put(planogramFtn);
+              }),
               theme: ThemeData(
                 useMaterial3: true,
                 primarySwatch: Colors.blue,

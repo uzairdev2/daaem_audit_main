@@ -12,6 +12,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../Constant/Colors/colors.dart';
+import '../Local DB/model.dart';
+import '../Local DB/openBox.dart';
 
 class ScanController extends GetxController {
   final commonDialog = CommonDialog().obs;
@@ -86,8 +88,16 @@ class ScanController extends GetxController {
                     height: 40.h,
                     name: "submit",
                     ontap: () {
-                      storingIDController.scanProduct(
-                          productId, listCode.value, quantity);
+                      final storedata = ModelHive(
+                          barcode: listCode.value, quamtitiy: quantity);
+                      final boxes = Boxes.getData();
+
+                      boxes.add(storedata).then((value) {
+                        print('add product successfully');
+                      }).onError((error, stackTrace) {
+                        print(error.toString());
+                      });
+                      storingIDController.scanProduct(listCode.value, quantity);
                       Get.back();
                     },
                   ),

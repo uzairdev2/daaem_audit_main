@@ -2,6 +2,7 @@
 
 import 'dart:developer';
 
+import 'package:daaem_reports/Core/Utils/alertDialoge/simpleYesorNO.dart';
 import 'package:daaem_reports/Core/Utils/sizebox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -127,35 +128,46 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           height: 46.h,
                           name: "Planogram",
                           ontap: () {
-                            controller.commonDialog.value.showPopCustom(
+                            planogramFtn.planogramFtnGetingIDs();
+                            Get.dialog(MyAlertDialog(
                               title: planogramPopText,
-                              customwidget: SizedBox(
-                                width: double.infinity,
-                                height: 100.h,
-                                child: Image.asset(logoAndname),
+                              yesTap: () {
+                                planogramFtn.handleYesButtonClick("yes");
+                              },
+                              noTap: () {
+                                planogramFtn.handleNoButtonClick("no");
+                              },
+                              containerHeight: 40.h,
+                              containerWidth: 90.w,
+                              option1Text: "Yes",
+                              radio1: Obx(
+                                () => Radio<String>(
+                                  value: "yes",
+                                  activeColor: white,
+                                  groupValue: planogramFtn.planogramValue.value,
+                                  onChanged: (p0) {
+                                    planogramFtn.handleYesButtonClick(p0!);
+                                  },
+                                ),
                               ),
-                              btn1Name: "Yes",
-                              btn2Name: "No",
-                              imageStatus: 1,
-                              btn1Ontap: () {
-                                checkController.handleYesButtonClick("Yes");
-                              },
-                              btn2Ontap: () {
-                                checkController.handleNoButtonClick("No");
-                              },
-                              submitOntap: () async {
-                                if (checkController.selectRadioBtnVal != null) {
-                                  log("here is check value ${checkController.selectRadioBtnVal.value}");
-                                  await storingIDController
-                                      .planogramFtnStoringID();
-                                  storingIDController.planogramFtnGetingIDs();
-
-                                  checkController.selectRadioBtnVal.value = "";
-
+                              option2Text: "No",
+                              radio2: Obx(
+                                () => Radio<String>(
+                                  value: "no",
+                                  activeColor: white,
+                                  groupValue: planogramFtn.planogramValue.value,
+                                  onChanged: (p0) {
+                                    planogramFtn.handleNoButtonClick(p0!);
+                                  },
+                                ),
+                              ),
+                              onSubmit: () {
+                                if (planogramFtn.planogramValue.value != null) {
+                                  planogramFtn.planogramFtnStoringID();
                                   Get.back();
                                 }
                               },
-                            );
+                            ));
                           },
                         ),
                         16.w.pw,
@@ -164,35 +176,50 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           height: 46.h,
                           name: "Cleanness",
                           ontap: () {
-                            controller.commonDialog.value.showPopCustom(
-                              title: cleannessPopText,
-                              imageStatus: 0,
-                              btn1Name: "Yes",
-                              btn2Name: "No",
-                              btn1Ontap: () {
-                                checkController.handleYesButtonClick("Yes");
-                              },
-                              btn2Ontap: () {
-                                checkController.handleNoButtonClick("No");
-                              },
-                              submitOntap: () async {
-                                if (checkController.selectRadioBtnVal != null &&
-                                    imageContoller.cleanBase64Image.value !=
-                                        null) {
-                                  await storingIDController
-                                      .cleaningFtnStoringID(
-                                          imagedata: imageContoller
-                                              .cleanBase64Image.value);
-                                  storingIDController.cleaningFtnGetingID();
-                                  checkController.selectRadioBtnVal.value = "";
-                                  Get.back();
-                                } else {
-                                  Get.snackbar("Picture Required ",
-                                      "Please take a picture ",
-                                      snackPosition: SnackPosition.BOTTOM);
-                                }
-                              },
-                            );
+                            cleaningFtnBtn.cleaningFtnGetingID();
+                            controller.commonDialog.value.showPopwithCustom(
+                                name: cleannessPopText,
+                                colum: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        CustomRadioWidget(
+                                          onTap: () {
+                                            cleaningFtnBtn
+                                                .handleYesButtonClick("yes");
+                                          },
+                                          name: "Yes",
+                                          value: "yes",
+                                          groupValue: cleaningFtnBtn
+                                              .cleaningValue.value,
+                                          width: 90.w,
+                                          height: 40.w,
+                                          onChanged: (value) {
+                                            cleaningFtnBtn
+                                                .handleYesButtonClick(value!);
+                                          },
+                                        ),
+                                        10.w.pw,
+                                        CustomRadioWidget(
+                                          onTap: () {
+                                            cleaningFtnBtn
+                                                .handleNoButtonClick("no");
+                                          },
+                                          name: "Yes",
+                                          value: "no",
+                                          groupValue: cleaningFtnBtn
+                                              .cleaningValue.value,
+                                          width: 90.w,
+                                          height: 40.w,
+                                          onChanged: (value) {
+                                            cleaningFtnBtn
+                                                .handleNoButtonClick(value!);
+                                          },
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ));
                           },
                         )
                       ],
@@ -764,5 +791,56 @@ class _CategoryScreenState extends State<CategoryScreen> {
             ]),
           ),
         ));
+  }
+}
+
+class CustomRadioWidget extends StatelessWidget {
+  final VoidCallback onTap;
+  final String name;
+  final String value;
+  final double width;
+  final double height;
+  final String groupValue;
+  final ValueChanged<String?> onChanged;
+
+  const CustomRadioWidget({
+    required this.onTap,
+    required this.name,
+    required this.value,
+    required this.width,
+    required this.height,
+    required this.groupValue,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: width,
+        height: height,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: Colors.red,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              name,
+              style: TextStyle(fontSize: 16, color: Colors.white),
+            ),
+            Radio<String>(
+              value: value,
+              activeColor: Colors.white,
+              groupValue: groupValue,
+              onChanged: onChanged,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

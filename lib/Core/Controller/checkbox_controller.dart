@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
 
 class CheckController extends GetxController {
-  RxBool CheckValue1 = false.obs;
-  RxBool CheckValue2 = false.obs;
+  RxBool checkValue1 = false.obs;
+  RxBool checkValue2 = false.obs;
 
   RxBool radioValue = false.obs;
   RxBool visable = false.obs;
@@ -16,8 +16,6 @@ class CheckController extends GetxController {
   void handleYesButtonClick(String gernder) {
     radioValue.value = !radioValue.value;
     selectRadioBtnVal.value = gernder;
-    print(radioValue);
-    // update(); // Toggle the value of the radio button
   }
 
   handleNoButtonClick(String gernder) {

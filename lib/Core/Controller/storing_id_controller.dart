@@ -22,7 +22,6 @@ class StoringIDController extends GetxController {
   List stockLevel = [];
   List accessible = [];
 
-  String planogaramValue = "";
   RxString cleanessValue = "".obs;
   RxString nabiursValue = "".obs;
   RxString itemName = "".obs;
@@ -160,34 +159,8 @@ class StoringIDController extends GetxController {
   ///////////////////////////////// Planogram /////////////////////////
   ///
   ///
-  planogramFtnStoringID() async {
-    final boxname = await Hive.openBox("planogramData");
-
-    boxname.put("retailerid", retailerid.value);
-    boxname.put("branchid", branchid.value);
-    boxname.put("custmoreid", custmoreid.value);
-    boxname.put("categoryid", categoryid.value);
-    await boxname.put(
-      "planogramValue",
-      checkController.selectRadioBtnVal.value,
-    );
-  }
-
-  planogramFtnGetingIDs() async {
-    final boxname = await Hive.openBox("planogramData");
-
-    retailerid.value = boxname.get("retailerid");
-    branchid.value = boxname.get("branchid");
-    custmoreid.value = boxname.get("custmoreid");
-    categoryid.value = boxname.get("categoryid");
-    planogaramValue = boxname.get("planogramValue");
-
-    log("here is retailer id $retailerid");
-    log("here is branch id $branchid");
-    log("here is custmore id $custmoreid");
-    log("here is category id $categoryid");
-    log("here is planogram value $planogaramValue");
-  }
+  ///
+  ///
 
 /////////////////////// Cleaning /////////////////////////
 
@@ -212,13 +185,7 @@ class StoringIDController extends GetxController {
     branchid.value = boxname.get("branchid");
     custmoreid.value = boxname.get("custmoreid");
     categoryid.value = boxname.get("categoryid");
-    cleanessValue = boxname.get("cleaningValue");
-
-    log("here is retailer id $retailerid");
-    log("here is branch id $branchid");
-    log("here is custmore id $custmoreid");
-    log("here is category id $categoryid");
-    log("here is cleaning value ${checkController.selectRadioBtnVal.value}");
+    cleanessValue.value = boxname.get("cleaningValue");
   }
 
 /////////////////// Neighbors //////////////////////
@@ -479,12 +446,9 @@ class StoringIDController extends GetxController {
     log("here is name Of promosite $morespaceExpire");
   }
 
-  Future<void> scanProduct(String productID, barcode, quantity) async {
+  Future<void> scanProduct(barcode, quantity) async {
     final boxname = await Hive.openBox("scanProduct");
-    boxname.put("custmorID", "43");
-    boxname.put("branchID", "1");
 
-    boxname.put("productID", productID);
     boxname.put("barcode", barcode);
     boxname.put("quantity", quantity);
   }
@@ -492,15 +456,10 @@ class StoringIDController extends GetxController {
   List<Map<String, dynamic>> scannedProducts = [];
   getscanProduct() async {
     final boxname = await Hive.openBox("scanProduct");
-    custmoreid.value = boxname.get("custmorID");
-    branchid.value = boxname.get("branchID");
-    productID.value = boxname.get("productID");
+
     barcode.value = boxname.get("barcode");
     quantity.value = boxname.get("quantity");
     scannedProducts.add({
-      "customerID": custmoreid.value,
-      "branchID": branchid.value,
-      "productID": productID.value,
       "barcode": barcode.value,
       "quantity": quantity.value,
     });

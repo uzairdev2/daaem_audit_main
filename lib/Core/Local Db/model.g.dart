@@ -17,28 +17,19 @@ class ModelHiveAdapter extends TypeAdapter<ModelHive> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return ModelHive(
-      retailerId: fields[0] as String?,
-      branchId: fields[1] as String?,
-      custmoreId: fields[2] as String?,
-      categoryId: fields[3] as String?,
-      productId: fields[4] as String?,
+      barcode: fields[0] as String,
+      quamtitiy: fields[1] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, ModelHive obj) {
     writer
-      ..writeByte(5)
-      ..writeByte(0)
-      ..write(obj.retailerId)
-      ..writeByte(1)
-      ..write(obj.branchId)
       ..writeByte(2)
-      ..write(obj.custmoreId)
-      ..writeByte(3)
-      ..write(obj.categoryId)
-      ..writeByte(4)
-      ..write(obj.productId);
+      ..writeByte(0)
+      ..write(obj.barcode)
+      ..writeByte(1)
+      ..write(obj.quamtitiy);
   }
 
   @override

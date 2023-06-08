@@ -215,7 +215,7 @@ class CompetitorsScreen extends StatelessWidget {
                                 size: 12.sp,
                                 color: grey,
                                 checkbox: CustomCheckBox(
-                                    value: checkController.CheckValue2),
+                                    value: checkController.checkValue2),
                                 name: "Gandula",
                                 ontap: () {},
                               ),
@@ -226,7 +226,7 @@ class CompetitorsScreen extends StatelessWidget {
                                 size: 12.sp,
                                 color: grey,
                                 checkbox: CustomCheckBox(
-                                    value: checkController.CheckValue1),
+                                    value: checkController.checkValue1),
                                 name: "Floor Display",
                                 ontap: () {},
                               ),

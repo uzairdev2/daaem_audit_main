@@ -9,9 +9,13 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../../Core/API,s Intergartion/API,s.dart';
+import '../../Core/Local DB/model.dart';
+import '../../Core/Local DB/openBox.dart';
+import '../../Core/Utils/custom_textfield.dart';
 
 class ScannerScreen extends StatefulWidget {
   const ScannerScreen({Key? key}) : super(key: key);
@@ -21,6 +25,18 @@ class ScannerScreen extends StatefulWidget {
 }
 
 class _ScannerScreenState extends State<ScannerScreen> {
+  void _deleteItem(int index) {
+    final box = Boxes.getData();
+    box.deleteAt(index);
+  }
+
+  void _editItem(int index, String barcode, String quantity) async {
+    final box = Hive.box<ModelHive>('scanData');
+    final newData = ModelHive(barcode: barcode, quamtitiy: quantity);
+    box.putAt(index, newData);
+  }
+
+  var quantity = "";
   @override
   Widget build(BuildContext context) {
     final logPro = Provider.of<ApiClass>(context);
@@ -80,7 +96,6 @@ class _ScannerScreenState extends State<ScannerScreen> {
                       InkWell(
                         onTap: () {
                           categoryController.visibilityTrue2();
-                          storingIDController.getscanProduct();
                         },
                         child: Container(
                           width: 24.w,
@@ -97,31 +112,87 @@ class _ScannerScreenState extends State<ScannerScreen> {
                       )
                     ],
                   ),
-                  Obx(
-                    () => Visibility(
+                  Obx(() => Visibility(
                       visible: categoryController.visibilityValue2.value,
-                      child: ListView.builder(
-                          itemCount: storingIDController.scannedProducts.length,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            final product =
-                                storingIDController.scannedProducts[index];
-                            return ListTile(
-                              title:
-                                  Text("Customer ID: ${product['customerID']}"),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Branch ID: ${product['branchID']}"),
-                                  Text("Product ID: ${product['productID']}"),
-                                  Text("Barcode: ${product['barcode']}"),
-                                  Text("Quantity: ${product['quantity']}"),
-                                ],
-                              ),
+                      child: ValueListenableBuilder<Box<ModelHive>>(
+                          valueListenable: Boxes.getData().listenable(),
+                          builder: (context, boxes, _) {
+                            var data = boxes.values.toList().cast<ModelHive>();
+
+                            return Card(
+                              child: ListView.builder(
+                                  itemCount: boxes.length,
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) {
+                                    return Column(
+                                      children: [
+                                        ListTile(
+                                          title: CustomText(
+                                              name:
+                                                  "Barcode :${data[index].barcode}"),
+                                          subtitle: CustomText(
+                                              name:
+                                                  "Quantity :${data[index].quamtitiy}"),
+                                          trailing: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              IconButton(
+                                                icon: Icon(Icons.edit),
+                                                onPressed: () {
+                                                  // Perform edit operation for the item at this index
+                                                  scanController
+                                                      .commonDialog.value
+                                                      .showPopwithCustom(
+                                                          name: data[index]
+                                                              .barcode,
+                                                          colum: Column(
+                                                            children: [
+                                                              10.h.ph,
+                                                              CustomTextfield(
+                                                                hintext:
+                                                                    "Enter Quantity",
+                                                                height: 50.h,
+                                                                width: 200.w,
+                                                                onchanged:
+                                                                    (value) {
+                                                                  quantity =
+                                                                      value;
+                                                                },
+                                                                textType:
+                                                                    TextInputType
+                                                                        .number,
+                                                              ),
+                                                              10.h.ph,
+                                                              CustomButton(
+                                                                name: "Save",
+                                                                ontap: () {
+                                                                  _editItem(
+                                                                      index,
+                                                                      data[index]
+                                                                          .barcode,
+                                                                      quantity);
+                                                                  Get.back();
+                                                                },
+                                                              )
+                                                            ],
+                                                          ));
+                                                },
+                                              ),
+                                              IconButton(
+                                                icon: Icon(Icons.delete),
+                                                onPressed: () {
+                                                  // Perform delete operation for the item at this index
+                                                  _deleteItem(index);
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    );
+                                  }),
                             );
-                          }),
-                    ),
-                  )
+                          })))
                 ]))));
   }
 }
