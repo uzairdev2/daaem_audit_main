@@ -1,8 +1,9 @@
-// ignore_for_file: must_be_immutable, unnecessary_null_comparison
+// ignore_for_file: must_be_immutable, unnecessary_null_comparison, unrelated_type_equality_checks
 
 import 'dart:developer';
 
 import 'package:daaem_reports/Core/Utils/alertDialoge/simpleYesorNO.dart';
+import 'package:daaem_reports/Core/Utils/common_dialogue.dart';
 import 'package:daaem_reports/Core/Utils/sizebox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -130,44 +131,56 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           ontap: () {
                             planogramFtn.planogramFtnGetingIDs();
                             Get.dialog(MyAlertDialog(
-                              title: planogramPopText,
-                              yesTap: () {
-                                planogramFtn.handleYesButtonClick("yes");
-                              },
-                              noTap: () {
-                                planogramFtn.handleNoButtonClick("no");
-                              },
-                              containerHeight: 40.h,
-                              containerWidth: 90.w,
-                              option1Text: "Yes",
-                              radio1: Obx(
-                                () => Radio<String>(
-                                  value: "yes",
-                                  activeColor: white,
-                                  groupValue: planogramFtn.planogramValue.value,
-                                  onChanged: (p0) {
-                                    planogramFtn.handleYesButtonClick(p0!);
-                                  },
+                                title: planogramPopText,
+                                yesTap: () {
+                                  planogramFtn.handleYesButtonClick("yes");
+                                },
+                                noTap: () {
+                                  planogramFtn.handleNoButtonClick("no");
+                                },
+                                containerHeight: 40.h,
+                                containerWidth: 90.w,
+                                option1Text: "Yes",
+                                radio1: Obx(
+                                  () => Radio<String>(
+                                    value: "yes",
+                                    activeColor: white,
+                                    groupValue:
+                                        planogramFtn.planogramValue.value,
+                                    onChanged: (p0) {
+                                      planogramFtn.handleYesButtonClick(p0!);
+                                    },
+                                  ),
                                 ),
-                              ),
-                              option2Text: "No",
-                              radio2: Obx(
-                                () => Radio<String>(
-                                  value: "no",
-                                  activeColor: white,
-                                  groupValue: planogramFtn.planogramValue.value,
-                                  onChanged: (p0) {
-                                    planogramFtn.handleNoButtonClick(p0!);
-                                  },
+                                option2Text: "No",
+                                radio2: Obx(
+                                  () => Radio<String>(
+                                    value: "no",
+                                    activeColor: white,
+                                    groupValue:
+                                        planogramFtn.planogramValue.value,
+                                    onChanged: (p0) {
+                                      planogramFtn.handleNoButtonClick(p0!);
+                                    },
+                                  ),
                                 ),
-                              ),
-                              onSubmit: () {
-                                if (planogramFtn.planogramValue.value != null) {
-                                  planogramFtn.planogramFtnStoringID();
-                                  Get.back();
-                                }
-                              },
-                            ));
+                                onSubmit: () {
+                                  if (planogramFtn.planogramValue.value !=
+                                      null) {
+                                    planogramFtn.planogramFtnStoringID();
+                                    Get.back();
+                                    Get.snackbar(
+                                        "Saved", "Data Saved SucccessFully",
+                                        snackPosition: SnackPosition.BOTTOM,
+                                        backgroundColor: red);
+                                  } else {
+                                    Get.back();
+                                    Get.snackbar("Faild",
+                                        "Faild to Save becaused Value of cleaning not Slelect Yet",
+                                        snackPosition: SnackPosition.BOTTOM,
+                                        backgroundColor: red);
+                                  }
+                                }));
                           },
                         ),
                         16.w.pw,
@@ -183,40 +196,73 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                   children: [
                                     Row(
                                       children: [
-                                        CustomRadioWidget(
-                                          onTap: () {
-                                            cleaningFtnBtn
-                                                .handleYesButtonClick("yes");
-                                          },
-                                          name: "Yes",
-                                          value: "yes",
-                                          groupValue: cleaningFtnBtn
-                                              .cleaningValue.value,
-                                          width: 90.w,
-                                          height: 40.w,
-                                          onChanged: (value) {
-                                            cleaningFtnBtn
-                                                .handleYesButtonClick(value!);
-                                          },
+                                        Obx(
+                                          () => CustomRadioWidget(
+                                            color: aquamarine,
+                                            onTap: () {
+                                              cleaningFtnBtn
+                                                  .handleYesButtonClick("yes");
+                                            },
+                                            name: "Yes",
+                                            value: "yes",
+                                            groupValue: cleaningFtnBtn
+                                                .cleaningValue.value,
+                                            width: 90.w,
+                                            height: 40.w,
+                                            onChanged: (value) {
+                                              cleaningFtnBtn
+                                                  .handleYesButtonClick(value!);
+                                            },
+                                          ),
                                         ),
                                         10.w.pw,
-                                        CustomRadioWidget(
-                                          onTap: () {
-                                            cleaningFtnBtn
-                                                .handleNoButtonClick("no");
-                                          },
-                                          name: "Yes",
-                                          value: "no",
-                                          groupValue: cleaningFtnBtn
-                                              .cleaningValue.value,
-                                          width: 90.w,
-                                          height: 40.w,
-                                          onChanged: (value) {
-                                            cleaningFtnBtn
-                                                .handleNoButtonClick(value!);
-                                          },
+                                        Obx(
+                                          () => CustomRadioWidget(
+                                            color: red,
+                                            onTap: () {
+                                              cleaningFtnBtn
+                                                  .handleNoButtonClick("no");
+                                            },
+                                            name: "No",
+                                            value: "no",
+                                            groupValue: cleaningFtnBtn
+                                                .cleaningValue.value,
+                                            width: 90.w,
+                                            height: 40.w,
+                                            onChanged: (value) {
+                                              cleaningFtnBtn
+                                                  .handleNoButtonClick(value!);
+                                            },
+                                          ),
                                         ),
                                       ],
+                                    ),
+                                    15.h.ph,
+                                    const Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: CameraWIdget()),
+                                    Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: CustomButton(
+                                        name: "Submit",
+                                        height: 40.h,
+                                        width: 88.w,
+                                        ontap: () {
+                                          if (cleaningFtnBtn.cleaningValue !=
+                                              null) {
+                                            cleaningFtnBtn.cleaningFtnStoringID(
+                                                imagedata: imageContoller
+                                                    .cleanBase64Image.value);
+                                            Get.back();
+                                            Get.snackbar("Saved",
+                                                "Data Saved SucccessFully");
+                                          } else {
+                                            Get.back();
+                                            Get.snackbar("Faild",
+                                                "Faild to Save becaused Value of cleaning not Slelect Yet");
+                                          }
+                                        },
+                                      ),
                                     )
                                   ],
                                 ));
@@ -231,20 +277,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           width: 155.w,
                           height: 46.h,
                           name: "SOS",
-                          ontap: () {
-                            controller.commonDialog.value.showPopCustom(
-                              title: sOSPopText,
-                              btn1Name: "Yes",
-                              btn2Name: "No",
-                              btn1Ontap: () {
-                                checkController.handleYesButtonClick("Yes");
-                              },
-                              btn2Ontap: () {
-                                checkController.handleNoButtonClick("No");
-                              },
-                              submitOntap: () {},
-                            );
-                          },
+                          ontap: () {},
                         ),
                         16.w.pw,
                         CustomButton(
@@ -374,6 +407,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                       for (int i = 0; i <= index; i++) {
                                         imageContoller.imagevalue
                                             .add(false.obs);
+                                        osaFtnBTn.osaBtnvalue.add(false.obs);
+                                        osaFtnBTn.osaVAlueYesorNO.add("".obs);
                                       }
 
                                       return Column(
@@ -427,12 +462,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                               InkWell(
                                                 onTap: () async {
                                                   await imageContoller
-                                                      .takeImage();
+                                                      .takeImage(index);
                                                   imageContoller
                                                       .imagevalue[index]
                                                       .value = true;
                                                 },
-                                                // ignore: unrelated_type_equality_checks
                                                 child: Obx(() => imageContoller
                                                                 .imagevalue[
                                                             index] ==
@@ -462,46 +496,205 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                             ],
                                           ),
                                           10.h.ph,
-                                          Wrap(
+                                          Row(
                                             children: [
                                               CustomButton(
-                                                width: 68.w,
-                                                height: 46.h,
-                                                name: "OSA",
-                                                size: 12.sp,
-                                                ontap: () {
-                                                  controller.commonDialog.value
-                                                      .showPopCustom(
-                                                          title: sOAPopText,
-                                                          imageStatus: 1,
-                                                          barcodeStatus: 0,
-                                                          index: index,
-                                                          btn1Name: "Yes",
-                                                          btn2Name: "No",
-                                                          takePictureStatus: 0,
-                                                          btn1Ontap: () {
-                                                            checkController
-                                                                .handleYesButtonClick(
-                                                                    "Yes");
-                                                            scanController
-                                                                .scanBarcode(logPro
-                                                                    .productList[
-                                                                        index]
-                                                                    .barcode
-                                                                    .toString());
-                                                          },
-                                                          btn2Ontap: () {
-                                                            checkController
-                                                                .handleNoButtonClick(
-                                                                    "No");
-                                                          },
-                                                          submitOntap: () {
-                                                            if (checkController
-                                                                    .selectRadioBtnVal
-                                                                    .value !=
-                                                                null) {
+                                                  width: 68.w,
+                                                  height: 46.h,
+                                                  name: "OSA",
+                                                  size: 12.sp,
+                                                  ontap: () async {
+                                                    imageContoller
+                                                        .takinkSpecficBase(
+                                                            index);
+
+                                                    controller
+                                                        .commonDialog.value
+                                                        .showPopwithCustom(
+                                                            name: sOAPopText,
+                                                            colum: Column(
+                                                              children: [
+                                                                Obx(
+                                                                  () => imageContoller.imagevalue[
+                                                                              index] !=
+                                                                          false
+                                                                      ? Image
+                                                                          .file(
+                                                                          imageContoller
+                                                                              .rowImages[index],
+                                                                          fit: BoxFit
+                                                                              .fitWidth,
+                                                                          width:
+                                                                              50,
+                                                                          height:
+                                                                              50.h,
+                                                                        )
+                                                                      : 0.ph,
+                                                                ),
+                                                                10.h.ph,
+                                                                Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Obx(
+                                                                      () =>
+                                                                          CustomRadioWidget(
+                                                                        onTap:
+                                                                            () {
+                                                                          osaFtnBTn.handleYesButtonClick(
+                                                                              "yes",
+                                                                              index);
+                                                                        },
+                                                                        name:
+                                                                            "Yes",
+                                                                        value:
+                                                                            "yes",
+                                                                        width:
+                                                                            88.w,
+                                                                        height:
+                                                                            40.h,
+                                                                        groupValue: osaFtnBTn
+                                                                            .osaVAlueYesorNO[index]
+                                                                            .value,
+                                                                        color:
+                                                                            aquamarine,
+                                                                        onChanged:
+                                                                            (value) {
+                                                                          osaFtnBTn.handleYesButtonClick(
+                                                                              value!,
+                                                                              index);
+                                                                        },
+                                                                      ),
+                                                                    ),
+                                                                    10.w.pw,
+                                                                    Obx(
+                                                                      () =>
+                                                                          CustomRadioWidget(
+                                                                        color:
+                                                                            red,
+                                                                        onTap:
+                                                                            () {
+                                                                          osaFtnBTn.handleNoButtonClick(
+                                                                              "no",
+                                                                              index);
+                                                                        },
+                                                                        name:
+                                                                            "No",
+                                                                        value:
+                                                                            "no",
+                                                                        width:
+                                                                            88.w,
+                                                                        height:
+                                                                            40.h,
+                                                                        groupValue: osaFtnBTn
+                                                                            .osaVAlueYesorNO[index]
+                                                                            .value,
+                                                                        onChanged:
+                                                                            (value) {
+                                                                          osaFtnBTn.handleYesButtonClick(
+                                                                              value!,
+                                                                              index);
+                                                                        },
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                10.h.ph,
+                                                                Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .bottomRight,
+                                                                  child:
+                                                                      CustomButton(
+                                                                    width: 87.w,
+                                                                    height:
+                                                                        40.h,
+                                                                    color: red,
+                                                                    name:
+                                                                        "Submit",
+                                                                    ontap: () {
+                                                                      if (osaFtnBTn
+                                                                              .osaVAlueYesorNO[index] !=
+                                                                          null) {
+                                                                        osaFtnBTn.osaFtnStoringID(
+                                                                            index,
+                                                                            [
+                                                                              {
+                                                                                "retailerid": storingIDController.retailerid.value,
+                                                                                "branchid": storingIDController.branchid.value,
+                                                                                "custmoreid": storingIDController.custmoreid.value,
+                                                                                "categoryid": storingIDController.categoryid.value,
+                                                                                "productId": logPro.productList[index].productId.toString(),
+                                                                                "osaValue": osaFtnBTn.osaVAlueYesorNO[index].value,
+                                                                                "barcode": logPro.productList[index].barcode.toString(),
+                                                                                "imagedata": "Image is not selected Yet",
+                                                                              },
+                                                                            ]);
+
+                                                                        Get.back();
+
+                                                                        osaFtnBTn
+                                                                            .getOsaValue(index);
+                                                                        Get.snackbar(
+                                                                            "Saved",
+                                                                            "SuccessFully",
+                                                                            snackPosition:
+                                                                                SnackPosition.BOTTOM,
+                                                                            backgroundColor: red);
+                                                                      } else {
+                                                                        Get.back();
+                                                                        Get.snackbar(
+                                                                            "Failed",
+                                                                            "To save data",
+                                                                            snackPosition:
+                                                                                SnackPosition.BOTTOM,
+                                                                            backgroundColor: red);
+                                                                      }
+                                                                    },
+                                                                  ),
+                                                                )
+                                                              ],
+                                                            ));
+                                                  }),
+                                              12.w.pw,
+                                              Obx(
+                                                () => Visibility(
+                                                  visible: osaFtnBTn
+                                                          .osaBtnvalue[index]
+                                                          .value ==
+                                                      true,
+                                                  child: Row(
+                                                    children: [
+                                                      CustomButton(
+                                                        width: 74.w,
+                                                        height: 46.h,
+                                                        size: 12.sp,
+                                                        name: "Pricing",
+                                                        ontap: () {
+                                                          controller
+                                                              .commonDialog
+                                                              .value
+                                                              .showPopCustom(
+                                                            title: pricePopText,
+                                                            index: index,
+                                                            btn1Name: "Yes",
+                                                            btn2Name: "No",
+                                                            btn1Ontap: () {
+                                                              checkController
+                                                                  .handleYesButtonClick(
+                                                                      "Yes");
+                                                            },
+                                                            takePictureStatus:
+                                                                0,
+                                                            btn2Ontap: () {
+                                                              checkController
+                                                                  .handleNoButtonClick(
+                                                                      "No");
+                                                            },
+                                                            submitOntap: () {
                                                               storingIDController
-                                                                  .osaFtnStoringID([
+                                                                  .PricingPutData([
                                                                 {
                                                                   "retailerid":
                                                                       storingIDController
@@ -524,15 +717,83 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                                           index]
                                                                       .productId
                                                                       .toString(),
-                                                                  "osaValue":
+                                                                  "pricevalue":
                                                                       checkController
                                                                           .selectRadioBtnVal
                                                                           .value,
-                                                                  "barcode": logPro
+                                                                  "imagedata":
+                                                                      imageContoller
+                                                                          .takeBase64Image
+                                                                          .value,
+                                                                }
+                                                              ]);
+
+                                                              storingIDController
+                                                                  .pricingGetData();
+                                                              Get.back();
+                                                            },
+                                                          );
+                                                        },
+                                                      ),
+                                                      10.w.pw,
+                                                      CustomButton(
+                                                        width: 78.w,
+                                                        height: 46.h,
+                                                        size: 12.sp,
+                                                        name: "Stock level",
+                                                        ontap: () {
+                                                          controller
+                                                              .commonDialog
+                                                              .value
+                                                              .showPopCustom(
+                                                            title:
+                                                                stockLevelPopText,
+                                                            index: index,
+                                                            btn1Name: "Normal",
+                                                            takePictureStatus:
+                                                                0,
+                                                            btn2Name: "Low",
+                                                            value1: "Normal",
+                                                            value2: "Low",
+                                                            btn1Ontap: () {
+                                                              checkController
+                                                                  .handleYesButtonClick(
+                                                                      "Normal");
+                                                            },
+                                                            btn2Ontap: () {
+                                                              checkController
+                                                                  .handleNoButtonClick(
+                                                                      "Low");
+                                                            },
+                                                            submitOntap: () {
+                                                              storingIDController
+                                                                  .stockLevelPutData([
+                                                                {
+                                                                  "retailerid":
+                                                                      storingIDController
+                                                                          .retailerid
+                                                                          .value,
+                                                                  "branchid":
+                                                                      storingIDController
+                                                                          .branchid
+                                                                          .value,
+                                                                  "custmoreid":
+                                                                      storingIDController
+                                                                          .custmoreid
+                                                                          .value,
+                                                                  "categoryid":
+                                                                      storingIDController
+                                                                          .categoryid
+                                                                          .value,
+                                                                  "productId": logPro
                                                                       .productList[
                                                                           index]
-                                                                      .barcode
+                                                                      .productId
                                                                       .toString(),
+                                                                  "stockLevelValue":
+                                                                      checkController
+                                                                          .selectRadioBtnVal
+                                                                          .value,
                                                                   "imagedata":
                                                                       imageContoller
                                                                           .takeBase64Image
@@ -541,214 +802,86 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                               ]);
 
                                                               storingIDController
-                                                                  .osaFtnGetingID();
+                                                                  .stockLevelGetData();
                                                               Get.back();
-                                                            }
-                                                          });
-                                                },
-                                              ),
-                                              12.w.pw,
-                                              CustomButton(
-                                                width: 74.w,
-                                                height: 46.h,
-                                                size: 12.sp,
-                                                name: "Pricing",
-                                                ontap: () {
-                                                  controller.commonDialog.value
-                                                      .showPopCustom(
-                                                    title: pricePopText,
-                                                    index: index,
-                                                    btn1Name: "Yes",
-                                                    btn2Name: "No",
-                                                    btn1Ontap: () {
-                                                      checkController
-                                                          .handleYesButtonClick(
-                                                              "Yes");
-                                                    },
-                                                    takePictureStatus: 0,
-                                                    btn2Ontap: () {
-                                                      checkController
-                                                          .handleNoButtonClick(
-                                                              "No");
-                                                    },
-                                                    submitOntap: () {
-                                                      storingIDController
-                                                          .PricingPutData([
-                                                        {
-                                                          "retailerid":
-                                                              storingIDController
-                                                                  .retailerid
-                                                                  .value,
-                                                          "branchid":
-                                                              storingIDController
-                                                                  .branchid
-                                                                  .value,
-                                                          "custmoreid":
-                                                              storingIDController
-                                                                  .custmoreid
-                                                                  .value,
-                                                          "categoryid":
-                                                              storingIDController
-                                                                  .categoryid
-                                                                  .value,
-                                                          "productId": logPro
-                                                              .productList[
-                                                                  index]
-                                                              .productId
-                                                              .toString(),
-                                                          "pricevalue":
+                                                            },
+                                                          );
+                                                        },
+                                                      ),
+                                                      7.w.pw,
+                                                      CustomButton(
+                                                        width: 79.w,
+                                                        height: 46.h,
+                                                        size: 12.sp,
+                                                        name: "Accessible ",
+                                                        ontap: () {
+                                                          controller
+                                                              .commonDialog
+                                                              .value
+                                                              .showPopCustom(
+                                                            title:
+                                                                accessPopText,
+                                                            index: index,
+                                                            btn1Name: "Yes",
+                                                            btn2Name: "No",
+                                                            takePictureStatus:
+                                                                0,
+                                                            btn1Ontap: () {
                                                               checkController
-                                                                  .selectRadioBtnVal
-                                                                  .value,
-                                                          "imagedata":
-                                                              imageContoller
-                                                                  .takeBase64Image
-                                                                  .value
-                                                        }
-                                                      ]);
-
-                                                      storingIDController
-                                                          .pricingGetData();
-                                                      Get.back();
-                                                    },
-                                                  );
-                                                },
-                                              ),
-                                              10.w.pw,
-                                              CustomButton(
-                                                width: 78.w,
-                                                height: 46.h,
-                                                size: 12.sp,
-                                                name: "Stock level",
-                                                ontap: () {
-                                                  controller.commonDialog.value
-                                                      .showPopCustom(
-                                                    title: stockLevelPopText,
-                                                    index: index,
-                                                    btn1Name: "Normal",
-                                                    takePictureStatus: 0,
-                                                    btn2Name: "Low",
-                                                    value1: "Normal",
-                                                    value2: "Low",
-                                                    btn1Ontap: () {
-                                                      checkController
-                                                          .handleYesButtonClick(
-                                                              "Normal");
-                                                    },
-                                                    btn2Ontap: () {
-                                                      checkController
-                                                          .handleNoButtonClick(
-                                                              "Low");
-                                                    },
-                                                    submitOntap: () {
-                                                      storingIDController
-                                                          .stockLevelPutData([
-                                                        {
-                                                          "retailerid":
-                                                              storingIDController
-                                                                  .retailerid
-                                                                  .value,
-                                                          "branchid":
-                                                              storingIDController
-                                                                  .branchid
-                                                                  .value,
-                                                          "custmoreid":
-                                                              storingIDController
-                                                                  .custmoreid
-                                                                  .value,
-                                                          "categoryid":
-                                                              storingIDController
-                                                                  .categoryid
-                                                                  .value,
-                                                          "productId": logPro
-                                                              .productList[
-                                                                  index]
-                                                              .productId
-                                                              .toString(),
-                                                          "stockLevelValue":
+                                                                  .handleYesButtonClick(
+                                                                      "Yes");
+                                                            },
+                                                            btn2Ontap: () {
                                                               checkController
-                                                                  .selectRadioBtnVal
-                                                                  .value,
-                                                          "imagedata":
-                                                              imageContoller
-                                                                  .takeBase64Image
-                                                                  .value
-                                                        }
-                                                      ]);
+                                                                  .handleNoButtonClick(
+                                                                      "No");
+                                                            },
+                                                            submitOntap: () {
+                                                              storingIDController
+                                                                  .accessiblePutData([
+                                                                {
+                                                                  "retailerid":
+                                                                      storingIDController
+                                                                          .retailerid
+                                                                          .value,
+                                                                  "branchid":
+                                                                      storingIDController
+                                                                          .branchid
+                                                                          .value,
+                                                                  "custmoreid":
+                                                                      storingIDController
+                                                                          .custmoreid
+                                                                          .value,
+                                                                  "categoryid":
+                                                                      storingIDController
+                                                                          .categoryid
+                                                                          .value,
+                                                                  "productId": logPro
+                                                                      .productList[
+                                                                          index]
+                                                                      .productId
+                                                                      .toString(),
+                                                                  "accessibleValue":
+                                                                      checkController
+                                                                          .selectRadioBtnVal
+                                                                          .value,
+                                                                  "imagedata":
+                                                                      imageContoller
+                                                                          .takeBase64Image
+                                                                          .value
+                                                                }
+                                                              ]);
 
-                                                      storingIDController
-                                                          .stockLevelGetData();
-                                                      Get.back();
-                                                    },
-                                                  );
-                                                },
-                                              ),
-                                              7.w.pw,
-                                              CustomButton(
-                                                width: 79.w,
-                                                height: 46.h,
-                                                size: 12.sp,
-                                                name: "Accessible ",
-                                                ontap: () {
-                                                  controller.commonDialog.value
-                                                      .showPopCustom(
-                                                    title: accessPopText,
-                                                    index: index,
-                                                    btn1Name: "Yes",
-                                                    btn2Name: "No",
-                                                    takePictureStatus: 0,
-                                                    btn1Ontap: () {
-                                                      checkController
-                                                          .handleYesButtonClick(
-                                                              "Yes");
-                                                    },
-                                                    btn2Ontap: () {
-                                                      checkController
-                                                          .handleNoButtonClick(
-                                                              "No");
-                                                    },
-                                                    submitOntap: () {
-                                                      storingIDController
-                                                          .accessiblePutData([
-                                                        {
-                                                          "retailerid":
                                                               storingIDController
-                                                                  .retailerid
-                                                                  .value,
-                                                          "branchid":
-                                                              storingIDController
-                                                                  .branchid
-                                                                  .value,
-                                                          "custmoreid":
-                                                              storingIDController
-                                                                  .custmoreid
-                                                                  .value,
-                                                          "categoryid":
-                                                              storingIDController
-                                                                  .categoryid
-                                                                  .value,
-                                                          "productId": logPro
-                                                              .productList[
-                                                                  index]
-                                                              .productId
-                                                              .toString(),
-                                                          "accessibleValue":
-                                                              checkController
-                                                                  .selectRadioBtnVal
-                                                                  .value,
-                                                          "imagedata":
-                                                              imageContoller
-                                                                  .takeBase64Image
-                                                                  .value
-                                                        }
-                                                      ]);
-
-                                                      storingIDController
-                                                          .accessibleGetData();
-                                                      Get.back();
-                                                    },
-                                                  );
-                                                },
+                                                                  .accessibleGetData();
+                                                              Get.back();
+                                                            },
+                                                          );
+                                                        },
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -800,12 +933,15 @@ class CustomRadioWidget extends StatelessWidget {
   final String value;
   final double width;
   final double height;
+  final Color color;
   final String groupValue;
   final ValueChanged<String?> onChanged;
 
   const CustomRadioWidget({
+    super.key,
     required this.onTap,
     required this.name,
+    required this.color,
     required this.value,
     required this.width,
     required this.height,
@@ -822,7 +958,7 @@ class CustomRadioWidget extends StatelessWidget {
         height: height,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: Colors.red,
+          color: color,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(
@@ -830,7 +966,7 @@ class CustomRadioWidget extends StatelessWidget {
           children: [
             Text(
               name,
-              style: TextStyle(fontSize: 16, color: Colors.white),
+              style: const TextStyle(fontSize: 16, color: Colors.white),
             ),
             Radio<String>(
               value: value,

@@ -137,7 +137,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
                                               IconButton(
-                                                icon: Icon(Icons.edit),
+                                                icon: const Icon(Icons.edit),
                                                 onPressed: () {
                                                   // Perform edit operation for the item at this index
                                                   scanController
@@ -179,7 +179,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
                                                 },
                                               ),
                                               IconButton(
-                                                icon: Icon(Icons.delete),
+                                                icon: const Icon(Icons.delete),
                                                 onPressed: () {
                                                   // Perform delete operation for the item at this index
                                                   _deleteItem(index);

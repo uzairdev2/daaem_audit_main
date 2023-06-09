@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'dart:convert';
 
 import 'package:get/get.dart';
@@ -26,19 +28,27 @@ class ImageContoller extends GetxController {
 
   Rx<File?> takeimageFile = Rx<File?>(null);
   RxList<File> rowImages = <File>[].obs;
-  RxString takeBase64Image = ''.obs;
+  RxString takeBase64Image = "".obs;
 
-  Future<void> takeImage() async {
+  Future<void> takeImage(int index) async {
     final image = await ImagePicker().pickImage(source: ImageSource.camera);
     if (image != null) {
       rowImages.add(File(image.path));
       takeimageFile.value = File(image.path);
       update();
-      List<int> imageBytes = await takeimageFile.value!.readAsBytes();
-      takeBase64Image.value = base64Encode(imageBytes);
+
       valueCheck2.value = true;
     } else {
       // Handle case when no image is captured
+    }
+  }
+
+  takinkSpecficBase(int index) async {
+    if (index >= 0 && index < rowImages.length) {
+      List<int> imageBytes = await rowImages[index].readAsBytes();
+      takeBase64Image.value = imageBytes as String;
+    } else {
+      print("sorry image is emplty");
     }
   }
 }

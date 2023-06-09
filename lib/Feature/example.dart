@@ -1,50 +1,147 @@
-// import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 
-// import 'package:flutter/material.dart';
-// import 'package:flutter/src/widgets/framework.dart';
-// import 'package:flutter/src/widgets/placeholder.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:get/get.dart';
-// import 'package:image_picker/image_picker.dart';
+class DataModel {
+  final String retailerId;
+  final String branchId;
+  final String customerId;
+  final String categoryId;
+  final String productId;
+  final String osaValue;
+  final String barcode;
+  final String imageData;
 
-// import '../Core/Constant/Colors/colors.dart';
-// import '../Core/Controller/controller_detail.dart';
-// import '../Core/Utils/custom_text.dart';
+  DataModel({
+    required this.retailerId,
+    required this.branchId,
+    required this.customerId,
+    required this.categoryId,
+    required this.productId,
+    required this.osaValue,
+    required this.barcode,
+    required this.imageData,
+  });
+}
 
-// class MyWidget extends StatelessWidget {
-//   MyWidget({super.key});
-//   final CheckController checkController = Get.put(CheckController());
+class DataController extends GetxController {
+  final dataList = <DataModel>[].obs;
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Center(
-//         child: Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             crossAxisAlignment: CrossAxisAlignment.center,
-//             children: [
-//               InkWell(
-//                 onTap: () async {
-//                   await checkController.proFile();
-//                 },
-//                 child: Obx(
-//                   () => checkController.imageFile.value == null
-//                       ? CustomText(
-//                           name: "Take a Picture",
-//                           color: Colors.black,
-//                           size: 12.sp,
-//                           alignment: TextAlign.center,
-//                           weightFont: FontWeight.w700,
-//                         )
-//                       : Image.file(
-//                           checkController.imageFile.value!,
-//                           width: 50.w,
-//                           height: 50.h,
-//                         ),
-//                 ),
-//               )
-//             ]),
-//       ),
-//     );
-//   }
-// }
+  Future<void> storeData(int index, DataModel data) async {
+    final boxname = await Hive.openBox("osaData");
+    boxname.putAt(index, data);
+  }
+
+  DataModel getData(int index) {
+    final boxname = Hive.box("osaData");
+    final data = boxname.getAt(index) as DataModel;
+    return data;
+  }
+}
+
+class MyApp extends StatelessWidget {
+  final DataController dataController = Get.put(DataController());
+
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      title: 'Data Storage Example',
+      home: Scaffold(
+        appBar: AppBar(title: Text('Data Storage Example')),
+        body: ListView.builder(
+          itemCount: dataController.dataList.length,
+          itemBuilder: (context, index) {
+            final data = dataController.getData(index);
+            return ListTile(
+              title: Text('Data $index'),
+              subtitle: Text(data.osaValue),
+              trailing: ElevatedButton(
+                onPressed: () => openAlertDialog(index),
+                child: Text('Select'),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Future<void> openAlertDialog(int index) async {
+    final data = dataController.getData(index);
+
+    String? selectedValue = "";
+    showDialog<String>(
+      context: Get.context!,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Select Value'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                title: Text('Yes'),
+                leading: Radio<String>(
+                  value: 'Yes',
+                  groupValue: data.osaValue,
+                  onChanged: (value) {
+                    selectedValue = value;
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text('No'),
+                leading: Radio<String>(
+                  value: 'No',
+                  groupValue: data.osaValue,
+                  onChanged: (value) {
+                    selectedValue = value;
+                  },
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                if (selectedValue != null) {
+                  final updatedData = data.copyWith(osaValue: selectedValue);
+                  dataController.storeData(index, updatedData);
+                }
+                Navigator.of(context).pop(selectedValue);
+              },
+              child: Text('Submit'),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (selectedValue != null) {
+      dataController.dataList[index] = data.copyWith(osaValue: selectedValue);
+    }
+  }
+}
+
+extension DataModelExtension on DataModel {
+  DataModel copyWith({
+    String? retailerId,
+    String? branchId,
+    String? customerId,
+    String? categoryId,
+    String? productId,
+    String? osaValue,
+    String? barcode,
+    String? imageData,
+  }) {
+    return DataModel(
+      retailerId: retailerId ?? this.retailerId,
+      branchId: branchId ?? this.branchId,
+      customerId: customerId ?? this.customerId,
+      categoryId: categoryId ?? this.categoryId,
+      productId: productId ?? this.productId,
+      osaValue: osaValue ?? this.osaValue,
+      barcode: barcode ?? this.barcode,
+      imageData: imageData ?? this.imageData,
+    );
+  }
+}
