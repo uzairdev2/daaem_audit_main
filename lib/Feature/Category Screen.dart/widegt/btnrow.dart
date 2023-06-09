@@ -1,6 +1,5 @@
 // ignore_for_file: unnecessary_null_comparison, must_be_immutable
 
-import 'package:daaem_reports/Core/Controller/btn_controller.dart/osaFtnStoringID.dart';
 import 'package:daaem_reports/Core/Utils/sizebox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,6 +29,7 @@ class BtnRow extends StatelessWidget {
             size: 12.sp,
             ontap: () async {
               imageContoller.takinkSpecficBase(index);
+
               controller.commonDialog.value.showPopwithCustom(
                   name: sOAPopText,
                   colum: Column(
@@ -52,7 +52,6 @@ class BtnRow extends StatelessWidget {
                             () => CustomRadioWidget(
                               onTap: () {
                                 osaFtnBTn.handleYesButtonClick("yes", index);
-                                osaFtnBTn.osaBtnvalue[index].value = true;
                               },
                               name: "Yes",
                               value: "yes",
@@ -72,7 +71,6 @@ class BtnRow extends StatelessWidget {
                               color: red,
                               onTap: () {
                                 osaFtnBTn.handleNoButtonClick("no", index);
-                                osaFtnBTn.osaBtnvalue[index].value = false;
                               },
                               name: "No",
                               value: "no",
@@ -99,74 +97,28 @@ class BtnRow extends StatelessWidget {
                             if (osaFtnBTn.osaVAlueYesorNO[index] != null) {
                               osaFtnBTn.osaFtnStoringID(index, [
                                 {
-                                  "retailerId":
+                                  "retailerid":
                                       storingIDController.retailerid.value,
-                                  "branchId":
-                                      storingIDController.retailerid.value,
-                                  "customerId":
-                                      storingIDController.retailerid.value,
-                                  "categoryId":
-                                      storingIDController.retailerid.value,
-                                  "productId":
-                                      storingIDController.retailerid.value,
+                                  "branchid":
+                                      storingIDController.branchid.value,
+                                  "custmoreid":
+                                      storingIDController.custmoreid.value,
+                                  "categoryid":
+                                      storingIDController.categoryid.value,
+                                  "productId": logPro
+                                      .productList[index].productId
+                                      .toString(),
                                   "osaValue":
-                                      storingIDController.retailerid.value,
-                                  "barcode":
-                                      storingIDController.retailerid.value,
-                                  "imageData":
-                                      storingIDController.retailerid.value
-                                }
+                                      osaFtnBTn.osaVAlueYesorNO[index].value,
+                                  "barcode": logPro.productList[index].barcode
+                                      .toString(),
+                                  "imagedata": "Image is not selected Yet",
+                                },
                               ]);
-                              // if (imageContoller.takeBase64Image.value ==
-                              //     null) {
-                              //   osaFtnBTn.osaFtnStoringID(index, [
-                              //     {
-                              //       "retailerid":
-                              //           storingIDController.retailerid.value,
-                              //       "branchid":
-                              //           storingIDController.branchid.value,
-                              //       "custmoreid":
-                              //           storingIDController.custmoreid.value,
-                              //       "categoryid":
-                              //           storingIDController.categoryid.value,
-                              //       "productId": logPro
-                              //           .productList[index].productId
-                              //           .toString(),
-                              //       "osaValue":
-                              //           osaFtnBTn.osaVAlueYesorNO[index].value,
-                              //       "barcode": logPro.productList[index].barcode
-                              //           .toString(),
-                              //       "imagedata": "Image is not selected Yet",
-                              //     },
-                              //   ]);
 
-                              //   Get.back();
-                              // } else {
-                              //   osaFtnBTn.osaFtnStoringID(index, [
-                              //     {
-                              //       "retailerid":
-                              //           storingIDController.retailerid.value,
-                              //       "branchid":
-                              //           storingIDController.branchid.value,
-                              //       "custmoreid":
-                              //           storingIDController.custmoreid.value,
-                              //       "categoryid":
-                              //           storingIDController.categoryid.value,
-                              //       "productId": logPro
-                              //           .productList[index].productId
-                              //           .toString(),
-                              //       "osaValue":
-                              //           osaFtnBTn.osaVAlueYesorNO[index].value,
-                              //       "barcode": logPro.productList[index].barcode
-                              //           .toString(),
-                              //       "imagedata":
-                              //           imageContoller.takeBase64Image.value,
-                              //     },
-                              //   ]);
-                              //   Get.back();
-                              // }
-                              // osaFtnBTn.getOsaValue(index);
+                              Get.back();
 
+                              osaFtnBTn.getOsaValue(index);
                               Get.snackbar("Saved", "SuccessFully",
                                   snackPosition: SnackPosition.BOTTOM,
                                   backgroundColor: red);
@@ -185,7 +137,7 @@ class BtnRow extends StatelessWidget {
         12.w.pw,
         Obx(
           () => Visibility(
-            visible: osaFtnBTn.osaBtnvalue[index].value,
+            visible: osaFtnBTn.osaBtnvalue[index].value == true,
             child: Row(
               children: [
                 CustomButton(
