@@ -132,7 +132,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
                                                   "Barcode :${data[index].barcode}"),
                                           subtitle: CustomText(
                                               name:
-                                                  "Quantity :${data[index].quamtitiy}"),
+                                                  "Quantity :${data[index].quamtitiy.toString()}"),
                                           trailing: Row(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [

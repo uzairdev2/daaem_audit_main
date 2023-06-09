@@ -28,7 +28,7 @@ class BtnRow extends StatelessWidget {
             name: "OSA",
             size: 12.sp,
             ontap: () async {
-              imageContoller.takinkSpecficBase(index);
+              // imageContoller.takinkSpecficBase(index);
 
               controller.commonDialog.value.showPopwithCustom(
                   name: sOAPopText,
@@ -95,6 +95,10 @@ class BtnRow extends StatelessWidget {
                           name: "Submit",
                           ontap: () {
                             if (osaFtnBTn.osaVAlueYesorNO[index] != null) {
+                              // await boxname.close();
+
+                              // osaFtnBTn.updateValueAtIndex(index, "yes");
+
                               osaFtnBTn.osaFtnStoringID(index, [
                                 {
                                   "retailerid":
