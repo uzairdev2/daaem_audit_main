@@ -9,4 +9,7 @@ class RoutesName {
   static const categoryScreen = '/categoryScreen';
   static const scannerScreen = '/scannerScreen';
   static const secondaryplace = '/secondaryplace';
+  static const materialSales = '/materialSales';
+
+  static const promoScreen = '/promoscreen';
 }

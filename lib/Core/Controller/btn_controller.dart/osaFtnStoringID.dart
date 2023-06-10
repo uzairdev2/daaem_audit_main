@@ -63,19 +63,6 @@ class OsaFtnBTn extends GetxController {
     } else {
       print('Invalid index: $index');
     }
-
-    Future<dynamic> getSpecificValueFromBox(int index, String key) async {
-      final box = await Hive.openBox<Map<String, dynamic>>('my_box');
-      Map<String, dynamic>? data = box.getAt(index);
-
-      if (data != null && data.containsKey(key)) {
-        dynamic specificValue = data[key];
-
-        return specificValue;
-      }
-
-      return null; // Handle the case when the data or key is not found
-    }
   }
 
   Future<dynamic> getSpecificValueFromBox(int index, String key) async {

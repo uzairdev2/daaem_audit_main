@@ -5,14 +5,16 @@ import 'package:get/get.dart';
 import '../Constant/Colors/colors.dart';
 
 class CustomCheckBox extends StatelessWidget {
-  const CustomCheckBox({required this.value, super.key});
+  const CustomCheckBox(
+      {required this.value, required this.onChanged, super.key});
   final RxBool value;
+  final ValueChanged<bool>? onChanged;
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => InkWell(
         onTap: () {
-          value.value = !value.value;
+          onChanged?.call(!value.value);
         },
         child: Container(
           height: 15.h,

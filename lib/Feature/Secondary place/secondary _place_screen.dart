@@ -1,5 +1,3 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:daaem_reports/Core/Utils/sizebox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,47 +5,22 @@ import 'package:get/get.dart';
 
 import '../../Core/Constant/Colors/colors.dart';
 import '../../Core/Controller/controller_detail.dart';
+import '../../Core/Utils/Camera Widget/camera_widget.dart';
 import '../../Core/Utils/checkbox.dart';
+import '../../Core/Utils/commonAppbar.dart';
 import '../../Core/Utils/common_dialogue.dart';
 import '../../Core/Utils/customButton.dart';
-import '../../Core/Utils/customText.dart';
-import '../../Core/Utils/dropdown.dart';
 
 class Secondaryplace extends StatelessWidget {
-  Secondaryplace({super.key});
-
-  List<String> countries = ['Coke', 'pepsi', 'Dew', 'Spirit', '7up'];
+  const Secondaryplace({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: CustomText(
-          name: "Secondary place",
-          size: 18.sp,
-          weightFont: FontWeight.w700,
-        ),
-        centerTitle: true,
-        leading: Padding(
-          padding: EdgeInsets.only(left: 16.w, top: 24.h),
-          child: InkWell(
-            onTap: () {
-              Get.back();
-            },
-            child: Container(
-              width: 30.w,
-              height: 30.h,
-              decoration: BoxDecoration(
-                  color: aquamarine, borderRadius: BorderRadius.circular(5.r)),
-              child: Icon(
-                Icons.arrow_back,
-                color: white,
-                weight: 18.w,
-              ),
-            ),
-          ),
-        ),
+      appBar: CommonAppBar(
+        title: "Secondary place",
+        onBackTap: () {
+          Get.back();
+        },
       ),
       body: Padding(
         padding: EdgeInsets.only(left: 16.w, top: 15.h, right: 16.w),
@@ -57,43 +30,162 @@ class Secondaryplace extends StatelessWidget {
           children: [
             Row(
               children: [
-                CustomButtonCheckBox(
-                  width: 160.w,
-                  height: 46.h,
-                  size: 12.sp,
-                  color: red,
-                  checkbox: CustomCheckBox(value: checkController.checkValue2),
-                  name: "Gandula",
-                  ontap: () {},
+                Column(
+                  children: [
+                    CustomButtonCheckBox(
+                      width: 160.w,
+                      height: 46.h,
+                      size: 12.sp,
+                      color: red,
+                      checkbox: CustomCheckBox(
+                        value: checkController.yesValue,
+                        onChanged: (value) {
+                          checkController.yesValue.value = value;
+                        },
+                      ),
+                      name: "Gandula",
+                      ontap: () {
+                        checkController.yesValue.value =
+                            !checkController.yesValue.value;
+                      },
+                    ),
+                    10.h.ph,
+                    Obx(() {
+                      return Visibility(
+                        visible: checkController.yesValue.value,
+                        child: Align(
+                          alignment: Alignment.bottomLeft,
+                          child: CameraWidget(
+                            imagePath: imageContoller.gandulaimageFile,
+                            showImage: imageContoller.gandulaValue,
+                            onTap: () {
+                              imageContoller.gandulaImage();
+                            },
+                          ),
+                        ),
+                      );
+                    }),
+                  ],
                 ),
                 5.w.pw,
-                CustomButtonCheckBox(
-                  width: 160.w,
-                  height: 46.h,
-                  size: 12.sp,
-                  color: red,
-                  checkbox: CustomCheckBox(value: checkController.checkValue1),
-                  name: "Floor Display",
-                  ontap: () {},
+                Column(
+                  children: [
+                    CustomButtonCheckBox(
+                      width: 160.w,
+                      height: 46.h,
+                      size: 12.sp,
+                      color: red,
+                      checkbox: CustomCheckBox(
+                        value: checkController.noValue,
+                        onChanged: (value) {
+                          checkController.noValue.value = value;
+                        },
+                      ),
+                      name: "Floor Display",
+                      ontap: () {
+                        checkController.noValue.value =
+                            !checkController.noValue.value;
+                      },
+                    ),
+                    10.h.ph,
+                    Obx(() {
+                      return Visibility(
+                        visible: checkController.noValue.value,
+                        child: Align(
+                          alignment: Alignment.bottomLeft,
+                          child: CameraWidget(
+                            imagePath: imageContoller.floorimageFile,
+                            showImage: imageContoller.floorValue,
+                            onTap: () {
+                              imageContoller.floorImage();
+                            },
+                          ),
+                        ),
+                      );
+                    }),
+                  ],
                 ),
               ],
             ),
             20.h.ph,
-            CustomDropdownButton(
-              hint: "Nothing selected",
-              items: countries,
-              width: 325.w,
-              size: 12.sp,
-              color: white,
-              backgroundColor: red,
-              height: 56.h,
-              iconsizes: 24,
-              onChanged: (value) {},
-            ),
-            10.h.ph,
-            const Align(
-              alignment: Alignment.bottomLeft,
-              child: CameraWIdget(),
+            Row(
+              children: [
+                Column(
+                  children: [
+                    CustomButtonCheckBox(
+                      width: 160.w,
+                      height: 46.h,
+                      size: 12.sp,
+                      color: red,
+                      checkbox: CustomCheckBox(
+                        value: checkController.noVal,
+                        onChanged: (value) {
+                          checkController.noVal.value = value;
+                        },
+                      ),
+                      name: "Stand",
+                      ontap: () {
+                        checkController.noVal.value =
+                            !checkController.noVal.value;
+                      },
+                    ),
+                    10.h.ph,
+                    Obx(() {
+                      return Visibility(
+                        visible: checkController.noVal.value,
+                        child: Align(
+                          alignment: Alignment.bottomLeft,
+                          child: CameraWidget(
+                            imagePath: imageContoller.standimageFile,
+                            showImage: imageContoller.standValue,
+                            onTap: () {
+                              imageContoller.standImage();
+                            },
+                          ),
+                        ),
+                      );
+                    }),
+                  ],
+                ),
+                5.w.pw,
+                Column(
+                  children: [
+                    CustomButtonCheckBox(
+                      width: 160.w,
+                      height: 46.h,
+                      size: 12.sp,
+                      color: red,
+                      checkbox: CustomCheckBox(
+                        value: checkController.yesVal,
+                        onChanged: (value) {
+                          checkController.yesVal.value = value;
+                        },
+                      ),
+                      name: "Promotion Area",
+                      ontap: () {
+                        checkController.yesVal.value =
+                            !checkController.yesVal.value;
+                      },
+                    ),
+                    10.h.ph,
+                    Obx(() {
+                      return Visibility(
+                        visible: checkController.yesVal.value,
+                        child: Align(
+                          alignment: Alignment.bottomLeft,
+                          child: CameraWidget(
+                            imagePath: imageContoller.promotionimageFile,
+                            showImage: imageContoller.promoValue,
+                            onTap: () {
+                              imageContoller.promoImage();
+                            },
+                          ),
+                        ),
+                      );
+                    }),
+                  ],
+                ),
+              ],
             ),
             20.h.ph,
             CustomButton(
@@ -101,7 +193,9 @@ class Secondaryplace extends StatelessWidget {
               height: 46.h,
               color: aquamarine,
               name: "Submit",
-              ontap: () {},
+              ontap: () {
+                Get.back();
+              },
             )
           ],
         ),

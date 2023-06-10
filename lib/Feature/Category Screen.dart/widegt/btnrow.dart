@@ -10,6 +10,7 @@ import '../../../Core/API,s Intergartion/API,s.dart';
 import '../../../Core/Constant/Colors/colors.dart';
 import '../../../Core/Constant/Text/text.dart';
 import '../../../Core/Controller/controller_detail.dart';
+import '../../../Core/Utils/alertDialoge/simpleYesorNO.dart';
 import '../../../Core/Utils/customButton.dart';
 import '../category_screen.dart';
 
@@ -190,39 +191,59 @@ class BtnRow extends StatelessWidget {
                   size: 12.sp,
                   name: "Stock level",
                   ontap: () {
-                    controller.commonDialog.value.showPopCustom(
-                      title: stockLevelPopText,
-                      index: index,
-                      btn1Name: "Normal",
-                      takePictureStatus: 0,
-                      btn2Name: "Low",
-                      value1: "Normal",
-                      value2: "Low",
-                      btn1Ontap: () {
-                        checkController.handleYesButtonClick("Normal");
-                      },
-                      btn2Ontap: () {
-                        checkController.handleNoButtonClick("Low");
-                      },
-                      submitOntap: () {
-                        storingIDController.stockLevelPutData([
-                          {
-                            "retailerid": storingIDController.retailerid.value,
-                            "branchid": storingIDController.branchid.value,
-                            "custmoreid": storingIDController.custmoreid.value,
-                            "categoryid": storingIDController.categoryid.value,
-                            "productId":
-                                logPro.productList[index].productId.toString(),
-                            "stockLevelValue":
-                                checkController.selectRadioBtnVal.value,
-                            "imagedata": imageContoller.takeBase64Image.value
-                          }
-                        ]);
+                    Get.dialog(MyAlertDialog(
+                        title: stockLevelPopText,
+                        yesTap: () {
+                          stockLevelFtnBtn.handleYesButtonClick("Normal");
+                        },
+                        noTap: () {
+                          stockLevelFtnBtn.handleNoButtonClick("Low");
+                        },
+                        containerHeight: 40.h,
+                        containerWidth: 100.w,
+                        option1Text: "Normal",
+                        radio1: Obx(
+                          () => Radio<String>(
+                            value: "Normal",
+                            activeColor: white,
+                            groupValue: stockLevelFtnBtn.stockValue.value,
+                            onChanged: (p0) {
+                              stockLevelFtnBtn.handleNoButtonClick(p0!);
+                            },
+                          ),
+                        ),
+                        option2Text: "Low",
+                        radio2: Obx(
+                          () => Radio<String>(
+                            value: "Low",
+                            activeColor: white,
+                            groupValue: stockLevelFtnBtn.stockValue.value,
+                            onChanged: (p0) {
+                              stockLevelFtnBtn.handleNoButtonClick(p0!);
+                            },
+                          ),
+                        ),
+                        onSubmit: () {
+                          // storingIDController.stockLevelPutData([
+                          //   {
+                          //     "retailerid":
+                          //         storingIDController.retailerid.value,
+                          //     "branchid": storingIDController.branchid.value,
+                          //     "custmoreid":
+                          //         storingIDController.custmoreid.value,
+                          //     "categoryid":
+                          //         storingIDController.categoryid.value,
+                          //     "productId": logPro.productList[index].productId
+                          //         .toString(),
+                          //     "stockLevelValue":
+                          //         checkController.selectRadioBtnVal.value,
+                          //     "imagedata": imageContoller.takeBase64Image.value
+                          //   }
+                          // ]);
 
-                        storingIDController.stockLevelGetData();
-                        Get.back();
-                      },
-                    );
+                          // storingIDController.stockLevelGetData();
+                          Get.back();
+                        }));
                   },
                 ),
                 7.w.pw,

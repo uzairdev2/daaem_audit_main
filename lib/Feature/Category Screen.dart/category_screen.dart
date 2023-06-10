@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable, unnecessary_null_comparison, unrelated_type_equality_checks
 
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:daaem_reports/Core/Utils/alertDialoge/simpleYesorNO.dart';
 import 'package:daaem_reports/Core/Utils/common_dialogue.dart';
@@ -408,6 +409,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                       for (int i = 0; i <= index; i++) {
                                         imageContoller.imagevalue
                                             .add(false.obs);
+                                        //  imageContoller.rowImages.value = List.generate(10, (index) => null).obs;
                                         osaFtnBTn.osaBtnvalue.add(false.obs);
                                         osaFtnBTn.osaVAlueYesorNO.add("".obs);
                                       }
@@ -460,39 +462,65 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                   log("here is product barcode ${logPro.productList[index].barcode}");
                                                 },
                                               ),
-                                              InkWell(
-                                                onTap: () async {
-                                                  await imageContoller
-                                                      .takeImage(index);
-                                                  imageContoller
-                                                      .imagevalue[index]
-                                                      .value = true;
-                                                },
-                                                child: Obx(() => imageContoller
-                                                                .imagevalue[
-                                                            index] ==
-                                                        false
-                                                    ? CustomText(
-                                                        name: "Picture",
-                                                        color: Colors.black,
-                                                        size: 12.sp,
-                                                        alignment:
-                                                            TextAlign.center,
-                                                        weightFont:
-                                                            FontWeight.w700,
-                                                      )
-                                                    : Container(
-                                                        width: 75.w,
-                                                        height: 50.h,
-                                                        decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                                color: red)),
-                                                        child: Image.file(
+                                              SizedBox(
+                                                width: 75.w,
+                                                height: 50.h,
+                                                child: Center(
+                                                  child: InkWell(
+                                                    onTap: () async {
+                                                      await imageContoller
+                                                          .takeImage(index);
+                                                      imageContoller
+                                                          .imagevalue[index]
+                                                          .value = true;
+                                                      print(imageContoller
+                                                          .imagevalue[index]
+                                                          .value = true);
+                                                    },
+                                                    child: Obx(() {
+                                                      if (index <
                                                           imageContoller
-                                                              .rowImages[index],
-                                                          fit: BoxFit.fitWidth,
-                                                        ),
-                                                      )),
+                                                              .rowImages
+                                                              .length) {
+                                                        // Show the captured image
+                                                        return Container(
+                                                          width: 75.w,
+                                                          height: 50.h,
+                                                          decoration: BoxDecoration(
+                                                              border:
+                                                                  Border.all(
+                                                                      color:
+                                                                          red)),
+                                                          child: Image.file(
+                                                            imageContoller
+                                                                    .rowImages[
+                                                                index],
+                                                            fit:
+                                                                BoxFit.fitWidth,
+                                                          ),
+                                                        );
+                                                      } else {
+                                                        // Show the button for capturing the image
+                                                        return InkWell(
+                                                          onTap: () {
+                                                            imageContoller
+                                                                .takeImage(
+                                                                    index);
+                                                          },
+                                                          child: CustomText(
+                                                            name: "Picture",
+                                                            color: Colors.black,
+                                                            size: 12.sp,
+                                                            alignment: TextAlign
+                                                                .center,
+                                                            weightFont:
+                                                                FontWeight.w700,
+                                                          ),
+                                                        );
+                                                      }
+                                                    }),
+                                                  ),
+                                                ),
                                               )
                                             ],
                                           ),

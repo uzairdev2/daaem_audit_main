@@ -1,10 +1,12 @@
 import 'package:daaem_reports/Core/Routes/routes_name.dart';
+import 'package:daaem_reports/Feature/Competitors%20Screen/Promotion%20Screen%20in%20Competitors/promo_screen.dart';
 import 'package:daaem_reports/Feature/Scanner%20Screen/scanner_screen.dart';
 import 'package:daaem_reports/Feature/Sign%20In/sign_in.dart';
 import 'package:get/get.dart';
 
 import '../../Feature/Category Screen.dart/category_screen.dart';
 import '../../Feature/Competitors Screen/competitors_screen.dart';
+import '../../Feature/Competitors Screen/materialSales.dart/materialsales.dart';
 import '../../Feature/Home Screen.dart/home_screen.dart';
 import '../../Feature/Promotion Screen/promotion_screen.dart';
 import '../../Feature/Secondary place/secondary _place_screen.dart';
@@ -42,7 +44,15 @@ class AppRoutes {
         ),
         GetPage(
           name: RoutesName.secondaryplace,
-          page: () => Secondaryplace(),
+          page: () => const Secondaryplace(),
+        ),
+        GetPage(
+          name: RoutesName.materialSales,
+          page: () => const MaterialSalesScreen(),
+        ),
+        GetPage(
+          name: RoutesName.promoScreen,
+          page: () => const PromoScreen(),
         ),
       ];
 }

@@ -65,6 +65,7 @@ class MyAlertDialog extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      5.w.pw,
                       CustomText(
                         name: option1Text,
                         size: 16,
@@ -89,6 +90,7 @@ class MyAlertDialog extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      5.w.pw,
                       CustomText(
                         name: option2Text,
                         color: white,
