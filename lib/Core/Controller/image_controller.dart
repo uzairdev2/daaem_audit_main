@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_null_comparison
+// ignore_for_file: unnecessary_null_comparison, avoid_print
 
 import 'dart:convert';
 
@@ -10,6 +10,10 @@ class ImageContoller extends GetxController {
   Rx<File?> cleanimageFile = Rx<File?>(null);
   RxString cleanBase64Image = ''.obs;
 
+  Rx<File?> promotionalimageFile = Rx<File?>(null);
+  RxString promotionalBase64Image = ''.obs;
+  RxBool promotionalValue = false.obs;
+
   Rx<File?> gandulaimageFile = Rx<File?>(null);
   RxString gandulaBase64Image = ''.obs;
   RxBool gandulaValue = false.obs;
@@ -18,13 +22,17 @@ class ImageContoller extends GetxController {
   RxString floorBase64Image = ''.obs;
   RxBool floorValue = false.obs;
 
+  Rx<File?> moreSpaceimageFile = Rx<File?>(null);
+  RxString moreSpaceBase64Image = ''.obs;
+  RxBool moreSpaceValue = false.obs;
+
   Rx<File?> standimageFile = Rx<File?>(null);
   RxString standBase64Image = ''.obs;
   RxBool standValue = false.obs;
 
-  Rx<File?> promotionimageFile = Rx<File?>(null);
-  RxString promotionBase64Image = ''.obs;
-  RxBool promoValue = false.obs;
+  Rx<File?> secondaryPromotionFile = Rx<File?>(null);
+  RxString secondaryPromotionBass64Image = ''.obs;
+  RxBool secondaryPromValue = false.obs;
 
   Rx<File?> promotionScreenimageFile = Rx<File?>(null);
   RxString promotionScreenBase64Image = ''.obs;
@@ -51,6 +59,19 @@ class ImageContoller extends GetxController {
     }
   }
 
+  Future<void> moreSpaceImage() async {
+    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+    if (image != null) {
+      moreSpaceimageFile.value = File(image.path);
+      update();
+      List<int> imageBytes = await moreSpaceimageFile.value!.readAsBytes();
+      moreSpaceBase64Image.value = base64Encode(imageBytes);
+      moreSpaceValue.value = true;
+    } else {
+      // Handle case when no image is captured
+    }
+  }
+
   Future<void> gandulaImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.camera);
     if (image != null) {
@@ -59,6 +80,19 @@ class ImageContoller extends GetxController {
       List<int> imageBytes = await gandulaimageFile.value!.readAsBytes();
       gandulaBase64Image.value = base64Encode(imageBytes);
       gandulaValue.value = true;
+    } else {
+      // Handle case when no image is captured
+    }
+  }
+
+  Future<void> promotionalImage() async {
+    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+    if (image != null) {
+      promotionalimageFile.value = File(image.path);
+      update();
+      List<int> imageBytes = await promotionalimageFile.value!.readAsBytes();
+      promotionalBase64Image.value = base64Encode(imageBytes);
+      promotionalValue.value = true;
     } else {
       // Handle case when no image is captured
     }
@@ -93,11 +127,11 @@ class ImageContoller extends GetxController {
   Future<void> promoImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.camera);
     if (image != null) {
-      promotionimageFile.value = File(image.path);
+      secondaryPromotionFile.value = File(image.path);
       update();
-      List<int> imageBytes = await promotionimageFile.value!.readAsBytes();
-      promotionBase64Image.value = base64Encode(imageBytes);
-      promoValue.value = true;
+      List<int> imageBytes = await secondaryPromotionFile.value!.readAsBytes();
+      secondaryPromotionBass64Image.value = base64Encode(imageBytes);
+      secondaryPromValue.value = true;
     } else {
       // Handle case when no image is captured
     }
@@ -154,6 +188,57 @@ class ImageContoller extends GetxController {
       takeBase64Image.value = imageBytes as String;
     } else {
       print("sorry image is emplty");
+    }
+  }
+
+  Rx<File?> materialgandulaimageFile = Rx<File?>(null);
+  RxString materialgandulaBase64Image = ''.obs;
+  RxBool materialgandulaValue = false.obs;
+
+  Future<void> materialGandulaImage() async {
+    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+    if (image != null) {
+      materialgandulaimageFile.value = File(image.path);
+      update();
+      List<int> imageBytes =
+          await materialgandulaimageFile.value!.readAsBytes();
+      materialgandulaBase64Image.value = base64Encode(imageBytes);
+      materialgandulaValue.value = true;
+    } else {
+      // Handle case when no image is captured
+    }
+  }
+
+  Rx<File?> materialfloorimageFile = Rx<File?>(null);
+  RxString materialfloorBase64Image = ''.obs;
+  RxBool materialfloorValue = false.obs;
+  Future<void> materiaFloorImage() async {
+    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+    if (image != null) {
+      materialfloorimageFile.value = File(image.path);
+      update();
+      List<int> imageBytes = await materialfloorimageFile.value!.readAsBytes();
+      materialfloorBase64Image.value = base64Encode(imageBytes);
+      materialfloorValue.value = true;
+    } else {
+      // Handle case when no image is captured
+    }
+  }
+
+  Rx<File?> materialPromositeimageFile = Rx<File?>(null);
+  RxString materialPromositeBase64Image = ''.obs;
+  RxBool materialPromositeValue = false.obs;
+  Future<void> materialPromositeImage() async {
+    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+    if (image != null) {
+      materialPromositeimageFile.value = File(image.path);
+      update();
+      List<int> imageBytes =
+          await materialPromositeimageFile.value!.readAsBytes();
+      materialPromositeBase64Image.value = base64Encode(imageBytes);
+      materialPromositeValue.value = true;
+    } else {
+      // Handle case when no image is captured
     }
   }
 }

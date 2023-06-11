@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, avoid_print
 
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -26,7 +26,7 @@ class CleaningFtnBtn extends GetxController {
 
     boxname.put("retailerid", storingIDController.retailerid.value);
     boxname.put("branchid", storingIDController.branchid.value);
-    boxname.put("custmoreid", storingIDController.custmoreid.value);
+    boxname.put("customerid", storingIDController.custmoreid.value);
     boxname.put("categoryid", storingIDController.categoryid.value);
     boxname.put("imagedata", imagedata);
     boxname.put(
@@ -40,7 +40,7 @@ class CleaningFtnBtn extends GetxController {
 
     storingIDController.retailerid.value = boxname.get("retailerid");
     storingIDController.branchid.value = boxname.get("branchid");
-    storingIDController.custmoreid.value = boxname.get("custmoreid");
+    storingIDController.custmoreid.value = boxname.get("customerid");
     storingIDController.categoryid.value = boxname.get("categoryid");
     cleaningValue.value = boxname.get("cleaningValue");
   }

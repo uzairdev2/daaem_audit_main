@@ -9,7 +9,7 @@ import '../../Feature/Competitors Screen/competitors_screen.dart';
 import '../../Feature/Competitors Screen/materialSales.dart/materialsales.dart';
 import '../../Feature/Home Screen.dart/home_screen.dart';
 import '../../Feature/Promotion Screen/promotion_screen.dart';
-import '../../Feature/Secondary place/secondary _place_screen.dart';
+import '../../Feature/Promotion Screen/Secondary place/secondary _place_screen.dart';
 import '../../Feature/Splash Screen/splash_screen.dart';
 
 class AppRoutes {
@@ -52,7 +52,7 @@ class AppRoutes {
         ),
         GetPage(
           name: RoutesName.promoScreen,
-          page: () => const PromoScreen(),
+          page: () => PromoScreen(),
         ),
       ];
 }

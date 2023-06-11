@@ -1,11 +1,10 @@
-// ignore_for_file: unnecessary_null_comparison
+// ignore_for_file: unnecessary_null_comparison, avoid_print, unnecessary_brace_in_string_interps, file_names
 
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
 class OsaFtnBTn extends GetxController {
   RxBool radioValue = false.obs;
-  List<RxBool> osaBtnvalue = [];
   RxString name = "".obs;
   List osaList = [];
   List<dynamic> osaVAlueYesorNO = [];
@@ -13,12 +12,10 @@ class OsaFtnBTn extends GetxController {
   void handleYesButtonClick(String gernder, int index) {
     radioValue.value = !radioValue.value;
     osaVAlueYesorNO[index].value = gernder;
-    osaBtnvalue[index].value = true;
   }
 
   handleNoButtonClick(String gernder, int index) {
     radioValue.value = !radioValue.value;
-    osaBtnvalue[index].value = false;
     osaVAlueYesorNO[index].value = gernder;
   }
 

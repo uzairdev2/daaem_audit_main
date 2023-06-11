@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, unrelated_type_equality_checks
 
 import 'package:daaem_reports/Core/Controller/controller_detail.dart';
 import 'package:daaem_reports/Core/Utils/common_dialogue.dart';
@@ -19,11 +19,11 @@ class ScanController extends GetxController {
   final commonDialog = CommonDialog().obs;
   RxString barcode = ''.obs;
   RxString listCode = ''.obs;
-  RxBool barValueCheck = false.obs;
+  List<RxBool> barValueCheck = [];
   RxBool valueCheck = false.obs;
   String quantity = "";
 
-  Future<void> scanBarcode(String apiBarcode) async {
+  Future<void> scanBarcode(String apiBarcode, int index) async {
     String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
       '#FF0000', // Custom color for the scanner overlay
       'Cancel', // Text for the cancel button
@@ -35,9 +35,9 @@ class ScanController extends GetxController {
     if (barcodeScanRes != '-1') {
       barcode.value = barcodeScanRes;
       if (barcode == apiBarcode) {
-        barValueCheck.value = true;
+        barValueCheck[index].value = true;
       } else {
-        barValueCheck.value = true;
+        barValueCheck[index].value = true;
       }
 
       update();

@@ -5,3 +5,4 @@ const logoAndname = "assets/images/logoAndname.png";
 const menu = "assets/images/Menu.png";
 const camera = "assets/images/camera.png";
 const pricingIcon = "assets/images/pricingIcon.png";
+const planogramImg = "assets/images/planogram.png";

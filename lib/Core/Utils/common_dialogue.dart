@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_null_comparison, avoid_init_to_null
+// ignore_for_file: unnecessary_null_comparison, avoid_init_to_null, unrelated_type_equality_checks
 
 import 'dart:developer';
 
@@ -121,10 +121,11 @@ class CommonDialog {
             15.h.ph,
             barcodeStatus == 0
                 ? Obx(() => Column(children: [
-                      scanController.barValueCheck.value == false
+                      scanController.barValueCheck[index].value == false
                           ? InkWell(
                               onTap: () {
-                                scanController.scanBarcode("4796007317504");
+                                scanController.scanBarcode(
+                                    "4796007317504", index);
                               },
                               child: CustomText(name: "Try Agian 😔"))
                           : CustomText(name: "Matched ☺ ")

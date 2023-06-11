@@ -42,12 +42,14 @@ class DataController extends GetxController {
 class MyApp extends StatelessWidget {
   final DataController dataController = Get.put(DataController());
 
+  MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Data Storage Example',
       home: Scaffold(
-        appBar: AppBar(title: Text('Data Storage Example')),
+        appBar: AppBar(title: const Text('Data Storage Example')),
         body: ListView.builder(
           itemCount: dataController.dataList.length,
           itemBuilder: (context, index) {
@@ -57,7 +59,7 @@ class MyApp extends StatelessWidget {
               subtitle: Text(data.osaValue),
               trailing: ElevatedButton(
                 onPressed: () => openAlertDialog(index),
-                child: Text('Select'),
+                child: const Text('Select'),
               ),
             );
           },
@@ -74,12 +76,12 @@ class MyApp extends StatelessWidget {
       context: Get.context!,
       builder: (context) {
         return AlertDialog(
-          title: Text('Select Value'),
+          title: const Text('Select Value'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                title: Text('Yes'),
+                title: const Text('Yes'),
                 leading: Radio<String>(
                   value: 'Yes',
                   groupValue: data.osaValue,
@@ -89,7 +91,7 @@ class MyApp extends StatelessWidget {
                 ),
               ),
               ListTile(
-                title: Text('No'),
+                title: const Text('No'),
                 leading: Radio<String>(
                   value: 'No',
                   groupValue: data.osaValue,
@@ -109,7 +111,7 @@ class MyApp extends StatelessWidget {
                 }
                 Navigator.of(context).pop(selectedValue);
               },
-              child: Text('Submit'),
+              child: const Text('Submit'),
             ),
           ],
         );

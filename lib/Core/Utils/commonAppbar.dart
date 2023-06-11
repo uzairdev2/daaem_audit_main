@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:daaem_reports/Core/Utils/customText.dart';
 import 'package:daaem_reports/Core/Utils/sizebox.dart';
 import 'package:flutter/material.dart';

@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, file_names
 
 import 'package:daaem_reports/Core/Utils/sizebox.dart';
 import 'package:flutter/material.dart';
@@ -17,11 +17,15 @@ class MyAlertDialog extends StatelessWidget {
   final VoidCallback yesTap;
   final VoidCallback noTap;
   final VoidCallback onSubmit;
+  final bool widgetTrue;
+  final Widget? widget;
   Widget radio1;
   Widget radio2;
 
   MyAlertDialog({
     super.key,
+    this.widget,
+    required this.widgetTrue,
     required this.noTap,
     required this.yesTap,
     required this.title,
@@ -49,6 +53,13 @@ class MyAlertDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          10.h.ph,
+          widgetTrue == true
+              ? widget!
+              : const SizedBox(
+                  width: 1,
+                ),
+          10.h.ph,
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -68,7 +79,7 @@ class MyAlertDialog extends StatelessWidget {
                       5.w.pw,
                       CustomText(
                         name: option1Text,
-                        size: 16,
+                        size: 12.sp,
                         color: white,
                       ),
                       radio1
@@ -94,7 +105,7 @@ class MyAlertDialog extends StatelessWidget {
                       CustomText(
                         name: option2Text,
                         color: white,
-                        size: 16,
+                        size: 12.sp,
                       ),
                       radio2
                     ],
@@ -103,6 +114,7 @@ class MyAlertDialog extends StatelessWidget {
               ),
             ],
           ),
+          10.h.ph,
         ],
       ),
       actions: [

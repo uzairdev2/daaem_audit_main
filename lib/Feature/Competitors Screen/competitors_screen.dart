@@ -1,6 +1,9 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:daaem_reports/Core/Constant/Colors/colors.dart';
 import 'package:daaem_reports/Core/Constant/Text/text.dart';
 import 'package:daaem_reports/Core/Routes/routes_name.dart';
+import 'package:daaem_reports/Core/Utils/Camera%20Widget/camera_widget.dart';
 import 'package:daaem_reports/Core/Utils/custom_button.dart';
 import 'package:daaem_reports/Core/Utils/custom_textfield.dart';
 import 'package:daaem_reports/Core/Utils/sizebox.dart';
@@ -16,6 +19,12 @@ import '../../Core/Utils/custom_text.dart';
 class CompetitorsScreen extends StatelessWidget {
   CompetitorsScreen({super.key});
   CommonDialog commonDialog = CommonDialog();
+  String? name;
+  String? price;
+  String? weight;
+  String? notes;
+  String? discription;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -66,74 +75,117 @@ class CompetitorsScreen extends StatelessWidget {
                 ontap: () {
                   commonDialog.showPopwithCustom(
                       name: newitemPopText,
-                      colum: Column(
-                        children: [
-                          CustomTextfield(
-                            hintext: "Enter item name",
-                            bgcolor: lightgrey,
-                            width: 303.w,
-                            onchanged: (value) {
-                              storingIDController.itemName.value = value;
-                            },
-                            height: 46.h,
-                          ),
-                          10.h.ph,
-                          CustomTextfield(
-                            hintext: "Enter item Price",
-                            bgcolor: lightgrey,
-                            width: 303.w,
-                            height: 46.h,
-                            onchanged: (value) {
-                              storingIDController.itemPrice.value = value;
-                            },
-                          ),
-                          10.h.ph,
-                          CustomTextfield(
-                            hintext: "Enter Weight of item",
-                            bgcolor: lightgrey,
-                            width: 303.w,
-                            textType: TextInputType.number,
-                            height: 46.h,
-                            onchanged: (value) {
-                              storingIDController.expiryItem.value = value;
-                            },
-                          ),
-                          10.h.ph,
-                          Align(
-                            alignment: Alignment.bottomLeft,
-                            child: CustomText(
-                              name: "Add a note",
-                              size: 12.sp,
-                              weightFont: FontWeight.w600,
+                      colum: Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            CustomTextfield(
+                              hintext: "Enter item name",
+                              bgcolor: lightgrey,
+                              width: 303.w,
+                              vlid: (p0) {
+                                if (name!.isEmpty) {
+                                  return 'Please enter a value';
+                                }
+                                return null;
+                              },
+                              onchanged: (value) {
+                                name = value;
+                              },
+                              height: 46.h,
                             ),
-                          ),
-                          10.h.ph,
-                          CustomTextfield(
-                            hintext: "Enter Discription of the item",
-                            bgcolor: lightgrey,
-                            onchanged: (value) {
-                              storingIDController.discriptionOfitem.value =
-                                  value;
-                            },
-                            width: 303.w,
-                            height: 61.h,
-                          ),
-                          10.h.ph,
-                          Align(
-                            alignment: Alignment.bottomRight,
-                            child: CustomButton(
-                              width: 87.w,
-                              height: 40.h,
-                              color: aquamarine,
-                              name: "Submit",
-                              ontap: () {
-                                storingIDController.newItemFtnStoringID();
-                                storingIDController.newItemFtnGetingIDs();
-                                Get.back();
+                            10.h.ph,
+                            CustomTextfield(
+                              hintext: "Enter item Price",
+                              bgcolor: lightgrey,
+                              width: 303.w,
+                              height: 46.h,
+                              textType: TextInputType.number,
+                              vlid: (p0) {
+                                if (price!.isEmpty) {
+                                  return 'Please enter a value';
+                                }
+                                return null;
+                              },
+                              onchanged: (value) {
+                                price = value;
                               },
                             ),
-                          )
-                        ],
+                            10.h.ph,
+                            CustomTextfield(
+                              hintext: "Enter Weight of item",
+                              bgcolor: lightgrey,
+                              width: 303.w,
+                              height: 46.h,
+                              vlid: (p0) {
+                                if (weight!.isEmpty) {
+                                  return 'Please enter a value';
+                                }
+                                return null;
+                              },
+                              onchanged: (value) {
+                                weight = value;
+                              },
+                            ),
+                            10.h.ph,
+                            Align(
+                              alignment: Alignment.bottomLeft,
+                              child: CustomText(
+                                name: "Add a note",
+                                size: 12.sp,
+                                weightFont: FontWeight.w600,
+                              ),
+                            ),
+                            10.h.ph,
+                            CustomTextfield(
+                              hintext: "Enter Discription of the item",
+                              bgcolor: lightgrey,
+                              vlid: (p0) {
+                                if (discription!.isEmpty) {
+                                  return 'Please enter a value';
+                                }
+                                return null;
+                              },
+                              onchanged: (value) {
+                                discription = value;
+                              },
+                              width: 303.w,
+                              height: 61.h,
+                            ),
+                            10.h.ph,
+                            Align(
+                              alignment: Alignment.bottomRight,
+                              child: CustomButton(
+                                width: 87.w,
+                                height: 40.h,
+                                color: aquamarine,
+                                name: "Submit",
+                                ontap: () {
+                                  if (name != null &&
+                                      price != null &&
+                                      weight != null &&
+                                      discription != null &&
+                                      _formKey.currentState!.validate()) {
+                                    newItemController.newItemFtnStoringID(
+                                        name, price, weight, discription);
+                                    Get.back();
+                                    Get.snackbar(
+                                        "Successfully", "Data has been saved",
+                                        snackPosition: SnackPosition.BOTTOM,
+                                        backgroundColor: aquamarine);
+                                  } else {
+                                    Get.back();
+                                    Get.snackbar(
+                                        "Please", "Enter Data in textfield",
+                                        snackPosition: SnackPosition.BOTTOM,
+                                        backgroundColor: aquamarine);
+                                  }
+                                  {}
+                                },
+                              ),
+                            )
+                          ],
+                        ),
                       ));
                 },
               ),
@@ -146,6 +198,16 @@ class CompetitorsScreen extends StatelessWidget {
                       colum: Column(
                         children: [
                           15.h.ph,
+                          CameraWidget(
+                            containerWidth: 70.w,
+                            containerHeight: 70.h,
+                            imagePath: imageContoller.moreSpaceimageFile,
+                            showImage: imageContoller.moreSpaceValue,
+                            onTap: () {
+                              imageContoller.moreSpaceImage();
+                            },
+                          ),
+                          10.h.ph,
                           Align(
                             alignment: Alignment.bottomLeft,
                             child: CustomText(
@@ -160,7 +222,7 @@ class CompetitorsScreen extends StatelessWidget {
                             bgcolor: lightgrey,
                             width: 303.w,
                             onchanged: (value) {
-                              storingIDController.morespaceExpire.value = value;
+                              notes = value;
                             },
                             height: 61.h,
                           ),
@@ -173,9 +235,23 @@ class CompetitorsScreen extends StatelessWidget {
                               color: aquamarine,
                               name: "Submit",
                               ontap: () {
-                                storingIDController.moreSpaceFtnStoringID();
-                                storingIDController.moreSpaceFtnGetingIDs();
-                                Get.back();
+                                if (imageContoller.moreSpaceimageFile.value !=
+                                        null &&
+                                    notes != null) {
+                                  moreSpaceController
+                                      .moreSpaceFtnStoringID(notes);
+                                  Get.back();
+                                  Get.snackbar(
+                                      "Successfully", "Data has been saved",
+                                      snackPosition: SnackPosition.BOTTOM,
+                                      backgroundColor: aquamarine);
+                                } else {
+                                  Get.back();
+                                  Get.snackbar(
+                                      "Please", "Enter Data in textfield",
+                                      snackPosition: SnackPosition.BOTTOM,
+                                      backgroundColor: aquamarine);
+                                }
                               },
                             ),
                           )
@@ -188,91 +264,7 @@ class CompetitorsScreen extends StatelessWidget {
                   name: "New point of sale material",
                   ontap: () {
                     Get.toNamed(RoutesName.materialSales);
-                  }
-                  // commonDialog.showPopwithCustom(
-                  //   name: newpointPopText,
-                  // colum: Column(children: [
-                  //   Row(
-                  //     children: [
-                  //       CustomButtonCheckBox(
-                  //         width: 90.w,
-                  //         height: 40.h,
-                  //         size: 12.sp,
-                  //         color: grey,
-                  //         checkbox: CustomCheckBox(
-                  //             value: checkController.checkValue2),
-                  //         name: "Gandula",
-                  //         ontap: () {},
-                  //       ),
-                  //       5.w.pw,
-                  //       CustomButtonCheckBox(
-                  //         width: 120.w,
-                  //         height: 40.h,
-                  //         size: 12.sp,
-                  //         color: grey,
-                  //         checkbox: CustomCheckBox(
-                  //             value: checkController.checkValue1),
-                  //         name: "Floor Display",
-                  //         ontap: () {},
-                  //       ),
-                  //     ],
-                  //   ),
-                  //   10.h.ph,
-                  //   Align(
-                  //     alignment: Alignment.bottomLeft,
-                  //     child: CustomText(
-                  //       name: "Add a note",
-                  //       size: 12.sp,
-                  //       weightFont: FontWeight.w600,
-                  //     ),
-                  //   ),
-                  //   10.h.ph,
-                  //   CustomTextfield(
-                  //     hintext: "Enter Text",
-                  //     bgcolor: lightgrey,
-                  //     width: 303.w,
-                  //     height: 55.h,
-                  //     onchanged: (value) {
-                  //       storingIDController.text.value = value;
-                  //     },
-                  //   ),
-                  //   10.h.ph,
-                  //   Align(
-                  //     alignment: Alignment.bottomLeft,
-                  //     child: CustomText(
-                  //       name: "Promosite",
-                  //       size: 12.sp,
-                  //       weightFont: FontWeight.w600,
-                  //     ),
-                  //   ),
-                  //   10.h.ph,
-                  //   CustomTextfield(
-                  //     hintext: "Enter the name of promosite",
-                  //     bgcolor: lightgrey,
-                  //     width: 303.w,
-                  //     height: 46.h,
-                  //     onchanged: (value) {
-                  //       storingIDController.nameOfpromosite.value = value;
-                  //     },
-                  //   ),
-                  //   10.h.ph,
-                  //   Align(
-                  //     alignment: Alignment.bottomRight,
-                  //     child: CustomButton(
-                  //       width: 87.w,
-                  //       height: 40.h,
-                  //       color: aquamarine,
-                  //       name: "Submit",
-                  //       ontap: () {
-                  //         storingIDController.saleMaterialFtnStoringID();
-                  //         storingIDController.saleMaterialFtnGetingIDs();
-                  //         Get.back();
-                  //       },
-                  //     ),
-                  //   )
-                  // ])
-
-                  )
+                  })
             ])));
   }
 }

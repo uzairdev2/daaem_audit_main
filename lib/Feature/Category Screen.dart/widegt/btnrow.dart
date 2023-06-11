@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_null_comparison, must_be_immutable
+// ignore_for_file: unnecessary_null_comparison, must_be_immutable, unrelated_type_equality_checks
 
 import 'package:daaem_reports/Core/Utils/sizebox.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +12,7 @@ import '../../../Core/Constant/Text/text.dart';
 import '../../../Core/Controller/controller_detail.dart';
 import '../../../Core/Utils/alertDialoge/simpleYesorNO.dart';
 import '../../../Core/Utils/customButton.dart';
+import '../../../Core/Utils/customText.dart';
 import '../category_screen.dart';
 
 class BtnRow extends StatelessWidget {
@@ -53,6 +54,10 @@ class BtnRow extends StatelessWidget {
                             () => CustomRadioWidget(
                               onTap: () {
                                 osaFtnBTn.handleYesButtonClick("yes", index);
+                                scanController.scanBarcode(
+                                    logPro.productList[index].barcode
+                                        .toString(),
+                                    index);
                               },
                               name: "Yes",
                               value: "yes",
@@ -85,6 +90,20 @@ class BtnRow extends StatelessWidget {
                             ),
                           ),
                         ],
+                      ),
+                      Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Obx(() {
+                          return scanController.barValueCheck[index].value ==
+                                  false
+                              ? InkWell(
+                                  onTap: () {
+                                    scanController.scanBarcode(
+                                        "4796007317504", index);
+                                  },
+                                  child: CustomText(name: " "))
+                              : CustomText(name: "Matched ☺ ");
+                        }),
                       ),
                       10.h.ph,
                       Align(
@@ -142,7 +161,7 @@ class BtnRow extends StatelessWidget {
         12.w.pw,
         Obx(
           () => Visibility(
-            visible: osaFtnBTn.osaBtnvalue[index].value == true,
+            visible: osaFtnBTn.osaVAlueYesorNO[index].value == "yes",
             child: Row(
               children: [
                 CustomButton(
@@ -164,7 +183,7 @@ class BtnRow extends StatelessWidget {
                         checkController.handleNoButtonClick("No");
                       },
                       submitOntap: () {
-                        storingIDController.PricingPutData([
+                        storingIDController.pricingPutData([
                           {
                             "retailerid": storingIDController.retailerid.value,
                             "branchid": storingIDController.branchid.value,
@@ -193,6 +212,7 @@ class BtnRow extends StatelessWidget {
                   ontap: () {
                     Get.dialog(MyAlertDialog(
                         title: stockLevelPopText,
+                        widgetTrue: false,
                         yesTap: () {
                           stockLevelFtnBtn.handleYesButtonClick("Normal");
                         },

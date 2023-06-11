@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, file_names
 
 import 'package:daaem_reports/Core/Controller/controller_detail.dart';
 import 'package:get/get.dart';

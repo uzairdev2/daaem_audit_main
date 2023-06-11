@@ -12,6 +12,7 @@ class StoringIDController extends GetxController {
   RxString custmoreid = "".obs;
   RxString categoryid = "".obs;
   RxString productID = "".obs;
+  RxString priceProductID = "".obs;
   RxString barcode = "".obs;
   RxString quantity = "".obs;
 
@@ -253,7 +254,7 @@ class StoringIDController extends GetxController {
 
 ///////////price/////////
 
-  Future<void> PricingPutData(List<Map<String, dynamic>> dataList) async {
+  Future<void> pricingPutData(List<Map<String, dynamic>> dataList) async {
     final boxname = await Hive.openBox("pricingData");
 
     boxname.addAll(dataList);

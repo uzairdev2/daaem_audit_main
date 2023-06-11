@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:daaem_reports/Core/Routes/routes_name.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;

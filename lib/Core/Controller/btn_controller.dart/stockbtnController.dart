@@ -1,9 +1,6 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, avoid_print
 
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
-
-import '../controller_detail.dart';
 
 class StockLevelFtnBtn extends GetxController {
   RxString stockValue = "".obs;

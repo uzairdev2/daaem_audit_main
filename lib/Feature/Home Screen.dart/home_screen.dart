@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable, unnecessary_null_comparison, unused_local_variable
+// ignore_for_file: must_be_immutable, unnecessary_null_comparison, unused_local_variable, avoid_print
 
 import 'dart:developer';
 
@@ -31,7 +31,6 @@ class _HomeScreenState extends State<HomeScreen> {
   TextEditingController search = TextEditingController();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     print(storingIDController.isDatabaseEmpty.value);
     storingIDController.checkingHive();

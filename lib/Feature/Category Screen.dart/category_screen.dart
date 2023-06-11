@@ -1,7 +1,6 @@
-// ignore_for_file: must_be_immutable, unnecessary_null_comparison, unrelated_type_equality_checks
+// ignore_for_file: must_be_immutable, unnecessary_null_comparison, unrelated_type_equality_checks, avoid_print
 
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:daaem_reports/Core/Utils/alertDialoge/simpleYesorNO.dart';
 import 'package:daaem_reports/Core/Utils/common_dialogue.dart';
@@ -134,6 +133,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             planogramFtn.planogramFtnGetingIDs();
                             Get.dialog(MyAlertDialog(
                                 title: planogramPopText,
+                                widgetTrue: true,
+                                widget:
+                                    SizedBox(child: Image.asset(planogramImg)),
                                 yesTap: () {
                                   planogramFtn.handleYesButtonClick("yes");
                                 },
@@ -174,13 +176,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                     Get.snackbar(
                                         "Saved", "Data Saved SucccessFully",
                                         snackPosition: SnackPosition.BOTTOM,
-                                        backgroundColor: red);
+                                        backgroundColor: white);
                                   } else {
                                     Get.back();
                                     Get.snackbar("Faild",
                                         "Faild to Save becaused Value of cleaning not Slelect Yet",
                                         snackPosition: SnackPosition.BOTTOM,
-                                        backgroundColor: red);
+                                        backgroundColor: white);
                                   }
                                 }));
                           },
@@ -257,11 +259,15 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                     .cleanBase64Image.value);
                                             Get.back();
                                             Get.snackbar("Saved",
-                                                "Data Saved SucccessFully");
+                                                "Data Saved SucccessFully",
+                                                snackPosition:
+                                                    SnackPosition.BOTTOM);
                                           } else {
                                             Get.back();
                                             Get.snackbar("Faild",
-                                                "Faild to Save becaused Value of cleaning not Slelect Yet");
+                                                "Faild to Save becaused Value of cleaning not Slelect Yet",
+                                                snackPosition:
+                                                    SnackPosition.BOTTOM);
                                           }
                                         },
                                       ),
@@ -347,6 +353,17 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                 .neighborsFtnGetingID();
 
                                             Get.back();
+                                            Get.snackbar(
+                                                "Saved", "Data has  been Saved",
+                                                snackPosition:
+                                                    SnackPosition.BOTTOM);
+                                          }
+                                          {
+                                            Get.back();
+                                            Get.snackbar("Faild",
+                                                "Data has not been Saved",
+                                                snackPosition:
+                                                    SnackPosition.BOTTOM);
                                           }
                                         },
                                       ),
@@ -410,7 +427,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                         imageContoller.imagevalue
                                             .add(false.obs);
                                         //  imageContoller.rowImages.value = List.generate(10, (index) => null).obs;
-                                        osaFtnBTn.osaBtnvalue.add(false.obs);
+                                        scanController.barValueCheck
+                                            .add(false.obs);
                                         osaFtnBTn.osaVAlueYesorNO.add("".obs);
                                       }
 

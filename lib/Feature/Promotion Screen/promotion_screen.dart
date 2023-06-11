@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_null_comparison
+// ignore_for_file: unnecessary_null_comparison, prefer_const_constructors_in_immutables
 
 import 'package:daaem_reports/Core/Constant/Colors/colors.dart';
 import 'package:daaem_reports/Core/Constant/Text/text.dart';
@@ -12,9 +12,11 @@ import 'package:provider/provider.dart';
 import '../../Core/API,s Intergartion/API,s.dart';
 import '../../Core/Controller/controller_detail.dart';
 import '../../Core/Routes/routes_name.dart';
-import '../../Core/Utils/alertDialoge/simpleYesorNO.dart';
+import '../../Core/Utils/Camera Widget/camera_widget.dart';
 import '../../Core/Utils/common_dialogue.dart';
 import '../../Core/Utils/custom_text.dart';
+import '../../Core/Utils/custom_textfield.dart';
+import '../Category Screen.dart/category_screen.dart';
 import '../Home Screen.dart/Common Widgets/custom_dropdown_button.dart';
 
 // ignore: must_be_immutable
@@ -29,8 +31,11 @@ class _PromotionScreenState extends State<PromotionScreen> {
   CommonDialog commonDialog = CommonDialog();
 
   List<String> countries = ['Coke', 'pepsi', 'Dew', 'Spirit', '7up'];
+  final _formKey = GlobalKey<FormState>();
 
   String? selectedProduct;
+  String? regularPrice = "";
+  String? promtionalprice = "";
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +56,7 @@ class _PromotionScreenState extends State<PromotionScreen> {
             child: InkWell(
               onTap: () {
                 Get.back();
+                imageContoller.promotionalValue.value = false;
               },
               child: Container(
                 width: 30.w,
@@ -82,7 +88,10 @@ class _PromotionScreenState extends State<PromotionScreen> {
                 },
                 items: logPro.productList
                     .map((item) => DropdownMenuItem<String>(
-                          onTap: () {},
+                          onTap: () {
+                            storingIDController.priceProductID.value =
+                                item.productId.toString();
+                          },
                           value: item.productName,
                           child: CustomText(
                             name: item.productName.toString(),
@@ -93,94 +102,186 @@ class _PromotionScreenState extends State<PromotionScreen> {
               45.h.ph,
               Visibility(
                 visible: selectedProduct != null,
-                child: Column(
-                  children: [
-                    CustomButton(
-                      name: "Price Label",
-                      ontap: () {
-                        commonDialog.showPopCustom(
-                          title: priceLabelPopText,
-                          btn1Name: "Yes",
-                          btn2Name: "No",
-                          btn1Ontap: () {
-                            checkController.handleYesButtonClick("Yes");
-                          },
-                          btn2Ontap: () {
-                            checkController.handleNoButtonClick("No");
-                          },
-                          submitOntap: () {
-                            storingIDController.priceLabelFtnStoringID();
-                            storingIDController.priceLabelFtnGetingIDs();
-                            Get.back();
-                          },
-                        );
-                      },
-                    ),
-                    39.h.ph,
-                    CustomButton(
-                      name: "Secondary place",
-                      ontap: () {
-                        Get.toNamed(RoutesName.secondaryplace);
-                      },
-                    ),
-                    39.h.ph,
-                    CustomButton(
-                      name: "Location",
-                      ontap: () {
-                        locationController.locationFtnGetingIDs();
-                        Get.dialog(MyAlertDialog(
-                            title: locationPopText,
-                            yesTap: () {
-                              locationController.handleYesButtonClick("Good");
-                            },
-                            noTap: () {
-                              locationController.handleNoButtonClick("Bad");
-                            },
-                            containerHeight: 40.h,
-                            containerWidth: 95.w,
-                            option1Text: "Good",
-                            radio1: Obx(
-                              () => Radio<String>(
-                                value: "Good",
-                                activeColor: white,
-                                groupValue:
-                                    locationController.locationValue.value,
-                                onChanged: (p0) {
-                                  checkController.handleYesButtonClick(p0!);
-                                },
-                              ),
-                            ),
-                            option2Text: "Bad",
-                            radio2: Obx(
-                              () => Radio<String>(
-                                value: "Bad",
-                                activeColor: white,
-                                groupValue:
-                                    locationController.locationValue.value,
-                                onChanged: (p0) {
-                                  checkController.handleNoButtonClick(p0!);
-                                },
-                              ),
-                            ),
-                            onSubmit: () {
-                              if (locationController.locationValue != null) {
-                                locationController.locationFtnStoringID();
-                                Get.back();
-                                Get.snackbar(
-                                    "Saved", "Data Saved SucccessFully",
-                                    snackPosition: SnackPosition.BOTTOM,
-                                    backgroundColor: red);
-                              } else {
-                                Get.back();
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: CameraWidget(
+                    buttonTextSize: 16.sp,
+                    showImage: imageContoller.promotionalValue,
+                    imagePath: imageContoller.promotionalimageFile,
+                    onTap: () {
+                      imageContoller.promotionalImage();
+                    },
+                    containerWidth: 100.w,
+                    containerHeight: 70.h,
+                  ),
+                ),
+              ),
+              Obx(
+                () => Visibility(
+                  visible: imageContoller.promotionalValue.value,
+                  child: Column(
+                    children: [
+                      20.h.ph,
+                      CustomButton(
+                        name: "Price",
+                        ontap: () {
+                          storingIDController.priceLabelFtnGetingIDs();
+                          controller.commonDialog.value.showPopwithCustom(
+                              name: priceLabelPopText,
+                              colum: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Obx(
+                                        () => CustomRadioWidget(
+                                          color: aquamarine,
+                                          onTap: () {
+                                            priceLabelController
+                                                .handleYesButtonClick("yes");
+                                          },
+                                          name: "Yes",
+                                          value: "yes",
+                                          groupValue: priceLabelController
+                                              .priceValue.value,
+                                          width: 90.w,
+                                          height: 40.w,
+                                          onChanged: (value) {
+                                            priceLabelController
+                                                .handleYesButtonClick(value!);
+                                          },
+                                        ),
+                                      ),
+                                      10.w.pw,
+                                      Obx(
+                                        () => CustomRadioWidget(
+                                          color: red,
+                                          onTap: () {
+                                            priceLabelController
+                                                .handleNoButtonClick("no");
+                                          },
+                                          name: "No",
+                                          value: "no",
+                                          groupValue: priceLabelController
+                                              .priceValue.value,
+                                          width: 90.w,
+                                          height: 40.w,
+                                          onChanged: (value) {
+                                            priceLabelController
+                                                .handleNoButtonClick(value!);
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  15.h.ph,
+                                  Form(
+                                    key: _formKey,
+                                    child: Column(
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: CustomText(
+                                            name: 'Regular Price',
+                                            size: 18.sp,
+                                            weightFont: FontWeight.w600,
+                                          ),
+                                        ),
+                                        10.h.ph,
+                                        Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: CustomTextfield(
+                                            hintext: 'Enter Regular Price',
+                                            textType: TextInputType.number,
+                                            onchanged: (value) {
+                                              regularPrice = value;
+                                            },
+                                            vlid: (p0) {
+                                              if (regularPrice!.isEmpty) {
+                                                return 'Please enter a value';
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                        ),
+                                        20.h.ph,
+                                        Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: CustomText(
+                                            name: 'Promotion Price',
+                                            size: 18.sp,
+                                            weightFont: FontWeight.w600,
+                                          ),
+                                        ),
+                                        10.h.ph,
+                                        Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: CustomTextfield(
+                                            hintext: 'Enter Promotion Price',
+                                            textType: TextInputType.number,
+                                            vlid: (p0) {
+                                              if (promtionalprice!.isEmpty) {
+                                                return 'Please enter a value';
+                                              }
+                                              return null;
+                                            },
+                                            onchanged: (value) {
+                                              promtionalprice = value;
+                                            },
+                                          ),
+                                        ),
+                                        15.h.ph,
+                                        Align(
+                                          alignment: Alignment.bottomRight,
+                                          child: CustomButton(
+                                            name: "Submit",
+                                            height: 40.h,
+                                            width: 88.w,
+                                            ontap: () {
+                                              if (_formKey.currentState!
+                                                      .validate() &&
+                                                  priceLabelController
+                                                      .priceValue.isNotEmpty) {
+                                                priceLabelController
+                                                    .priceLabelFtnStoringID(
+                                                        regularPrice.toString(),
+                                                        promtionalprice
+                                                            .toString());
+                                                Get.back();
+                                                Get.snackbar("Saved",
+                                                    "Data Saved SucccessFully",
+                                                    snackPosition:
+                                                        SnackPosition.BOTTOM,
+                                                    backgroundColor: white);
+                                              } else {
+                                                Get.snackbar("Faild",
+                                                    "Faild to Save becaused Value of Price  is empty",
+                                                    snackPosition:
+                                                        SnackPosition.BOTTOM,
+                                                    backgroundColor: white);
 
-                                Get.snackbar("Faild", "Failed to  Saved Data",
-                                    snackPosition: SnackPosition.BOTTOM,
-                                    backgroundColor: red);
-                              }
-                            }));
-                      },
-                    ),
-                  ],
+                                                // Form is valid, perform necessary actions
+                                              }
+                                            },
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ));
+                        },
+                      ),
+                      39.h.ph,
+                      CustomButton(
+                        name: "Secondary place",
+                        ontap: () {
+                          Get.toNamed(RoutesName.secondaryplace);
+                        },
+                      ),
+                      39.h.ph,
+                    ],
+                  ),
                 ),
               ),
             ],
