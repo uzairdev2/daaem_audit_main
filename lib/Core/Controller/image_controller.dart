@@ -241,4 +241,20 @@ class ImageContoller extends GetxController {
       // Handle case when no image is captured
     }
   }
+
+  Rx<File?> materialOtherimageFile = Rx<File?>(null);
+  RxString materialOtherBase64Image = ''.obs;
+  RxBool materialOtherValue = false.obs;
+  Future<void> materialOtherImage() async {
+    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+    if (image != null) {
+      materialOtherimageFile.value = File(image.path);
+      update();
+      List<int> imageBytes = await materialOtherimageFile.value!.readAsBytes();
+      materialOtherBase64Image.value = base64Encode(imageBytes);
+      materialOtherValue.value = true;
+    } else {
+      // Handle case when no image is captured
+    }
+  }
 }

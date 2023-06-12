@@ -172,6 +172,19 @@ class MaterialSalesScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Align(
+                              alignment: Alignment.centerLeft,
+                              child: CameraWidget(
+                                buttonText: "Take a Picture for\n Others",
+                                imagePath:
+                                    imageContoller.materialOtherimageFile,
+                                showImage: imageContoller.materialOtherValue,
+                                onTap: () {
+                                  imageContoller.materialOtherImage();
+                                },
+                              ),
+                            ),
+                            10.h.ph,
+                            Align(
                               alignment: Alignment.bottomLeft,
                               child: CustomText(
                                 name: "Point Of Sales Material",

@@ -52,7 +52,7 @@ class AppRoutes {
         ),
         GetPage(
           name: RoutesName.promoScreen,
-          page: () => PromoScreen(),
+          page: () => const PromoScreen(),
         ),
       ];
 }

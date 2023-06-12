@@ -13,6 +13,7 @@ import '../../Core/API,s Intergartion/API,s.dart';
 import '../../Core/Controller/controller_detail.dart';
 import '../../Core/Routes/routes_name.dart';
 import '../../Core/Utils/Camera Widget/camera_widget.dart';
+import '../../Core/Utils/commonAppbar.dart';
 import '../../Core/Utils/common_dialogue.dart';
 import '../../Core/Utils/custom_text.dart';
 import '../../Core/Utils/custom_textfield.dart';
@@ -42,36 +43,12 @@ class _PromotionScreenState extends State<PromotionScreen> {
     final logPro = Provider.of<ApiClass>(context);
 
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          title: CustomText(
-            name: "Promotion",
-            size: 18.sp,
-            weightFont: FontWeight.w700,
-          ),
-          centerTitle: true,
-          leading: Padding(
-            padding: EdgeInsets.only(left: 16.w, top: 24.h),
-            child: InkWell(
-              onTap: () {
-                Get.back();
-                imageContoller.promotionalValue.value = false;
-              },
-              child: Container(
-                width: 30.w,
-                height: 30.h,
-                decoration: BoxDecoration(
-                    color: aquamarine,
-                    borderRadius: BorderRadius.circular(5.r)),
-                child: Icon(
-                  Icons.arrow_back,
-                  color: white,
-                  weight: 18.w,
-                ),
-              ),
-            ),
-          ),
+        appBar: CommonAppBar(
+          title: 'Promotion',
+          onBackTap: () {
+            Get.back();
+            imageContoller.promotionalValue.value = false;
+          },
         ),
         body: Padding(
           padding: EdgeInsets.only(left: 16.w, right: 16.w),
@@ -91,6 +68,7 @@ class _PromotionScreenState extends State<PromotionScreen> {
                           onTap: () {
                             storingIDController.priceProductID.value =
                                 item.productId.toString();
+                            imageContoller.promotionalValue.value = false;
                           },
                           value: item.productName,
                           child: CustomText(

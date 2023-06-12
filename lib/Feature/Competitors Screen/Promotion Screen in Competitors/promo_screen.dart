@@ -1,4 +1,3 @@
-import 'package:daaem_reports/Core/Constant/Text/text.dart';
 import 'package:daaem_reports/Core/Utils/sizebox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,7 +16,7 @@ import '../../../Core/Utils/custom_textfield.dart';
 import '../../Home Screen.dart/Common Widgets/custom_dropdown_button.dart';
 
 class PromoScreen extends StatefulWidget {
-  PromoScreen({super.key});
+  const PromoScreen({super.key});
 
   @override
   State<PromoScreen> createState() => _PromoScreenState();
@@ -56,8 +55,9 @@ class _PromoScreenState extends State<PromoScreen> {
                 items: logPro.productList
                     .map((item) => DropdownMenuItem<String>(
                           onTap: () {
-                            competitorPromotionController.productID =
-                                item.productId as RxString?;
+                            competitorPromotionController.productID?.value =
+                                item.productId.toString();
+                            imageContoller.promotionScreenValue.value = false;
                           },
                           value: item.productName,
                           child: CustomText(
