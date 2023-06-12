@@ -91,6 +91,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 items: logPro.categoryList
                     .map((item) => DropdownMenuItem<String>(
                           onTap: () async {
+                            imageContoller.rowImages.clear();
                             logPro.productList.clear();
                             await logPro.getCategoryData(
                                 categoryid: item.categoryId.toString());
