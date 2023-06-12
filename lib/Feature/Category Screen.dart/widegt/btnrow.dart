@@ -68,6 +68,10 @@ class BtnRow extends StatelessWidget {
                               color: aquamarine,
                               onChanged: (value) {
                                 osaFtnBTn.handleYesButtonClick(value!, index);
+                                scanController.scanBarcode(
+                                    logPro.productList[index].barcode
+                                        .toString(),
+                                    index);
                               },
                             ),
                           ),
