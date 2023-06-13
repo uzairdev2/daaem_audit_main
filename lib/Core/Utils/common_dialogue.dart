@@ -154,26 +154,29 @@ class CommonDialog {
     required Widget colum,
     imagestate = 0,
   }) {
-    Get.dialog(AlertDialog(
-      backgroundColor: white,
-      title: Padding(
-        padding: EdgeInsets.only(left: 10.w, top: 20, right: 10.w),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Align(
-              alignment: Alignment.topCenter,
-              child: CustomText(
-                name: name,
-                color: black,
-                size: 16.sp,
-                alignment: TextAlign.center,
-                weightFont: FontWeight.w500,
+    Get.dialog(SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: AlertDialog(
+        backgroundColor: white,
+        title: Padding(
+          padding: EdgeInsets.only(left: 10.w, top: 20, right: 10.w),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Align(
+                alignment: Alignment.topCenter,
+                child: CustomText(
+                  name: name,
+                  color: black,
+                  size: 16.sp,
+                  alignment: TextAlign.center,
+                  weightFont: FontWeight.w500,
+                ),
               ),
-            ),
-            20.h.ph,
-            colum
-          ],
+              20.h.ph,
+              colum
+            ],
+          ),
         ),
       ),
     ));

@@ -52,6 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
+        resizeToAvoidBottomInset: false,
         body: Center(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,

@@ -23,98 +23,102 @@ class SignIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: EdgeInsets.only(left: 16.w, right: 16.w),
-          child: Column(children: [
-            76.h.ph,
-            Image.asset(
-              logoAndname,
-              height: 94.h,
-              width: 103.w,
-            ),
-            47.h.ph,
-            CustomText(
-              name: "Sign in",
-              size: 20.sp,
-              color: grey,
-              weightFont: FontWeight.w700,
-            ),
-            29.h.ph,
-            Align(
-              alignment: Alignment.centerLeft,
-              child: CustomText(
-                name: "User name",
-                size: 14.sp,
-                weightFont: FontWeight.w700,
-              ),
-            ),
-            10.h.ph,
-            CustomTextfield(
-              hintext: "Enter your user name",
-              onchanged: (value) {
-                username = value;
-              },
-            ),
-            24.h.ph,
-            Align(
-              alignment: Alignment.centerLeft,
-              child: CustomText(
-                name: "Password",
-                size: 14.sp,
-                weightFont: FontWeight.w700,
-              ),
-            ),
-            10.h.ph,
-            CustomTextfield(
-              hintext: "Enter Password",
-              color: black,
-              onchanged: (value) {
-                password = value;
-              },
-            ),
-            5.h.ph,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: Padding(
+        padding: EdgeInsets.only(left: 16.w, right: 16.w),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Expanded(
-                    child: CheckboxListTile(
-                  checkColor: white,
-                  tristate: false,
-                  dense: true,
-                  title: CustomText(
-                    name: "Remember me",
+                76.h.ph,
+                Image.asset(
+                  logoAndname,
+                  height: 94.h,
+                  width: 103.w,
+                ),
+                47.h.ph,
+                CustomText(
+                  name: "Sign in",
+                  size: 20.sp,
+                  color: grey,
+                  weightFont: FontWeight.w700,
+                ),
+                29.h.ph,
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: CustomText(
+                    name: "User name",
                     size: 14.sp,
                     weightFont: FontWeight.w700,
                   ),
-                  activeColor: Colors.transparent,
-                  onChanged: (value) {},
-                  controlAffinity: ListTileControlAffinity.leading,
-                  contentPadding: EdgeInsets.zero,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(3.r),
+                ),
+                10.h.ph,
+                CustomTextfield(
+                  hintext: "Enter your user name",
+                  onchanged: (value) {
+                    username = value;
+                  },
+                ),
+                24.h.ph,
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: CustomText(
+                    name: "Password",
+                    size: 14.sp,
+                    weightFont: FontWeight.w700,
                   ),
-                  value: false,
-                )),
-                CustomText(
-                  name: "Forgot Password?",
-                  color: red,
-                  weightFont: FontWeight.w600,
-                  size: 12.sp,
+                ),
+                10.h.ph,
+                CustomTextfield(
+                  hintext: "Enter Password",
+                  color: black,
+                  onchanged: (value) {
+                    password = value;
+                  },
+                ),
+                5.h.ph,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                        child: CheckboxListTile(
+                      checkColor: white,
+                      tristate: false,
+                      dense: true,
+                      title: CustomText(
+                        name: "Remember me",
+                        size: 14.sp,
+                        weightFont: FontWeight.w700,
+                      ),
+                      activeColor: Colors.transparent,
+                      onChanged: (value) {},
+                      controlAffinity: ListTileControlAffinity.leading,
+                      contentPadding: EdgeInsets.zero,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(3.r),
+                      ),
+                      value: false,
+                    )),
+                    CustomText(
+                      name: "Forgot Password?",
+                      color: red,
+                      weightFont: FontWeight.w600,
+                      size: 12.sp,
+                    )
+                  ],
+                ),
+                36.h.ph,
+                CustomButton(
+                  name: "Login",
+                  ontap: () {
+                    // if (username != null && password != null) {
+                    //   loginApi.loginUser(username, password);
+                    // }
+                    Get.toNamed(RoutesName.homeScreen);
+                  },
                 )
-              ],
-            ),
-            36.h.ph,
-            CustomButton(
-              name: "Login",
-              ontap: () {
-                // if (username != null && password != null) {
-                //   loginApi.loginUser(username, password);
-                // }
-                Get.toNamed(RoutesName.homeScreen);
-              },
-            )
-          ]),
+              ]),
         ),
       ),
     );

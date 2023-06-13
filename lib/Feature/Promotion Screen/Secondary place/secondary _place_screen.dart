@@ -411,6 +411,7 @@ class Secondaryplace extends StatelessWidget {
                       imageContoller.standValue.value != false) {
                     secondaryFtnController.secondaryAreaFtnStoringID();
                   }
+                  Get.back();
                   checkController.yesVal.value = false;
                   checkController.yesValue.value = false;
                   checkController.noVal.value = false;
@@ -423,6 +424,7 @@ class Secondaryplace extends StatelessWidget {
                   imageContoller.gandulaValue.value = false;
                   imageContoller.secondaryPromValue.value = false;
                   imageContoller.standValue.value = false;
+
                   Get.snackbar("Successfully", "Data has been stored",
                       snackPosition: SnackPosition.BOTTOM,
                       backgroundColor: aquamarine);
