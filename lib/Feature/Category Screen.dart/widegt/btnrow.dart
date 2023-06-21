@@ -103,9 +103,11 @@ class BtnRow extends StatelessWidget {
                               ? InkWell(
                                   onTap: () {
                                     scanController.scanBarcode(
-                                        "4796007317504", index);
+                                        logPro.productList[index].barcode
+                                            .toString(),
+                                        index);
                                   },
-                                  child: CustomText(name: " "))
+                                  child: CustomText(name: "Try Again"))
                               : CustomText(name: "Matched ☺ ");
                         }),
                       ),
@@ -118,7 +120,7 @@ class BtnRow extends StatelessWidget {
                           color: red,
                           name: "Submit",
                           ontap: () {
-                            if (osaFtnBTn.osaVAlueYesorNO[index] != null) {
+                            if (osaFtnBTn.osaVAlueYesorNO[index] == null) {
                               // await boxname.close();
 
                               // osaFtnBTn.updateValueAtIndex(index, "yes");
@@ -143,10 +145,10 @@ class BtnRow extends StatelessWidget {
                                   "imagedata": "Image is not selected Yet",
                                 },
                               ]);
+                              // osaFtnBTn.getOsaValue(index);
 
                               Get.back();
 
-                              osaFtnBTn.getOsaValue(index);
                               Get.snackbar("Saved", "SuccessFully",
                                   snackPosition: SnackPosition.BOTTOM,
                                   backgroundColor: red);

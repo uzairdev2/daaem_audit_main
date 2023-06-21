@@ -56,22 +56,26 @@ class CameraWidget extends StatelessWidget {
               color: borderColor,
               width: borderWidth,
             ),
-            borderRadius: BorderRadius.circular(borderRadius),
+           // borderRadius: BorderRadius.circular(borderRadius),
           ),
-          child: Center(
-            child: Obx(() {
-              return showImage!.value != false
-                  ? Image.file(
-                      imagePath!.value!,
-                      fit: BoxFit.cover,
-                    )
-                  : Image.asset(
-                      cameraIconPath,
-                      width: 22,
-                      height: 20,
-                    );
-            }),
-          ),
+          child: Obx(() {
+            final File ? gandulaImagePath = imagePath?.value;
+            if (gandulaImagePath != null) {
+              return Image.file(
+                gandulaImagePath,
+                fit: BoxFit.cover,
+              );
+            } else {
+              return Center(
+                child: Image.asset(
+                  cameraIconPath,
+                  width: 22,
+                  height: 20,
+                  fit: BoxFit.cover,
+                ),
+              );
+            }
+          }),
         ),
         SizedBox(width: 10),
         InkWell(

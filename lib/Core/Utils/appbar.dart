@@ -49,10 +49,11 @@ class CustomAppBar extends StatelessWidget {
             color:
                 storingIDController.isDatabaseEmpty.value == false ? grey : red,
             ontap: () async {
-              // await storingIDController.clearBoxData();
-              await storingIDController.osaFtnGetingID();
-
-              await storingIDController.stockLevelGetData();
+              printIdController.planogramDbHive();
+              printIdController.cleaningDbHive();
+              printIdController.competitorPromotionDbHive();
+              printIdController.newItemDbHive();
+              printIdController.priceLabelDbHive();
 
               // Get.to(const HiveData());
             },

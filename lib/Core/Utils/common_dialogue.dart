@@ -155,27 +155,29 @@ class CommonDialog {
     imagestate = 0,
   }) {
     Get.dialog(SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: AlertDialog(
-        backgroundColor: white,
-        title: Padding(
-          padding: EdgeInsets.only(left: 10.w, top: 20, right: 10.w),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Align(
-                alignment: Alignment.topCenter,
-                child: CustomText(
-                  name: name,
-                  color: black,
-                  size: 16.sp,
-                  alignment: TextAlign.center,
-                  weightFont: FontWeight.w500,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 20),
+        child: AlertDialog(
+          backgroundColor: white,
+          title: Padding(
+            padding: EdgeInsets.only(left: 10.w, top: 20, right: 10.w),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: CustomText(
+                    name: name,
+                    color: black,
+                    size: 16.sp,
+                    alignment: TextAlign.center,
+                    weightFont: FontWeight.w500,
+                  ),
                 ),
-              ),
-              20.h.ph,
-              colum
-            ],
+                20.h.ph,
+                colum
+              ],
+            ),
           ),
         ),
       ),
@@ -200,19 +202,21 @@ class CameraWIdget extends StatelessWidget {
               border: Border.all(
                 color: aquamarine,
               ),
-              borderRadius: BorderRadius.circular(10.r)),
-          child: Center(child: Obx(() {
-            return imageContoller.valueCheck.value != false
+          ),
+          child:Obx(() {
+         return imageContoller.valueCheck.value != false
                 ? Image.file(
                     imageContoller.cleanimageFile.value!,
-                    fit: BoxFit.fitWidth,
-                  )
-                : Image.asset(
-                    camera,
-                    width: 22.w,
-                    height: 20.h,
-                  );
-          })),
+                    fit: BoxFit.cover,
+                  ):
+          Center(
+            child: Image.asset(
+              camera,
+              width: 22.w,
+              height: 20.h,
+            ),
+          );
+          })
         ),
         10.w.pw,
         InkWell(

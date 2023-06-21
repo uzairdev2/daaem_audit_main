@@ -98,6 +98,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
                             storingIDController.categoryid.value =
                                 item.categoryId!;
+                            print(storingIDController.categoryid.value);
                           },
                           value: item.categoryName,
                           child: Text(

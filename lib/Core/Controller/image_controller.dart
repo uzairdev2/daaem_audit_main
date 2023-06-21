@@ -46,6 +46,8 @@ class ImageContoller extends GetxController {
   RxBool valueCheck2 = false.obs;
   List<RxBool> imagevalue = [];
 
+
+
   Future<void> cleanessImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.camera);
     if (image != null) {
@@ -58,6 +60,7 @@ class ImageContoller extends GetxController {
       // Handle case when no image is captured
     }
   }
+
 
   Future<void> moreSpaceImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.camera);
@@ -175,7 +178,6 @@ class ImageContoller extends GetxController {
       rowImages.add(capturedFile);
       takeimageFile.value = capturedFile;
       update();
-
       valueCheck2.value = true;
     } else {
       // Handle case when no image is captured

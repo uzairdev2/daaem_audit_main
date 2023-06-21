@@ -37,7 +37,6 @@ class CleaningFtnBtn extends GetxController {
 
   Future<void> cleaningFtnGetingID() async {
     final boxname = await Hive.openBox("cleaningData");
-
     storingIDController.retailerid.value = boxname.get("retailerid");
     storingIDController.branchid.value = boxname.get("branchid");
     storingIDController.custmoreid.value = boxname.get("customerid");

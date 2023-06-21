@@ -2,8 +2,9 @@ class ProductModel {
   String? productId;
   String? productName;
   String? barcode;
+  String imagePath = "";
 
-  ProductModel({this.productId, this.productName, this.barcode});
+  ProductModel({this.productId, this.productName, this.barcode,required this.imagePath});
 
   ProductModel.fromJson(Map<String, dynamic> json) {
     productId = json['product_id'];

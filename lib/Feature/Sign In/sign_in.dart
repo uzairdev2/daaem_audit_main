@@ -112,10 +112,10 @@ class SignIn extends StatelessWidget {
                 CustomButton(
                   name: "Login",
                   ontap: () {
-                    // if (username != null && password != null) {
-                    //   loginApi.loginUser(username, password);
-                    // }
-                    Get.toNamed(RoutesName.homeScreen);
+                    if (username != null && password != null) {
+                      loginApi.loginUser(username, password);
+                    }
+                    // Get.toNamed(RoutesName.homeScreen);
                   },
                 )
               ]),

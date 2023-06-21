@@ -33,8 +33,7 @@ class PriceLabelController extends GetxController {
     boxname.put("custmoreid", storingIDController.custmoreid.value);
     boxname.put("categoryid", storingIDController.categoryid.value);
     boxname.put("priceProductid", storingIDController.priceProductID.value);
-    boxname.put(
-        "priceImage", imageContoller.secondaryPromotionBass64Image.value);
+    boxname.put("priceImage", imageContoller.promotionalBase64Image.value);
     boxname.put("regularPrice", regularPrice);
     boxname.put("promotonalPrice", promotionalPrice);
     boxname.put(

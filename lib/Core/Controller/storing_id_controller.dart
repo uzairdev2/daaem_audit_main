@@ -236,19 +236,14 @@ class StoringIDController extends GetxController {
 
   Future<void> osaFtnGetingID() async {
     final box = await Hive.openBox('osaData');
-
     // List dataList = [];
     // boxname.addAll(dataList);
-
     // osaList.add(box.values.first);
-
     log("here is box value first ${box.values.first}");
     log("here is box value  ${box.values}");
     log("here is box value length ${box.values.length}");
-
     osaList = box.values.toList();
     log("here is data list $osaList");
-
     log("here box ${box.length}");
   }
 
@@ -289,9 +284,7 @@ class StoringIDController extends GetxController {
 
   Future<void> stockLevelGetData() async {
     final box = await stockLevelopenBox();
-
     stockLevel = box.values.toList();
-
     log("here is price data list ${stockLevel.length}");
     log("here is price data list $stockLevel");
   }

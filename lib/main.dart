@@ -1,4 +1,5 @@
 import 'package:daaem_reports/Core/Controller/controller_detail.dart';
+import 'package:daaem_reports/Feature/Home%20Screen.dart/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
@@ -12,7 +13,6 @@ import 'Core/Constant/Colors/colors.dart';
 import 'package:provider/provider.dart';
 
 import 'Core/Local DB/model.dart';
-import 'Core/Routes/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -52,8 +52,8 @@ class MyApp extends StatelessWidget {
                 scaffoldBackgroundColor: backgroundColor,
               ),
               debugShowCheckedModeBanner: false,
-              getPages: AppRoutes.appRoutes(),
-              // home: MyApp(),
+              // getPages: AppRoutes.appRoutes(),
+              home: const HomeScreen(),
             )),
       ),
     );

@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   retailerid: item.retailerId.toString());
                               controller.selectedRetailer.value = "newValue";
                               storingIDController.retailerid.value =
-                                  item.retailerId!;
+                                  item.retailerId.toString();
                             },
                             value: item.retailerName,
                             child: Text(

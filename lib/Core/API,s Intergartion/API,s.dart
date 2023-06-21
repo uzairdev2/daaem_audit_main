@@ -6,11 +6,21 @@ import 'package:daaem_reports/Core/Model/API,s%20Models/retailer_model.dart';
 import 'package:daaem_reports/Core/Model/API,s%20Models/branch_model.dart';
 import 'package:daaem_reports/Core/Model/API,s%20Models/scan_model.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Model/API,s Models/category_model.dart';
 import '../Model/API,s Models/customer_model.dart';
 import '../Model/API,s Models/product_model.dart';
+
+import '../Routes/routes_name.dart';
+
+String extractValueFromBody(String responseBody) {
+  var jsonData = json.decode(responseBody);
+  var value = jsonData[0]['merchandiser_id'].toString();
+  return value;
+}
 
 class ApiClass with ChangeNotifier {
   // reatiler_model firstmodel = reatiler_model();
@@ -20,9 +30,19 @@ class ApiClass with ChangeNotifier {
   List<CategoryModel> categoryList = [];
   List<ProductModel> productList = [];
   List<ModelScan> scanProduct = [];
-
+  var selectedCategoryId = '';
+  var selectedProductId = '';
   var Data = "";
   List<RetailerModel> firstlist = [];
+  String merchandiser_id = "";
+
+  Future<void> setCategoryId(String id) async {
+    selectedCategoryId = id;
+  }
+
+  Future<void> setProductId(String id) async {
+    selectedProductId = id;
+  }
 
   againsearch() {
     branchList = [];
@@ -30,10 +50,14 @@ class ApiClass with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getRetailerData() async {
-    final url = Uri.parse(
-        'https://www.daaemsolutions.com/test/audit_api/retailer/?retailer_id=1'); // Replace with your API endpoint
-    final response = await http.get(url);
+  Future<void> getRetailerData({String? merchandiser_id}) async {
+    final body = {'merchandiser_id': merchandiser_id};
+    String url =
+        'https://www.daaemsolutions.com/test/audit_api/retailer/'; // Replace with your API endpoint
+    final response = await http.post(
+      Uri.parse(url),
+      body: body,
+    );
 
     if (response.statusCode == 200) {
       Data = response.body;
@@ -55,10 +79,59 @@ class ApiClass with ChangeNotifier {
     }
   }
 
-  Future<void> getBranchData({required String retailerid}) async {
-    final url = Uri.parse(
-        'https://www.daaemsolutions.com/test/audit_api/branch/?retailer_id=$retailerid'); // Replace with your API endpoint
-    final response = await http.get(url);
+  loginUser({required String username, required String password}) async {
+    print("$username and $password");
+    final formData = {
+      'username': username,
+      'password': password,
+    };
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    await sharedPreferences.setString('username', username);
+    String url =
+        'https://www.daaemsolutions.com/test/audit_api/login/'; // Replace with your API endpoint
+    http
+        .post(
+      Uri.parse(url),
+      body: formData,
+    )
+        .then((value) {
+      if (value.statusCode == 200) {
+        // Login successful
+        print('Login successful! ${value.body}');
+
+        String responseBody = value.body;
+        String merchandiserId = extractValueFromBody(responseBody);
+        print('Merchandiser ID: $merchandiserId');
+        merchandiser_id = merchandiserId;
+
+        getRetailerData(merchandiser_id: merchandiserId).then((value) {
+          //ROUTE TO HOME
+          Get.toNamed(RoutesName.homeScreen);
+        });
+      } else {
+        // Login failed
+        print('Login failed! $value');
+
+        print('Login failed. Error: ${value.statusCode}');
+      }
+    }).catchError((e) {
+      print('Error during login: $e');
+    });
+  }
+
+  Future<void> getBranchData(
+      {required String retailer_id, required String merchandiser_id}) async {
+    final body = {
+      'merchandiser_id': merchandiser_id,
+      'retailer_id': retailer_id,
+    };
+    final url =
+        'https://www.daaemsolutions.com/test/audit_api/branch/'; // Replace with your API endpoint
+    final response = await http.post(
+      Uri.parse(url),
+      body: body,
+    );
 
     if (response.statusCode == 200) {
       Data = response.body;

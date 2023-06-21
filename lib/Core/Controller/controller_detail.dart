@@ -9,6 +9,7 @@ import 'btn_controller.dart/moreItemFtnStoringID.dart';
 import 'btn_controller.dart/newItemFtnStoringID.dart';
 import 'btn_controller.dart/osaFtnStoringID.dart';
 import 'btn_controller.dart/priceLableFtnStoringId.dart';
+import 'btn_controller.dart/printing_the_all_id.dart';
 import 'btn_controller.dart/sceondaryFtnStoringID.dart';
 import 'btn_controller.dart/stockbtnController.dart';
 import 'checkbox_controller.dart';
@@ -16,6 +17,8 @@ import 'dropdown_controller.dart';
 import 'image_controller.dart';
 
 CheckController checkController = Get.put(CheckController());
+PrintIdController printIdController = Get.put(PrintIdController());
+
 SecondaryFtnController secondaryFtnController =
     Get.put(SecondaryFtnController());
 PriceLabelController priceLabelController = Get.put(PriceLabelController());

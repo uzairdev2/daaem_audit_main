@@ -37,7 +37,7 @@ class ScanController extends GetxController {
       if (barcode == apiBarcode) {
         barValueCheck[index].value = true;
       } else {
-        barValueCheck[index].value = true;
+        barValueCheck[index].value = false;
       }
 
       update();
