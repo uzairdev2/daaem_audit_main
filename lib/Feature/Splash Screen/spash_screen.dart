@@ -1,6 +1,7 @@
+// ignore_for_file: avoid_print
+
 import 'dart:async';
 import 'package:daaem_reports/Core/Utils/sizebox.dart';
-import 'package:daaem_reports/Feature/Home%20Screen.dart/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -31,13 +32,13 @@ class _SplashScreenState extends State<SplashScreen> {
       number = sharedPreferences.getString("username");
       merchId = sharedPreferences.getString("merchandiserId");
       print("merchandiserId_____ $merchId");
-      if (number == null) {
-        Get.offAll(() => SignIn());
-      } else {
-        apiClass.getRetailerData(merchandiser_id: merchId).then((value) {
-          Get.offAll(() => const HomeScreen());
-        });
-      }
+      // if (number == null) {
+      Get.offAll(() => SignIn());
+      // } else {
+      // apiClass.getRetailerData(merchandiser_id: merchId).then((value) {
+      // Get.offAll(() => const HomeScreen());
+      // });
+      // }
     });
     super.didChangeDependencies();
   }

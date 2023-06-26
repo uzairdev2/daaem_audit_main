@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import 'bar_code_ftn.dart';
 import 'btn_controller.dart/cleaningFtnStoringID.dart';
+import 'btn_controller.dart/competitor_material.dart';
 import 'btn_controller.dart/moreItemFtnStoringID.dart';
 import 'btn_controller.dart/newItemFtnStoringID.dart';
 import 'btn_controller.dart/osaFtnStoringID.dart';
@@ -21,6 +22,8 @@ PrintIdController printIdController = Get.put(PrintIdController());
 
 SecondaryFtnController secondaryFtnController =
     Get.put(SecondaryFtnController());
+CompetitiorMaterialFtnController competitiorMaterialFtnController =
+    Get.put(CompetitiorMaterialFtnController());
 PriceLabelController priceLabelController = Get.put(PriceLabelController());
 CompetitorPromotionController competitorPromotionController =
     Get.put(CompetitorPromotionController());

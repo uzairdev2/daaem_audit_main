@@ -2,7 +2,6 @@
 
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import '../controller_detail.dart';
 
 class CompetitorPromotionController extends GetxController {
   RxString productID = "".obs;

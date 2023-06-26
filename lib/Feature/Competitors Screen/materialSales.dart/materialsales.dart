@@ -14,8 +14,9 @@ import '../../../Core/Utils/customText.dart';
 import '../../../Core/Utils/custom_textfield.dart';
 
 class MaterialSalesScreen extends StatelessWidget {
-  const MaterialSalesScreen({super.key});
-
+  MaterialSalesScreen({super.key});
+  String notes = '';
+  String materialName = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,8 +84,9 @@ class MaterialSalesScreen extends StatelessWidget {
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: CameraWidget(
-                                buttonText: "Take a Picture for\n Gandula",
-                                imagePath: imageContoller.materialimageFile,
+                                buttonText: "Take a Picture for\n gandula",
+                                imagePath:
+                                    imageContoller.materialgandulaimageFile,
                                 showImage: imageContoller.materialgandulaValue,
                                 onTap: () {
                                   imageContoller.materialGandulaImage();
@@ -198,7 +200,9 @@ class MaterialSalesScreen extends StatelessWidget {
                               bgcolor: lightgrey,
                               width: 160.w,
                               height: 46.h,
-                              onchanged: (value) {},
+                              onchanged: (value) {
+                                materialName = value;
+                              },
                             ),
                           ],
                         ),
@@ -262,7 +266,9 @@ class MaterialSalesScreen extends StatelessWidget {
               bgcolor: lightgrey,
               width: 303.w,
               height: 55.h,
-              onchanged: (value) {},
+              onchanged: (value) {
+                notes = value;
+              },
             ),
             10.h.ph,
             10.h.ph,
@@ -272,7 +278,34 @@ class MaterialSalesScreen extends StatelessWidget {
               height: 46.h,
               color: aquamarine,
               name: "Submit",
-              ontap: () {},
+              ontap: () {
+                if (imageContoller.materialgandulaBase64Image.isNotEmpty ||
+                    imageContoller.floorBase64Image.isEmpty ||
+                    (imageContoller.materialOtherBase64Image.isNotEmpty &&
+                        notes != null) ||
+                    imageContoller.materialPromositeBase64Image.isNotEmpty) {
+                  competitiorMaterialFtnController
+                      .competitiorMaterialFtnStoringID([
+                    {
+                      "table_name": 'Competitior_material',
+                      "retailerid": storingIDController.retailerid.value,
+                      "branchid": storingIDController.branchid.value,
+                      "customerid": storingIDController.custmoreid.value,
+                      "categoryid  ": storingIDController.categoryid.value,
+                      "competitorGandulaimage":
+                          imageContoller.materialgandulaBase64Image.value,
+                      "competitorFloorImage":
+                          imageContoller.materialfloorBase64Image.value,
+                      "competitorOrtherImage":
+                          imageContoller.materialOtherBase64Image.value,
+                      "ortherMaterialName": materialName,
+                      "competitorPromositeImage":
+                          imageContoller.materialPromositeBase64Image.value,
+                      "notes": notes,
+                    }
+                  ]);
+                }
+              },
             )
           ],
         ),

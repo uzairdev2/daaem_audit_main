@@ -3,8 +3,6 @@
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
-import '../controller_detail.dart';
-
 class SecondaryFtnController extends GetxController {
   RxString gandulaValue = ''.obs;
   RxString gandulapicture = ''.obs;

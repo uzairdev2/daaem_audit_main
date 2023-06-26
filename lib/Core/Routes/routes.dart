@@ -48,7 +48,7 @@ class AppRoutes {
         ),
         GetPage(
           name: RoutesName.materialSales,
-          page: () => const MaterialSalesScreen(),
+          page: () => MaterialSalesScreen(),
         ),
         GetPage(
           name: RoutesName.promoScreen,
