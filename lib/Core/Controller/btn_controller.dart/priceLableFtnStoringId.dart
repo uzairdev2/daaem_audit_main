@@ -25,21 +25,10 @@ class PriceLabelController extends GetxController {
   }
 
   Future<void> priceLabelFtnStoringID(
-      String regularPrice, String promotionalPrice) async {
+      List<Map<String, dynamic>> dataList) async {
     final boxname = await Hive.openBox("priceLabelData");
-    boxname.put("table_name",'priceLabel');
-    boxname.put("retailerid", storingIDController.retailerid.value);
-    boxname.put("branchid", storingIDController.branchid.value);
-    boxname.put("custmoreid", storingIDController.custmoreid.value);
-    boxname.put("categoryid", storingIDController.categoryid.value);
-    boxname.put("priceProductid", storingIDController.priceProductID.value);
-    boxname.put("priceImage", imageContoller.promotionalBase64Image.value);
-    boxname.put("regularPrice", regularPrice);
-    boxname.put("promotonalPrice", promotionalPrice);
-    boxname.put(
-      "priceLabelValue",
-      priceValue.value,
-    );
+    boxname.addAll(dataList);
+    print("this is the PriceLabel List ${dataList}");
   }
 
   priceLabelFtnGetingIDs() async {

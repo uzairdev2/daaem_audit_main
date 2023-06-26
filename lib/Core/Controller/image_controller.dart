@@ -23,6 +23,10 @@ class ImageContoller extends GetxController {
   RxString floorBase64Image = ''.obs;
   RxBool floorValue = false.obs;
 
+  Rx<File?> areaImage = Rx<File?>(null);
+  RxString areaBase64 = ''.obs;
+  RxBool areavalue = false.obs;
+
   Rx<File?> moreSpaceimageFile = Rx<File?>(null);
   RxString moreSpaceBase64Image = ''.obs;
   RxBool moreSpaceValue = false.obs;
@@ -35,9 +39,9 @@ class ImageContoller extends GetxController {
   RxString secondaryPromotionBass64Image = ''.obs;
   RxBool secondaryPromValue = false.obs;
 
-  Rx<File?> promotionScreenimageFile = Rx<File?>(null);
-  RxString promotionScreenBase64Image = ''.obs;
-  RxBool promotionScreenValue = false.obs;
+  Rx<File?> competitorPromtionImageFile = Rx<File?>(null);
+  RxString competitorPromotionBase64 = ''.obs;
+  RxBool competitorPromotionValue = false.obs;
 
   Rx<File?> materialimageFile = Rx<File?>(null);
   RxString materilaBase64Image = ''.obs;
@@ -81,6 +85,19 @@ class ImageContoller extends GetxController {
       List<int> imageBytes = await gandulaimageFile.value!.readAsBytes();
       gandulaBase64Image.value = base64Encode(imageBytes);
       gandulaValue.value = true;
+    } else {
+      // Handle case when no image is captured
+    }
+  }
+
+  Future<void> promotionAreaImage() async {
+    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+    if (image != null) {
+      areaImage.value = File(image.path);
+      update();
+      List<int> imageBytes = await areaImage.value!.readAsBytes();
+      areaBase64.value = base64Encode(imageBytes);
+      areavalue.value = true;
     } else {
       // Handle case when no image is captured
     }
@@ -141,12 +158,12 @@ class ImageContoller extends GetxController {
   Future<void> promotionScreenImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.camera);
     if (image != null) {
-      promotionScreenimageFile.value = File(image.path);
+      competitorPromtionImageFile.value = File(image.path);
       update();
       List<int> imageBytes =
-          await promotionScreenimageFile.value!.readAsBytes();
-      promotionScreenBase64Image.value = base64Encode(imageBytes);
-      promotionScreenValue.value = true;
+          await competitorPromtionImageFile.value!.readAsBytes();
+      competitorPromotionBase64.value = base64Encode(imageBytes);
+      competitorPromotionValue.value = true;
     } else {
       // Handle case when no image is captured
     }

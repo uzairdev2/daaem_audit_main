@@ -66,30 +66,30 @@ class _SecondaryplaceState extends State<Secondaryplace> {
       Hive.close();
     }
 
-    void pickImage(int index) async {
-      final image = await ImagePicker().pickImage(source: ImageSource.camera);
-      if (image != null) {
-        setState(() {
-          if (index == 0) {
-            imageContoller.gandulaValue.value = true;
-          } else if (index == 1) {
-            imageContoller.floorValue.value = true;
-          } else if (index == 2) {
-            imageContoller.standValue.value = true;
-          } else if (index == 3) {
-            imageContoller.secondaryPromValue.value = true;
-          }
-          var model = SecondaryModel(
-              productId: logPro.selectedProductId,
-              categoryId: logPro.selectedCategoryId,
-              imagePath: Rx<File?>(File(image.path)));
-          secondaryList.insert(index, model);
-          var key =
-              "$index/${logPro.selectedCategoryId}/${logPro.selectedProductId}";
-          saveDataHive(key, model);
-        });
-      }
-    }
+    // void pickImage(int index) async {
+    //   final image = await ImagePicker().pickImage(source: ImageSource.camera);
+    //   if (image != null) {
+    //     setState(() {
+    //       if (index == 0) {
+    //         imageContoller.gandulaValue.value = true;
+    //       } else if (index == 1) {
+    //         imageContoller.floorValue.value = true;
+    //       } else if (index == 2) {
+    //         imageContoller.standValue.value = true;
+    //       } else if (index == 3) {
+    //         imageContoller.secondaryPromValue.value = true;
+    //       }
+    //       var model = SecondaryModel(
+    //           productId: logPro.selectedProductId,
+    //           categoryId: logPro.selectedCategoryId,
+    //           imagePath: Rx<File?>(File(image.path)));
+    //       secondaryList.insert(index, model);
+    //       var key =
+    //           "$index/${logPro.selectedCategoryId}/${logPro.selectedProductId}";
+    //       saveDataHive(key, model);
+    //     });
+    //   }
+    // }
 
     return Scaffold(
       appBar: CommonAppBar(
@@ -140,15 +140,10 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                               alignment: Alignment.centerLeft,
                               child: CameraWidget(
                                 buttonText: "Take a Picture for\n Gandula",
-                                imagePath: secondaryList.length >= 1
-                                    ? secondaryList[0].imagePath == null
-                                        ? imageContoller.gandulaimageFile
-                                        : secondaryList[0].imagePath
-                                    : imageContoller.gandulaimageFile,
+                                imagePath: imageContoller.gandulaimageFile,
                                 showImage: imageContoller.gandulaValue,
                                 onTap: () {
-                                  pickImage(0);
-                                  // imageContoller.gandulaImage();
+                                  imageContoller.floorImage();
                                 },
                               ),
                             ),
@@ -229,15 +224,10 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                                 alignment: Alignment.bottomLeft,
                                 child: CameraWidget(
                                   buttonText: "Take a Picture for\n Gandula",
-                                  imagePath: secondaryList.length >= 2
-                                      ? secondaryList[1].imagePath == null
-                                          ? imageContoller.gandulaimageFile
-                                          : secondaryList[1].imagePath
-                                      : imageContoller.gandulaimageFile,
-                                  showImage: imageContoller.gandulaValue,
+                                  imagePath: imageContoller.floorimageFile,
+                                  showImage: imageContoller.floorValue,
                                   onTap: () {
-                                    pickImage(1);
-                                    // imageContoller.gandulaImage();
+                                    imageContoller.floorImage();
                                   },
                                 ),
                               ),
@@ -320,16 +310,11 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                             Align(
                               alignment: Alignment.bottomLeft,
                               child: CameraWidget(
-                                buttonText: "Take a Picture for\n Gandula",
-                                imagePath: secondaryList.length >= 3
-                                    ? secondaryList[2].imagePath == null
-                                        ? imageContoller.gandulaimageFile
-                                        : secondaryList[2].imagePath
-                                    : imageContoller.gandulaimageFile,
-                                showImage: imageContoller.gandulaValue,
+                                buttonText: "Take a Picture for\n Stand",
+                                imagePath: imageContoller.standimageFile,
+                                showImage: imageContoller.standValue,
                                 onTap: () {
-                                  pickImage(2);
-                                  // imageContoller.gandulaImage();
+                                  imageContoller.standImage();
                                 },
                               ),
                             ),
@@ -409,16 +394,11 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                             Align(
                               alignment: Alignment.bottomLeft,
                               child: CameraWidget(
-                                buttonText: "Take a Picture for\n Gandula",
-                                imagePath: secondaryList.length >= 4
-                                    ? secondaryList[3].imagePath == null
-                                        ? imageContoller.gandulaimageFile
-                                        : secondaryList[3].imagePath
-                                    : imageContoller.gandulaimageFile,
-                                showImage: imageContoller.gandulaValue,
+                                buttonText: "Take a Picture for\n Area",
+                                imagePath: imageContoller.areaImage,
+                                showImage: imageContoller.areavalue,
                                 onTap: () {
-                                  pickImage(3);
-                                  // imageContoller.gandulaImage();
+                                  imageContoller.promotionAreaImage();
                                 },
                               ),
                             ),
@@ -472,59 +452,63 @@ class _SecondaryplaceState extends State<Secondaryplace> {
             ),
             20.h.ph,
             CustomButton(
-              width: 320.w,
-              height: 46.h,
-              color: aquamarine,
-              name: "Submit",
-              ontap: () {
-                if (secondaryFtnController.gandulaValue.value != null &&
-                        imageContoller.gandulaValue.value != false ||
-                    secondaryFtnController.floorValue.value != null &&
-                        imageContoller.floorValue.value != false ||
-                    secondaryFtnController.standValue.value != null &&
-                        imageContoller.standValue.value != false ||
-                    secondaryFtnController.areaValue.value != null &&
-                        imageContoller.secondaryPromValue.value != false) {
-                  if (secondaryFtnController.gandulaValue.value != null &&
-                      imageContoller.gandulaValue.value != false) {
-                    secondaryFtnController.secomdayGandulaFtnStoringID();
+                width: 320.w,
+                height: 46.h,
+                color: aquamarine,
+                name: "Submit",
+                ontap: () {
+                  if ((secondaryFtnController.gandulaValue.value != null &&
+                          imageContoller.gandulaValue.value != false) ||
+                      (secondaryFtnController.floorValue.value != null &&
+                          imageContoller.floorValue.value != false) ||
+                      (secondaryFtnController.standValue.value != null &&
+                          imageContoller.standValue.value != false) ||
+                      (secondaryFtnController.areaValue.value != null &&
+                          imageContoller.secondaryPromValue.value != false)) {
+                    secondaryFtnController.promotionSecondaryFtnStoringID([
+                      {
+                        "table_name": 'promotion_secondary',
+                        "retailerid": storingIDController.retailerid.value,
+                        "branchid": storingIDController.branchid.value,
+                        "customerid": storingIDController.custmoreid.value,
+                        "categoryid  ": storingIDController.categoryid.value,
+                        "priceProductid":
+                            storingIDController.priceProductID.value,
+                        "gandulaImage": imageContoller.gandulaBase64Image.value,
+                        "gandulaValue":
+                            secondaryFtnController.gandulaValue.value,
+                        "floorValue": secondaryFtnController.floorValue.value,
+                        "floorImage": imageContoller.floorBase64Image.value,
+                        "standImage": imageContoller.standBase64Image.value,
+                        "standValue": secondaryFtnController.standValue.value,
+                        "AreaImage":
+                            imageContoller.secondaryPromotionBass64Image.value,
+                        "AreaValue": secondaryFtnController.areaPicture.value,
+                      }
+                    ]);
+                    Get.back();
+                    checkController.yesVal.value = false;
+                    checkController.yesValue.value = false;
+                    checkController.noVal.value = false;
+                    secondaryFtnController.areaValue.value = "";
+                    secondaryFtnController.standValue.value = "";
+                    secondaryFtnController.floorValue.value = "";
+                    secondaryFtnController.gandulaValue.value = "";
+                    checkController.noValue.value = false;
+                    imageContoller.floorValue.value = false;
+                    imageContoller.gandulaValue.value = false;
+                    imageContoller.secondaryPromValue.value = false;
+                    imageContoller.standValue.value = false;
+                    Get.snackbar("Successfully", "Data has been stored",
+                        snackPosition: SnackPosition.BOTTOM,
+                        backgroundColor: aquamarine);
+                    // } else {
+                    //   Get.snackbar("faild", "please Select something",
+                    //       snackPosition: SnackPosition.BOTTOM,
+                    //       backgroundColor: aquamarine);
+                    // }
                   }
-                  if (secondaryFtnController.floorValue.value != null &&
-                      imageContoller.floorValue.value != false) {
-                    secondaryFtnController.secondaryFloorFtnGetingIDs();
-                  }
-
-                  if (secondaryFtnController.standValue.value != null &&
-                      imageContoller.standValue.value != false) {
-                    secondaryFtnController.secondaryStandFtnStoringID();
-                  }
-                  if (secondaryFtnController.standValue.value != null &&
-                      imageContoller.standValue.value != false) {
-                    secondaryFtnController.secondaryAreaFtnStoringID();
-                  }
-                  Get.back();
-                  checkController.yesVal.value = false;
-                  checkController.yesValue.value = false;
-                  checkController.noVal.value = false;
-                  secondaryFtnController.areaValue.value = "";
-                  secondaryFtnController.standValue.value = "";
-                  secondaryFtnController.floorValue.value = "";
-                  secondaryFtnController.gandulaValue.value = "";
-                  checkController.noValue.value = false;
-                  imageContoller.floorValue.value = false;
-                  imageContoller.gandulaValue.value = false;
-                  imageContoller.secondaryPromValue.value = false;
-                  imageContoller.standValue.value = false;
-                  Get.snackbar("Successfully", "Data has been stored",
-                      snackPosition: SnackPosition.BOTTOM,
-                      backgroundColor: aquamarine);
-                } else {
-                  Get.snackbar("faild", "please Select something",
-                      snackPosition: SnackPosition.BOTTOM,
-                      backgroundColor: aquamarine);
-                }
-              },
-            )
+                })
           ],
         ),
       ),

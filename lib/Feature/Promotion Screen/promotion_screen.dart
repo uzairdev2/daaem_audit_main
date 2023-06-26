@@ -38,10 +38,9 @@ class _PromotionScreenState extends State<PromotionScreen> {
   var promtionalprice = "";
   late ApiClass logPro;
 
-
   @override
   Widget build(BuildContext context) {
-     logPro = Provider.of<ApiClass>(context);
+    logPro = Provider.of<ApiClass>(context);
 
     return Scaffold(
         appBar: CommonAppBar(
@@ -68,16 +67,16 @@ class _PromotionScreenState extends State<PromotionScreen> {
                 },
                 items: logPro.productList
                     .map((item) => DropdownMenuItem<String>(
-                  onTap: () {
-                    storingIDController.priceProductID.value =
-                        item.productId.toString();
-                    imageContoller.promotionalValue.value = false;
-                  },
-                  value: item.productName,
-                  child: CustomText(
-                    name: item.productName.toString(),
-                  ),
-                ))
+                          onTap: () {
+                            storingIDController.priceProductID.value =
+                                item.productId.toString();
+                            imageContoller.promotionalValue.value = false;
+                          },
+                          value: item.productName,
+                          child: CustomText(
+                            name: item.productName.toString(),
+                          ),
+                        ))
                     .toList(),
               ),
               45.h.ph,
@@ -98,7 +97,7 @@ class _PromotionScreenState extends State<PromotionScreen> {
                 ),
               ),
               Obx(
-                    () => Visibility(
+                () => Visibility(
                   visible: imageContoller.promotionalValue.value,
                   child: Column(
                     children: [
@@ -114,7 +113,7 @@ class _PromotionScreenState extends State<PromotionScreen> {
                                   Row(
                                     children: [
                                       Obx(
-                                            () => CustomRadioWidget(
+                                        () => CustomRadioWidget(
                                           color: aquamarine,
                                           onTap: () {
                                             priceLabelController
@@ -134,7 +133,7 @@ class _PromotionScreenState extends State<PromotionScreen> {
                                       ),
                                       10.w.pw,
                                       Obx(
-                                            () => CustomRadioWidget(
+                                        () => CustomRadioWidget(
                                           color: red,
                                           onTap: () {
                                             priceLabelController
@@ -205,9 +204,9 @@ class _PromotionScreenState extends State<PromotionScreen> {
                                             vlid: (p0) {
                                               if (promtionalprice.isEmpty) {
                                                 return 'Please enter a value';
-                                              }else
-                                              if(int.parse(promtionalprice) >= int.parse(regularPrice))
-                                              {
+                                              } else if (int.parse(
+                                                      promtionalprice) >=
+                                                  int.parse(regularPrice)) {
                                                 return 'Promotional value should be < Regular value';
                                               }
                                               return null;
@@ -223,21 +222,50 @@ class _PromotionScreenState extends State<PromotionScreen> {
                                             width: 88.w,
                                             ontap: () {
                                               if (_formKey.currentState!
-                                                  .validate() && priceLabelController.priceValue.isNotEmpty) {
-                                                priceLabelController.priceLabelFtnStoringID(
-                                                    regularPrice.toString(),
-                                                    promtionalprice.toString());
+                                                      .validate() &&
+                                                  priceLabelController
+                                                      .priceValue.isNotEmpty) {
+                                                priceLabelController
+                                                    .priceLabelFtnStoringID([
+                                                  {
+                                                    "table_name": 'priceLabel',
+                                                    "retailerid":
+                                                        storingIDController
+                                                            .retailerid.value,
+                                                    "branchid":
+                                                        storingIDController
+                                                            .branchid.value,
+                                                    "custmoreid":
+                                                        storingIDController
+                                                            .custmoreid.value,
+                                                    "categoryid":
+                                                        storingIDController
+                                                            .categoryid.value,
+                                                    "priceProductid":
+                                                        storingIDController
+                                                            .priceProductID
+                                                            .value,
+                                                    "priceImage": imageContoller
+                                                        .promotionalBase64Image
+                                                        .value,
+                                                    "regularPrice":
+                                                        regularPrice,
+                                                    "promotonalPrice":
+                                                        promtionalprice,
+                                                  }
+                                                ]);
+
                                                 Get.back();
                                                 Get.snackbar("Saved",
                                                     "Data Saved SucccessFully",
                                                     snackPosition:
-                                                    SnackPosition.BOTTOM,
+                                                        SnackPosition.BOTTOM,
                                                     backgroundColor: white);
                                               } else {
                                                 Get.snackbar("Faild",
                                                     "Faild to Save becaused Value of Price  is empty",
                                                     snackPosition:
-                                                    SnackPosition.BOTTOM,
+                                                        SnackPosition.BOTTOM,
                                                     backgroundColor: white);
 
                                                 // Form is valid, perform necessary actions
@@ -268,7 +296,4 @@ class _PromotionScreenState extends State<PromotionScreen> {
           ),
         ));
   }
-
 }
-
-

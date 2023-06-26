@@ -53,112 +53,16 @@ class SecondaryFtnController extends GetxController {
     update();
   }
 
-  Future<void> secomdayGandulaFtnStoringID() async {
-    final boxname = await Hive.openBox("secondarygandulaData");
-    boxname.put("table_name", 'promotion_secondary');
-    boxname.put("retailerid", storingIDController.retailerid.value);
-    boxname.put("branchid", storingIDController.branchid.value);
-    boxname.put("customerid", storingIDController.custmoreid.value);
-    boxname.put("categoryid", storingIDController.categoryid.value);
-    boxname.put("priceProductid", storingIDController.priceProductID.value);
-    boxname.put("gandulaImage", imageContoller.gandulaBase64Image.value);
-    boxname.put(
-      "gandulaValue",
-      gandulaValue.value,
-    );
-  }
+  Future<void> promotionSecondaryFtnStoringID(
+      List<Map<String, dynamic>> dataList) async {
+    final boxname = await Hive.openBox("promotionSecondary");
 
-  secomdayGandulaFtnGetingIDs() async {
-    final boxname = await Hive.openBox("secondarygandulaData");
+    boxname.addAll(dataList);
 
-    storingIDController.retailerid.value = boxname.get("retailerid");
-    storingIDController.branchid.value = boxname.get("branchid");
-    storingIDController.custmoreid.value = boxname.get("customerid");
-    storingIDController.categoryid.value = boxname.get("categoryid");
-    storingIDController.priceProductID.value = boxname.get("priceProductid");
-    gandulapicture.value = boxname.get("gandulaImage");
-    gandulaValue.value = boxname.get("gandulaValue");
-  }
-
-  Future<void> secomdaryFloorFtnStoringID() async {
-    final boxname = await Hive.openBox("secondaryFloorData");
-
-    boxname.put("retailerid", storingIDController.retailerid.value);
-    boxname.put("branchid", storingIDController.branchid.value);
-    boxname.put("customerid", storingIDController.custmoreid.value);
-    boxname.put("categoryid", storingIDController.categoryid.value);
-    boxname.put("priceProductid", storingIDController.priceProductID.value);
-    boxname.put("floorImage", imageContoller.floorBase64Image.value);
-    boxname.put(
-      "floorValue",
-      floorValue.value,
-    );
-  }
-
-  secondaryFloorFtnGetingIDs() async {
-    final boxname = await Hive.openBox("secondaryFloorData");
-
-    storingIDController.retailerid.value = boxname.get("retailerid");
-    storingIDController.branchid.value = boxname.get("branchid");
-    storingIDController.custmoreid.value = boxname.get("customerid");
-    storingIDController.categoryid.value = boxname.get("categoryid");
-    storingIDController.priceProductID.value = boxname.get("priceProductid");
-    floorpicture.value = boxname.get("floorImage");
-    floorValue.value = boxname.get("floorValue");
-  }
-
-  Future<void> secondaryStandFtnStoringID() async {
-    final boxname = await Hive.openBox("secondaryStandData");
-
-    boxname.put("retailerid", storingIDController.retailerid.value);
-    boxname.put("branchid", storingIDController.branchid.value);
-    boxname.put("customerid", storingIDController.custmoreid.value);
-    boxname.put("categoryid", storingIDController.categoryid.value);
-    boxname.put("priceProductid", storingIDController.priceProductID.value);
-    boxname.put("standImage", imageContoller.standBase64Image.value);
-    boxname.put(
-      "standValue",
-      standValue.value,
-    );
-  }
-
-  secondaryStandFtnGetingIDs() async {
-    final boxname = await Hive.openBox("secondaryStandData");
-
-    storingIDController.retailerid.value = boxname.get("retailerid");
-    storingIDController.branchid.value = boxname.get("branchid");
-    storingIDController.custmoreid.value = boxname.get("customerid");
-    storingIDController.categoryid.value = boxname.get("categoryid");
-    storingIDController.priceProductID.value = boxname.get("priceProductid");
-    standPicture.value = boxname.get("standImage");
-    standValue.value = boxname.get("standValue");
-  }
-
-  Future<void> secondaryAreaFtnStoringID() async {
-    final boxname = await Hive.openBox("secondaryAreaData");
-
-    boxname.put("retailerid", storingIDController.retailerid.value);
-    boxname.put("branchid", storingIDController.branchid.value);
-    boxname.put("customerid", storingIDController.custmoreid.value);
-    boxname.put("categoryid", storingIDController.categoryid.value);
-    boxname.put("priceProductid", storingIDController.priceProductID.value);
-    boxname.put(
-        "AreaImage", imageContoller.secondaryPromotionBass64Image.value);
-    boxname.put(
-      "AreaValue",
-      areaPicture.value,
-    );
-  }
-
-  secondaryAreaFtnGetingIDs() async {
-    final boxname = await Hive.openBox("secondaryAreaData");
-
-    storingIDController.retailerid.value = boxname.get("retailerid");
-    storingIDController.branchid.value = boxname.get("branchid");
-    storingIDController.custmoreid.value = boxname.get("customerid");
-    storingIDController.categoryid.value = boxname.get("categoryid");
-    storingIDController.priceProductID.value = boxname.get("priceProductid");
-    areaPicture.value = boxname.get("AreaImage");
-    areaValue.value = boxname.get("AreaValue");
+    print("Printing all data in promotionSecondary box:");
+    for (var value in boxname.values) {
+      print(value);
+    }
+    print("this is the Promtion Secondary List ${dataList}");
   }
 }

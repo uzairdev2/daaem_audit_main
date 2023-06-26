@@ -266,18 +266,6 @@ class MaterialSalesScreen extends StatelessWidget {
             ),
             10.h.ph,
             10.h.ph,
-            Align(
-                alignment: Alignment.bottomLeft,
-                child: CameraWidget(
-                  containerHeight: 80.h,
-                  containerWidth: 100.w,
-                  imagePath: imageContoller.materialimageFile,
-                  showImage: imageContoller.materialValue,
-                  onTap: () {
-                    imageContoller.materialImage();
-                    print(imageContoller.materialValue.value);
-                  },
-                )),
             20.h.ph,
             CustomButton(
               width: 320.w,

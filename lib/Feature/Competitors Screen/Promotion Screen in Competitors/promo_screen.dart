@@ -55,9 +55,11 @@ class _PromoScreenState extends State<PromoScreen> {
                 items: logPro.productList
                     .map((item) => DropdownMenuItem<String>(
                           onTap: () {
-                            competitorPromotionController.productID?.value =
+                            competitorPromotionController.productID.value =
                                 item.productId.toString();
-                            imageContoller.promotionScreenValue.value = false;
+
+                            imageContoller.competitorPromotionValue.value =
+                                false;
                           },
                           value: item.productName,
                           child: CustomText(
@@ -78,8 +80,8 @@ class _PromoScreenState extends State<PromoScreen> {
                       Align(
                         alignment: Alignment.bottomLeft,
                         child: CameraWidget(
-                          imagePath: imageContoller.promotionScreenimageFile,
-                          showImage: imageContoller.promotionScreenValue,
+                          imagePath: imageContoller.competitorPromtionImageFile,
+                          showImage: imageContoller.competitorPromotionValue,
                           onTap: () {
                             imageContoller.promotionScreenImage();
                           },
@@ -133,11 +135,32 @@ class _PromoScreenState extends State<PromoScreen> {
                         name: "Submit",
                         ontap: () {
                           if (_formKey.currentState!.validate() &&
-                              imageContoller.promotionScreenValue.isTrue) {
+                              imageContoller.competitorPromotionValue.isTrue) {
                             competitorPromotionController
-                                .competitorPromotionFtnStoringID(
-                                    mregularPrice.toString(),
-                                    mpromtionalprice.toString());
+                                .competitorPromotionFtnStoringID([
+                              {
+                                "table_name": 'competitor_promotion',
+                                "retailerid":
+                                    storingIDController.retailerid.value,
+                                "branchid": storingIDController.branchid.value,
+                                "custmoreid":
+                                    storingIDController.custmoreid.value,
+                                "categoryid":
+                                    storingIDController.categoryid.value,
+                                "competitorPromotionProductid":
+                                    competitorPromotionController
+                                        .productID.value,
+                                "competitorpromtion": imageContoller
+                                    .competitorPromotionBase64.value,
+                                "regularPrice": mregularPrice,
+                                "promotonalPrice": mpromtionalprice,
+                              }
+                            ]);
+                            imageContoller.cleaningValueImage.value = false;
+
+                            mregularPrice = "";
+                            mpromtionalprice = "";
+
                             Get.snackbar("Successfully", "Data has been Saved",
                                 snackPosition: SnackPosition.BOTTOM,
                                 backgroundColor: aquamarine);
