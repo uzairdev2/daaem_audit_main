@@ -9,6 +9,7 @@ import 'dart:io';
 class ImageContoller extends GetxController {
   Rx<File?> cleanimageFile = Rx<File?>(null);
   RxString cleanBase64Image = ''.obs;
+  RxBool cleaningValueImage = false.obs;
 
   Rx<File?> promotionalimageFile = Rx<File?>(null);
   RxString promotionalBase64Image = ''.obs;
@@ -46,8 +47,6 @@ class ImageContoller extends GetxController {
   RxBool valueCheck2 = false.obs;
   List<RxBool> imagevalue = [];
 
-
-
   Future<void> cleanessImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.camera);
     if (image != null) {
@@ -55,12 +54,11 @@ class ImageContoller extends GetxController {
       update();
       List<int> imageBytes = await cleanimageFile.value!.readAsBytes();
       cleanBase64Image.value = base64Encode(imageBytes);
-      valueCheck.value = true;
+      cleaningValueImage.value = true;
     } else {
       // Handle case when no image is captured
     }
   }
-
 
   Future<void> moreSpaceImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.camera);

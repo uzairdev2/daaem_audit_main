@@ -33,14 +33,15 @@ class _PromotionScreenState extends State<PromotionScreen> {
 
   List<String> countries = ['Coke', 'pepsi', 'Dew', 'Spirit', '7up'];
   final _formKey = GlobalKey<FormState>();
-
   String? selectedProduct;
-  String? regularPrice = "";
-  String? promtionalprice = "";
+  var regularPrice = "";
+  var promtionalprice = "";
+  late ApiClass logPro;
+
 
   @override
   Widget build(BuildContext context) {
-    final logPro = Provider.of<ApiClass>(context);
+     logPro = Provider.of<ApiClass>(context);
 
     return Scaffold(
         appBar: CommonAppBar(
@@ -61,20 +62,22 @@ class _PromotionScreenState extends State<PromotionScreen> {
                 isExpanded: true,
                 onChanged: (String? newValue) {
                   selectedProduct = newValue;
-                  setState(() {});
+                  setState(() {
+                    logPro.setCategoryId(selectedProduct.toString());
+                  });
                 },
                 items: logPro.productList
                     .map((item) => DropdownMenuItem<String>(
-                          onTap: () {
-                            storingIDController.priceProductID.value =
-                                item.productId.toString();
-                            imageContoller.promotionalValue.value = false;
-                          },
-                          value: item.productName,
-                          child: CustomText(
-                            name: item.productName.toString(),
-                          ),
-                        ))
+                  onTap: () {
+                    storingIDController.priceProductID.value =
+                        item.productId.toString();
+                    imageContoller.promotionalValue.value = false;
+                  },
+                  value: item.productName,
+                  child: CustomText(
+                    name: item.productName.toString(),
+                  ),
+                ))
                     .toList(),
               ),
               45.h.ph,
@@ -95,7 +98,7 @@ class _PromotionScreenState extends State<PromotionScreen> {
                 ),
               ),
               Obx(
-                () => Visibility(
+                    () => Visibility(
                   visible: imageContoller.promotionalValue.value,
                   child: Column(
                     children: [
@@ -106,151 +109,146 @@ class _PromotionScreenState extends State<PromotionScreen> {
                           storingIDController.priceLabelFtnGetingIDs();
                           controller.commonDialog.value.showPopwithCustom(
                               name: priceLabelPopText,
-                              colum: SingleChildScrollView(
-                                scrollDirection: Axis.vertical,
-                                child: Column(
-                                  children: [
-                                    Row(
+                              colum: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Obx(
+                                            () => CustomRadioWidget(
+                                          color: aquamarine,
+                                          onTap: () {
+                                            priceLabelController
+                                                .handleYesButtonClick("yes");
+                                          },
+                                          name: "Yes",
+                                          value: "yes",
+                                          groupValue: priceLabelController
+                                              .priceValue.value,
+                                          width: 90.w,
+                                          height: 40.w,
+                                          onChanged: (value) {
+                                            priceLabelController
+                                                .handleYesButtonClick(value!);
+                                          },
+                                        ),
+                                      ),
+                                      10.w.pw,
+                                      Obx(
+                                            () => CustomRadioWidget(
+                                          color: red,
+                                          onTap: () {
+                                            priceLabelController
+                                                .handleNoButtonClick("no");
+                                          },
+                                          name: "No",
+                                          value: "no",
+                                          groupValue: priceLabelController
+                                              .priceValue.value,
+                                          width: 90.w,
+                                          height: 40.w,
+                                          onChanged: (value) {
+                                            priceLabelController
+                                                .handleNoButtonClick(value!);
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  15.h.ph,
+                                  Form(
+                                    key: _formKey,
+                                    child: Column(
                                       children: [
-                                        Obx(
-                                          () => CustomRadioWidget(
-                                            color: aquamarine,
-                                            onTap: () {
-                                              priceLabelController
-                                                  .handleYesButtonClick("yes");
+                                        Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: CustomText(
+                                            name: 'Regular Price',
+                                            size: 18.sp,
+                                            weightFont: FontWeight.w600,
+                                          ),
+                                        ),
+                                        10.h.ph,
+                                        Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: CustomTextfield(
+                                            hintext: 'Enter Regular Price',
+                                            textType: TextInputType.number,
+                                            onchanged: (value) {
+                                              regularPrice = value;
                                             },
-                                            name: "Yes",
-                                            value: "yes",
-                                            groupValue: priceLabelController
-                                                .priceValue.value,
-                                            width: 90.w,
-                                            height: 40.w,
-                                            onChanged: (value) {
-                                              priceLabelController
-                                                  .handleYesButtonClick(value!);
+                                            vlid: (p0) {
+                                              if (regularPrice.isEmpty) {
+                                                return 'Please enter a value';
+                                              }
+                                              return null;
                                             },
                                           ),
                                         ),
-                                        10.w.pw,
-                                        Obx(
-                                          () => CustomRadioWidget(
-                                            color: red,
-                                            onTap: () {
-                                              priceLabelController
-                                                  .handleNoButtonClick("no");
+                                        20.h.ph,
+                                        Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: CustomText(
+                                            name: 'Promotion Price',
+                                            size: 18.sp,
+                                            weightFont: FontWeight.w600,
+                                          ),
+                                        ),
+                                        10.h.ph,
+                                        Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: CustomTextfield(
+                                            hintext: 'Enter Promotion Price',
+                                            textType: TextInputType.number,
+                                            onchanged: (value) {
+                                              promtionalprice = value;
                                             },
-                                            name: "No",
-                                            value: "no",
-                                            groupValue: priceLabelController
-                                                .priceValue.value,
-                                            width: 90.w,
-                                            height: 40.w,
-                                            onChanged: (value) {
-                                              priceLabelController
-                                                  .handleNoButtonClick(value!);
+                                            vlid: (p0) {
+                                              if (promtionalprice.isEmpty) {
+                                                return 'Please enter a value';
+                                              }else
+                                              if(int.parse(promtionalprice) >= int.parse(regularPrice))
+                                              {
+                                                return 'Promotional value should be < Regular value';
+                                              }
+                                              return null;
                                             },
                                           ),
                                         ),
+                                        15.h.ph,
+                                        Align(
+                                          alignment: Alignment.bottomRight,
+                                          child: CustomButton(
+                                            name: "Submit",
+                                            height: 40.h,
+                                            width: 88.w,
+                                            ontap: () {
+                                              if (_formKey.currentState!
+                                                  .validate() && priceLabelController.priceValue.isNotEmpty) {
+                                                priceLabelController.priceLabelFtnStoringID(
+                                                    regularPrice.toString(),
+                                                    promtionalprice.toString());
+                                                Get.back();
+                                                Get.snackbar("Saved",
+                                                    "Data Saved SucccessFully",
+                                                    snackPosition:
+                                                    SnackPosition.BOTTOM,
+                                                    backgroundColor: white);
+                                              } else {
+                                                Get.snackbar("Faild",
+                                                    "Faild to Save becaused Value of Price  is empty",
+                                                    snackPosition:
+                                                    SnackPosition.BOTTOM,
+                                                    backgroundColor: white);
+
+                                                // Form is valid, perform necessary actions
+                                              }
+                                            },
+                                          ),
+                                        )
                                       ],
                                     ),
-                                    15.h.ph,
-                                    Form(
-                                      key: _formKey,
-                                      child: Column(
-                                        children: [
-                                          Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: CustomText(
-                                              name: 'Regular Price',
-                                              size: 18.sp,
-                                              weightFont: FontWeight.w600,
-                                            ),
-                                          ),
-                                          10.h.ph,
-                                          Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: CustomTextfield(
-                                              hintext: 'Enter Regular Price',
-                                              textType: TextInputType.number,
-                                              onchanged: (value) {
-                                                regularPrice = value;
-                                              },
-                                              vlid: (p0) {
-                                                if (regularPrice!.isEmpty) {
-                                                  return 'Please enter a value';
-                                                }
-                                                return null;
-                                              },
-                                            ),
-                                          ),
-                                          20.h.ph,
-                                          Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: CustomText(
-                                              name: 'Promotion Price',
-                                              size: 18.sp,
-                                              weightFont: FontWeight.w600,
-                                            ),
-                                          ),
-                                          10.h.ph,
-                                          Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: CustomTextfield(
-                                              hintext: 'Enter Promotion Price',
-                                              textType: TextInputType.number,
-                                              vlid: (p0) {
-                                                if (promtionalprice!.isEmpty) {
-                                                  return 'Please enter a value';
-                                                }
-                                                return null;
-                                              },
-                                              onchanged: (value) {
-                                                promtionalprice = value;
-                                              },
-                                            ),
-                                          ),
-                                          15.h.ph,
-                                          Align(
-                                            alignment: Alignment.bottomRight,
-                                            child: CustomButton(
-                                              name: "Submit",
-                                              height: 40.h,
-                                              width: 88.w,
-                                              ontap: () {
-                                                if (_formKey.currentState!
-                                                        .validate() &&
-                                                    priceLabelController
-                                                        .priceValue
-                                                        .isNotEmpty) {
-                                                  priceLabelController
-                                                      .priceLabelFtnStoringID(
-                                                          regularPrice
-                                                              .toString(),
-                                                          promtionalprice
-                                                              .toString());
-                                                  Get.back();
-                                                  Get.snackbar("Saved",
-                                                      "Data Saved SucccessFully",
-                                                      snackPosition:
-                                                          SnackPosition.BOTTOM,
-                                                      backgroundColor: white);
-                                                } else {
-                                                  Get.snackbar("Faild",
-                                                      "Faild to Save becaused Value of Price  is empty",
-                                                      snackPosition:
-                                                          SnackPosition.BOTTOM,
-                                                      backgroundColor: white);
-
-                                                  // Form is valid, perform necessary actions
-                                                }
-                                              },
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ));
                         },
                       ),
@@ -270,4 +268,7 @@ class _PromotionScreenState extends State<PromotionScreen> {
           ),
         ));
   }
+
 }
+
+

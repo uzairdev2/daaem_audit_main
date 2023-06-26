@@ -3,7 +3,8 @@ const planogramPopText =
 const cleannessPopText = "Are the shelves clean?";
 const neighborsPopText = "Who are the neighbors on left and right? ";
 const sOSPopText = "Is the item available on shelf?";
-const sOAPopText = "Is the item available on shelf?";
+const productDetailText = "Product Details";
+
 const pricePopText = "Is the Pricing for the item is displayed on shelf??";
 const stockLevelPopText = "Is the stock of the item full or low?";
 const accessPopText = "Is the item in the shelf can easily be accessible ?";

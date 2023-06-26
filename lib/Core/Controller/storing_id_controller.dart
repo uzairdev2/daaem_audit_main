@@ -195,6 +195,7 @@ class StoringIDController extends GetxController {
       String leftdropValue, String rightDropVlaue) async {
     final boxname = await Hive.openBox("neighborsData");
 
+    boxname.put("tablename", "neighborsData");
     boxname.put("retailerid", retailerid.value);
     boxname.put("branchid", branchid.value);
     boxname.put("custmoreid", custmoreid.value);
@@ -221,12 +222,18 @@ class StoringIDController extends GetxController {
     log("here is right drop value ${rightvalue.value}");
   }
 
-/////////////////////////////// OSA ////////////////////////////////////////
-  Future<void> osaFtnStoringID(
-      int index, List<Map<String, dynamic>> dataList) async {
-    final boxname = await Hive.openBox("osaData");
+  Future<void> clearHiveBox(String boxName) async {
+    final box = await Hive.openBox(boxName);
 
-    boxname.putAt(index, dataList);
+    await box.clear();
+
+    await box.close();
+  }
+
+/////////////////////////////// OSA ////////////////////////////////////////
+  Future<void> osaFtnStoringID(List<Map<String, dynamic>> dataList) async {
+    final boxname = await Hive.openBox("osaData");
+    boxname.addAll(dataList);
   }
 
   Future<Box> openBox() async {

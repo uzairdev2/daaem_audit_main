@@ -23,12 +23,12 @@ class CleaningFtnBtn extends GetxController {
 
   cleaningFtnStoringID({required String imagedata}) async {
     final boxname = await Hive.openBox("cleaningData");
-
+    boxname.put("table_name", 'cleanness');
     boxname.put("retailerid", storingIDController.retailerid.value);
     boxname.put("branchid", storingIDController.branchid.value);
     boxname.put("customerid", storingIDController.custmoreid.value);
     boxname.put("categoryid", storingIDController.categoryid.value);
-    boxname.put("imagedata", imagedata);
+    boxname.put("imagedata", imageContoller.cleanBase64Image.value);
     boxname.put(
       "cleaningValue",
       cleaningValue.value,

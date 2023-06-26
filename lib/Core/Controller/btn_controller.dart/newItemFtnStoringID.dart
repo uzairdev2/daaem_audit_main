@@ -12,7 +12,7 @@ class NewItemController extends GetxController {
   newItemFtnStoringID(
       String? itemName, itemPrice, itemWeight, discriptionOfitem) async {
     final boxname = await Hive.openBox("newItemData");
-
+    boxname.put("table_name",'newItem');
     boxname.put("retailerid", storingIDController.retailerid.value);
     boxname.put("branchid", storingIDController.branchid.value);
     boxname.put("customerid", storingIDController.custmoreid.value);

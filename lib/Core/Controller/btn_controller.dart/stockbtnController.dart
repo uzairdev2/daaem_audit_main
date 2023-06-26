@@ -34,7 +34,7 @@ class StockLevelFtnBtn extends GetxController {
 
   // Future<void> cleaningFtnGetingID() async {
   //   final boxname = await Hive.openBox("cleaningData");
-
+  //      boxname.put("table_name",'stocklevel');
   //   storingIDController.retailerid.value = boxname.get("retailerid");
   //   storingIDController.branchid.value = boxname.get("branchid");
   //   storingIDController.custmoreid.value = boxname.get("custmoreid");

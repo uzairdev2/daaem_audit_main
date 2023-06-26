@@ -55,7 +55,7 @@ class SecondaryFtnController extends GetxController {
 
   Future<void> secomdayGandulaFtnStoringID() async {
     final boxname = await Hive.openBox("secondarygandulaData");
-
+    boxname.put("table_name", 'promotion_secondary');
     boxname.put("retailerid", storingIDController.retailerid.value);
     boxname.put("branchid", storingIDController.branchid.value);
     boxname.put("customerid", storingIDController.custmoreid.value);

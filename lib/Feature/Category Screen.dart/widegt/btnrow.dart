@@ -1,16 +1,19 @@
-// ignore_for_file: unnecessary_null_comparison, must_be_immutable, unrelated_type_equality_checks
+// ignore_for_file: unnecessary_null_comparison, must_be_immutable, unrelated_type_equality_checks, avoid_print
+
+import 'dart:convert';
+import 'dart:io';
 
 import 'package:daaem_reports/Core/Utils/sizebox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 import '../../../Core/API,s Intergartion/API,s.dart';
 import '../../../Core/Constant/Colors/colors.dart';
 import '../../../Core/Constant/Text/text.dart';
 import '../../../Core/Controller/controller_detail.dart';
-import '../../../Core/Utils/alertDialoge/simpleYesorNO.dart';
 import '../../../Core/Utils/customButton.dart';
 import '../../../Core/Utils/customText.dart';
 import '../category_screen.dart';
@@ -18,6 +21,15 @@ import '../category_screen.dart';
 class BtnRow extends StatelessWidget {
   BtnRow({required this.index, super.key});
   int index;
+  void printAllData() async {
+    final boxname = await Hive.openBox("osaData");
+    final dataList = boxname.values.toList();
+
+    for (var data in dataList) {
+      print(data.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final logPro = Provider.of<ApiClass>(context);
@@ -25,35 +37,28 @@ class BtnRow extends StatelessWidget {
     return Row(
       children: [
         CustomButton(
-            width: 68.w,
+            width: 108.w,
             height: 46.h,
-            name: "OSA",
+            name: "Product Details",
             size: 12.sp,
             ontap: () async {
-              // imageContoller.takinkSpecficBase(index);
-
               controller.commonDialog.value.showPopwithCustom(
-                  name: sOAPopText,
+                  name: productDetailText,
                   colum: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Obx(
-                        () => imageContoller.imagevalue[index] != false
-                            ? Image.file(
-                                imageContoller.rowImages[index],
-                                fit: BoxFit.fitWidth,
-                                width: 50,
-                                height: 50.h,
-                              )
-                            : 0.ph,
+                      CustomText(
+                        name: sOSPopText,
+                        size: 12.sp,
                       ),
                       10.h.ph,
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Obx(
                             () => CustomRadioWidget(
                               onTap: () {
-                                osaFtnBTn.handleYesButtonClick("yes", index);
+                                productDetailController.handleYesButtonClick(
+                                    "yes", index);
                                 scanController.scanBarcode(
                                     logPro.productList[index].barcode
                                         .toString(),
@@ -61,13 +66,14 @@ class BtnRow extends StatelessWidget {
                               },
                               name: "Yes",
                               value: "yes",
-                              width: 88.w,
+                              width: 70.w,
                               height: 40.h,
-                              groupValue:
-                                  osaFtnBTn.osaVAlueYesorNO[index].value,
+                              groupValue: productDetailController
+                                  .osaVAlueYesorNO[index].value,
                               color: aquamarine,
                               onChanged: (value) {
-                                osaFtnBTn.handleYesButtonClick(value!, index);
+                                productDetailController.handleYesButtonClick(
+                                    value!, index);
                                 scanController.scanBarcode(
                                     logPro.productList[index].barcode
                                         .toString(),
@@ -80,21 +86,24 @@ class BtnRow extends StatelessWidget {
                             () => CustomRadioWidget(
                               color: red,
                               onTap: () {
-                                osaFtnBTn.handleNoButtonClick("no", index);
+                                productDetailController.handleNoButtonClick(
+                                    "no", index);
                               },
                               name: "No",
                               value: "no",
-                              width: 88.w,
+                              width: 67.w,
                               height: 40.h,
-                              groupValue:
-                                  osaFtnBTn.osaVAlueYesorNO[index].value,
+                              groupValue: productDetailController
+                                  .osaVAlueYesorNO[index].value,
                               onChanged: (value) {
-                                osaFtnBTn.handleYesButtonClick(value!, index);
+                                productDetailController.handleYesButtonClick(
+                                    value!, index);
                               },
                             ),
                           ),
                         ],
                       ),
+                      5.h.ph,
                       Align(
                         alignment: Alignment.bottomLeft,
                         child: Obx(() {
@@ -107,11 +116,196 @@ class BtnRow extends StatelessWidget {
                                             .toString(),
                                         index);
                                   },
-                                  child: CustomText(name: "Try Again"))
+                                  child: CustomText(
+                                    name: "Try Again",
+                                    size: 12.sp,
+                                    weightFont: FontWeight.bold,
+                                  ))
                               : CustomText(name: "Matched ☺ ");
                         }),
                       ),
                       10.h.ph,
+                      Center(
+                        child: Obx(
+                          () => Visibility(
+                            visible: productDetailController
+                                    .osaVAlueYesorNO[index].value ==
+                                "yes",
+                            child: Column(
+                              children: [
+                                CustomText(
+                                  name: pricePopText,
+                                  size: 12.sp,
+                                ),
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Obx(
+                                        () => CustomRadioWidget(
+                                          color: aquamarine,
+                                          onTap: () {
+                                            productDetailController
+                                                .handlePriceButtonClick(
+                                                    "yes", index);
+                                          },
+                                          name: "Yes",
+                                          value: "yes",
+                                          width: 70.w,
+                                          height: 40.h,
+                                          groupValue: productDetailController
+                                              .priceVAlueYesorNO[index].value,
+                                          onChanged: (value) {
+                                            productDetailController
+                                                .handlePriceButtonClick(
+                                                    value!, index);
+                                          },
+                                        ),
+                                      ),
+                                      10.w.pw,
+                                      Obx(
+                                        () => CustomRadioWidget(
+                                          color: red,
+                                          onTap: () {
+                                            productDetailController
+                                                .handlePriceButtonClick(
+                                                    "no", index);
+                                          },
+                                          name: "No",
+                                          value: "no",
+                                          width: 67.w,
+                                          height: 40.h,
+                                          groupValue: productDetailController
+                                              .priceVAlueYesorNO[index].value,
+                                          onChanged: (value) {
+                                            productDetailController
+                                                .handlePriceButtonClick(
+                                                    value!, index);
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                10.h.ph,
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: CustomText(
+                                    name: stockLevelPopText,
+                                    size: 12.sp,
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Obx(
+                                      () => CustomRadioWidget(
+                                        color: aquamarine,
+                                        onTap: () {
+                                          productDetailController
+                                              .handleStockButtonClick(
+                                                  "Normal", index);
+                                        },
+                                        name: "Normal",
+                                        value: "Normal",
+                                        width: 90.w,
+                                        height: 40.h,
+                                        groupValue: productDetailController
+                                            .stockVAlueYesorNO[index].value,
+                                        onChanged: (value) {
+                                          productDetailController
+                                              .handleStockButtonClick(
+                                                  value!, index);
+                                        },
+                                      ),
+                                    ),
+                                    10.w.pw,
+                                    Obx(
+                                      () => CustomRadioWidget(
+                                        color: red,
+                                        onTap: () {
+                                          productDetailController
+                                              .handleStockButtonClick(
+                                                  "Low", index);
+                                        },
+                                        name: "Low",
+                                        value: "Low",
+                                        width: 75.w,
+                                        height: 40.h,
+                                        groupValue: productDetailController
+                                            .stockVAlueYesorNO[index].value,
+                                        onChanged: (value) {
+                                          productDetailController
+                                              .handleStockButtonClick(
+                                                  value!, index);
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                10.h.ph,
+                                CustomText(
+                                  name: accessPopText,
+                                  size: 12.sp,
+                                ),
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Obx(
+                                        () => CustomRadioWidget(
+                                          color: aquamarine,
+                                          onTap: () {
+                                            productDetailController
+                                                .handleAccessButtonClick(
+                                                    "yes", index);
+                                          },
+                                          name: "Yes",
+                                          value: "yes",
+                                          width: 70.w,
+                                          height: 40.h,
+                                          groupValue: productDetailController
+                                              .accessVAlueYesorNO[index].value,
+                                          onChanged: (value) {
+                                            productDetailController
+                                                .handleAccessButtonClick(
+                                                    value!, index);
+                                          },
+                                        ),
+                                      ),
+                                      10.w.pw,
+                                      Obx(
+                                        () => CustomRadioWidget(
+                                          color: red,
+                                          onTap: () {
+                                            productDetailController
+                                                .handleAccessButtonClick(
+                                                    "no", index);
+                                          },
+                                          name: "No",
+                                          value: "no",
+                                          width: 67.w,
+                                          height: 40.h,
+                                          groupValue: productDetailController
+                                              .accessVAlueYesorNO[index].value,
+                                          onChanged: (value) {
+                                            productDetailController
+                                                .handleAccessButtonClick(
+                                                    value!, index);
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
                       Align(
                         alignment: Alignment.bottomRight,
                         child: CustomButton(
@@ -119,14 +313,27 @@ class BtnRow extends StatelessWidget {
                           height: 40.h,
                           color: red,
                           name: "Submit",
-                          ontap: () {
-                            if (osaFtnBTn.osaVAlueYesorNO[index] == null) {
-                              // await boxname.close();
+                          ontap: () async {
+                            print(
+                                "stock valuee: ${productDetailController.stockVAlueYesorNO[index].value}");
+                            if (productDetailController
+                                        .osaVAlueYesorNO[index] !=
+                                    null &&
+                                productDetailController
+                                        .stockVAlueYesorNO[index] !=
+                                    null) {
+                              // storingIDController.clearHiveBox("osaData");
 
-                              // osaFtnBTn.updateValueAtIndex(index, "yes");
-
-                              osaFtnBTn.osaFtnStoringID(index, [
+                              List<int> imageBytes = await File(
+                                      logPro.productList[index].imagePath)
+                                  .readAsBytes();
+                              String cleanBase64Image =
+                                  base64Encode(imageBytes);
+                              print(
+                                  " print clean image base 64 ${cleanBase64Image}");
+                              storingIDController.osaFtnStoringID([
                                 {
+                                  "table_name": "product_detail",
                                   "retailerid":
                                       storingIDController.retailerid.value,
                                   "branchid":
@@ -138,25 +345,41 @@ class BtnRow extends StatelessWidget {
                                   "productId": logPro
                                       .productList[index].productId
                                       .toString(),
-                                  "osaValue":
-                                      osaFtnBTn.osaVAlueYesorNO[index].value,
-                                  "barcode": logPro.productList[index].barcode
-                                      .toString(),
-                                  "imagedata": "Image is not selected Yet",
-                                },
+                                  "osa": productDetailController
+                                      .osaVAlueYesorNO[index].value,
+                                  "pricevalue": productDetailController
+                                      .priceVAlueYesorNO[index].value,
+                                  "stockvalue": productDetailController
+                                      .stockVAlueYesorNO[index].value,
+                                  "accessible": productDetailController
+                                      .accessVAlueYesorNO[index].value,
+                                  "imagedata": cleanBase64Image,
+                                }
                               ]);
-                              // osaFtnBTn.getOsaValue(index);
+
+                              printAllData();
+
+                              // await boxname.close();
+                              // osaFtnBTn.updateValueAtIndex(index, "yes");
+                              // print(
+                              //     "osa Value${productDetailController.osaVAlueYesorNO[index].toString()}");
+                              // print(
+                              //     "price Value${productDetailController.priceVAlueYesorNO[index].toString()}");
+                              // print(
+                              //     "stock Value${productDetailController.stockVAlueYesorNO[index].toString()}");
+                              // print(
+                              //     "access Value${productDetailController.accessVAlueYesorNO[index].toString()}");
 
                               Get.back();
-
+                              // osaFtnBTn.getOsaValue(index);
                               Get.snackbar("Saved", "SuccessFully",
                                   snackPosition: SnackPosition.BOTTOM,
-                                  backgroundColor: red);
+                                  backgroundColor: Colors.white);
                             } else {
                               Get.back();
                               Get.snackbar("Failed", "To save data",
                                   snackPosition: SnackPosition.BOTTOM,
-                                  backgroundColor: red);
+                                  backgroundColor: Colors.white);
                             }
                           },
                         ),
@@ -165,157 +388,6 @@ class BtnRow extends StatelessWidget {
                   ));
             }),
         12.w.pw,
-        Obx(
-          () => Visibility(
-            visible: osaFtnBTn.osaVAlueYesorNO[index].value == "yes",
-            child: Row(
-              children: [
-                CustomButton(
-                  width: 74.w,
-                  height: 46.h,
-                  size: 12.sp,
-                  name: "Pricing",
-                  ontap: () {
-                    controller.commonDialog.value.showPopCustom(
-                      title: pricePopText,
-                      index: index,
-                      btn1Name: "Yes",
-                      btn2Name: "No",
-                      btn1Ontap: () {
-                        checkController.handleYesButtonClick("Yes");
-                      },
-                      takePictureStatus: 0,
-                      btn2Ontap: () {
-                        checkController.handleNoButtonClick("No");
-                      },
-                      submitOntap: () {
-                        storingIDController.pricingPutData([
-                          {
-                            "retailerid": storingIDController.retailerid.value,
-                            "branchid": storingIDController.branchid.value,
-                            "custmoreid": storingIDController.custmoreid.value,
-                            "categoryid": storingIDController.categoryid.value,
-                            "productId":
-                                logPro.productList[index].productId.toString(),
-                            "pricevalue":
-                                checkController.selectRadioBtnVal.value,
-                            "imagedata": imageContoller.takeBase64Image.value,
-                          }
-                        ]);
-
-                        storingIDController.pricingGetData();
-                        Get.back();
-                      },
-                    );
-                  },
-                ),
-                10.w.pw,
-                CustomButton(
-                  width: 78.w,
-                  height: 46.h,
-                  size: 12.sp,
-                  name: "Stock level",
-                  ontap: () {
-                    Get.dialog(MyAlertDialog(
-                        title: stockLevelPopText,
-                        widgetTrue: false,
-                        yesTap: () {
-                          stockLevelFtnBtn.handleYesButtonClick("Normal");
-                        },
-                        noTap: () {
-                          stockLevelFtnBtn.handleNoButtonClick("Low");
-                        },
-                        containerHeight: 40.h,
-                        containerWidth: 100.w,
-                        option1Text: "Normal",
-                        radio1: Obx(
-                          () => Radio<String>(
-                            value: "Normal",
-                            activeColor: white,
-                            groupValue: stockLevelFtnBtn.stockValue.value,
-                            onChanged: (p0) {
-                              stockLevelFtnBtn.handleNoButtonClick(p0!);
-                            },
-                          ),
-                        ),
-                        option2Text: "Low",
-                        radio2: Obx(
-                          () => Radio<String>(
-                            value: "Low",
-                            activeColor: white,
-                            groupValue: stockLevelFtnBtn.stockValue.value,
-                            onChanged: (p0) {
-                              stockLevelFtnBtn.handleNoButtonClick(p0!);
-                            },
-                          ),
-                        ),
-                        onSubmit: () {
-                          // storingIDController.stockLevelPutData([
-                          //   {
-                          //     "retailerid":
-                          //         storingIDController.retailerid.value,
-                          //     "branchid": storingIDController.branchid.value,
-                          //     "custmoreid":
-                          //         storingIDController.custmoreid.value,
-                          //     "categoryid":
-                          //         storingIDController.categoryid.value,
-                          //     "productId": logPro.productList[index].productId
-                          //         .toString(),
-                          //     "stockLevelValue":
-                          //         checkController.selectRadioBtnVal.value,
-                          //     "imagedata": imageContoller.takeBase64Image.value
-                          //   }
-                          // ]);
-
-                          // storingIDController.stockLevelGetData();
-                          Get.back();
-                        }));
-                  },
-                ),
-                7.w.pw,
-                CustomButton(
-                  width: 79.w,
-                  height: 46.h,
-                  size: 12.sp,
-                  name: "Accessible ",
-                  ontap: () {
-                    controller.commonDialog.value.showPopCustom(
-                      title: accessPopText,
-                      index: index,
-                      btn1Name: "Yes",
-                      btn2Name: "No",
-                      takePictureStatus: 0,
-                      btn1Ontap: () {
-                        checkController.handleYesButtonClick("Yes");
-                      },
-                      btn2Ontap: () {
-                        checkController.handleNoButtonClick("No");
-                      },
-                      submitOntap: () {
-                        storingIDController.accessiblePutData([
-                          {
-                            "retailerid": storingIDController.retailerid.value,
-                            "branchid": storingIDController.branchid.value,
-                            "custmoreid": storingIDController.custmoreid.value,
-                            "categoryid": storingIDController.categoryid.value,
-                            "productId":
-                                logPro.productList[index].productId.toString(),
-                            "accessibleValue":
-                                checkController.selectRadioBtnVal.value,
-                            "imagedata": imageContoller.takeBase64Image.value
-                          }
-                        ]);
-
-                        storingIDController.accessibleGetData();
-                        Get.back();
-                      },
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
-        ),
       ],
     );
   }

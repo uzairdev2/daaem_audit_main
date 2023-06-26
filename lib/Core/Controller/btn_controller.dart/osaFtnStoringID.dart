@@ -3,26 +3,47 @@
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
-class OsaFtnBTn extends GetxController {
-  RxBool radioValue = false.obs;
+class ProductDetailController extends GetxController {
+  RxBool osaRadioValue = false.obs;
+  RxBool priceRadioValue = false.obs;
+  RxBool stockRadioValue = false.obs;
+  RxBool accessRadioValue = false.obs;
   RxString name = "".obs;
   List osaList = [];
   List<dynamic> osaVAlueYesorNO = [];
+  List<dynamic> priceVAlueYesorNO = [];
+  List<dynamic> stockVAlueYesorNO = [];
+  List<dynamic> accessVAlueYesorNO = [];
+  void handlePriceButtonClick(String gernder, int index) {
+    priceRadioValue.value = !priceRadioValue.value;
+    priceVAlueYesorNO[index].value = gernder;
+  }
+
+  void handleStockButtonClick(String gernder, int index) {
+    stockRadioValue.value = !stockRadioValue.value;
+    stockVAlueYesorNO[index].value = gernder;
+  }
+
+  void handleAccessButtonClick(String gernder, int index) {
+    accessRadioValue.value = !accessRadioValue.value;
+    accessVAlueYesorNO[index].value = gernder;
+  }
 
   void handleYesButtonClick(String gernder, int index) {
-    radioValue.value = !radioValue.value;
+    osaRadioValue.value = !osaRadioValue.value;
     osaVAlueYesorNO[index].value = gernder;
   }
 
   handleNoButtonClick(String gernder, int index) {
-    radioValue.value = !radioValue.value;
+    osaRadioValue.value = !osaRadioValue.value;
     osaVAlueYesorNO[index].value = gernder;
   }
 
   Future<void> osaFtnStoringID(
       int index, List<Map<String, dynamic>> dataList) async {
     try {
-      final boxname = await Hive.openBox("osaData");
+      final boxname = await Hive.openBox("osa");
+      boxname.put("Tablename", 'osa table');
       boxname.clear();
       if (index >= 0) {
         boxname.putAt(0, dataList);

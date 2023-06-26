@@ -10,7 +10,7 @@ import '../../Feature/Competitors Screen/materialSales.dart/materialsales.dart';
 import '../../Feature/Home Screen.dart/home_screen.dart';
 import '../../Feature/Promotion Screen/promotion_screen.dart';
 import '../../Feature/Promotion Screen/Secondary place/secondary _place_screen.dart';
-import '../../Feature/Splash Screen/splash_screen.dart';
+import '../../Feature/Splash Screen/spash_screen.dart';
 
 class AppRoutes {
   static appRoutes() => [

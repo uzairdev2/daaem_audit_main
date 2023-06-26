@@ -1,18 +1,15 @@
 import 'package:daaem_reports/Core/Controller/controller_detail.dart';
-import 'package:daaem_reports/Feature/Home%20Screen.dart/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
-
 import 'Core/API,s Intergartion/API,s.dart';
 import 'Core/Constant/Colors/colors.dart';
-
 import 'package:provider/provider.dart';
-
 import 'Core/Local DB/model.dart';
+import 'Core/Routes/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +20,6 @@ void main() async {
   Hive.init(directory.path);
   Hive.registerAdapter(ModelHiveAdapter());
   await Hive.openBox<ModelHive>("scanData");
-
   runApp(const MyApp());
 }
 
@@ -52,8 +48,8 @@ class MyApp extends StatelessWidget {
                 scaffoldBackgroundColor: backgroundColor,
               ),
               debugShowCheckedModeBanner: false,
-              // getPages: AppRoutes.appRoutes(),
-              home: const HomeScreen(),
+              getPages: AppRoutes.appRoutes(),
+              // home: MyApp(),
             )),
       ),
     );

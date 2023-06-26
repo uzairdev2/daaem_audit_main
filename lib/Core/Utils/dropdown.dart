@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // ignore: must_be_immutable
-class CustomDropdownButton extends StatelessWidget {
+class CustomDropdownButton extends StatefulWidget {
   final String hint;
 
   final List<String> items;
@@ -33,24 +33,29 @@ class CustomDropdownButton extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<CustomDropdownButton> createState() => _CustomDropdownButtonState();
+}
+
+class _CustomDropdownButtonState extends State<CustomDropdownButton> {
+  @override
   Widget build(BuildContext context) {
     return Container(
-      width: width,
-      height: height,
+      width: widget.width,
+      height: widget.height,
       padding: const EdgeInsets.only(left: 15, top: 10, bottom: 10, right: 15),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: backgroundColor,
+        color: widget.backgroundColor,
       ),
       child: Center(
         child: DropdownButtonHideUnderline(
           child: DropdownButton<String>(
             menuMaxHeight: 200,
-            value: dropvalue,
-            focusColor: backgroundColor,
+            value: widget.dropvalue,
+            focusColor: widget.backgroundColor,
             dropdownColor: white,
-            iconEnabledColor: color,
-            iconDisabledColor: color,
+            iconEnabledColor: widget.color,
+            iconDisabledColor: widget.color,
             isExpanded: true,
             isDense: true,
             borderRadius: BorderRadius.circular(10.r),
@@ -59,24 +64,23 @@ class CustomDropdownButton extends StatelessWidget {
                 fontSize: 16.sp,
                 fontWeight: FontWeight.w400,
                 fontFamily: 'Montserrat'),
-            iconSize: iconsizes,
+            iconSize: widget.iconsizes,
             hint: Text(
-              hint,
+              widget.hint,
               style: TextStyle(
-                  color: color,
+                  color: widget.color,
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w400,
                   fontFamily: 'Montserrat'),
             ),
-            onChanged: onChanged,
-            items: items.map((String value) {
+            onChanged: widget.onChanged,
+            items: widget.items
+                .toSet()
+                .toList()
+                .map<DropdownMenuItem<String>>((value) {
               return DropdownMenuItem<String>(
                 value: value,
-                child: Row(
-                  children: [
-                    Text(value),
-                  ],
-                ),
+                child: Text(value),
               );
             }).toList(),
           ),

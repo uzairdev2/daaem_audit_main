@@ -22,6 +22,7 @@ class PlanogramFtn extends GetxController {
 
   planogramFtnStoringID() async {
     final boxname = await Hive.openBox("planogramData");
+    boxname.put("table_name",'planogram');
     print(
         "this the current value retailerId ${storingIDController.retailerid.value}");
     print(
@@ -40,7 +41,6 @@ class PlanogramFtn extends GetxController {
 
   planogramFtnGetingIDs() async {
     final boxname = await Hive.openBox("planogramData");
-
     storingIDController.retailerid.value = boxname.get("retailerid");
     storingIDController.branchid.value = boxname.get("branchid");
     storingIDController.custmoreid.value = boxname.get("custmoreid");

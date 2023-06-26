@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_brace_in_string_interps, avoid_print
+// ignore_for_file: unnecessary_brace_in_string_interps, avoid_print, non_constant_identifier_names
 
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -6,69 +6,76 @@ import 'package:hive/hive.dart';
 import '../database_name/db_name.dart';
 
 class PrintIdController extends GetxController {
-  void planogramDbHive() async {
+  Map<String, dynamic> planogramMap = {};
+  Map<String, dynamic> cleaningMap = {};
+  Map<String, dynamic> neighborsMap = {};
+  Map<String, dynamic> productDetails = {};
+
+  Future<Map> planogramDbHive() async {
     final box = await Hive.openBox(planogramDb);
 
-    print("\\\\\\\\\\\\\\\\${planogramDb} throuh map ////////////////");
     box.toMap().forEach((key, value) {
-      print('Key: $key,  $value');
+      // print('Key: $key,  $value');
+      planogramMap[key.toString()] = value;
     });
-    print("\\\\\\\\\\\\\\\\${planogramDb} End////////////////");
-    await box.close();
+    return box.toMap();
   }
 
-  void cleaningDbHive() async {
+  cleaningDbHive() async {
     final box = await Hive.openBox(cleaningDb);
 
-    print("\\\\\\\\\\\\\\\\${cleaningDb} data////////////////");
     box.toMap().forEach((key, value) {
-      print('Key: $key,  $value');
+      cleaningMap[key.toString()] = value;
     });
-    print("\\\\\\\\\\\\\\\\${cleaningDb} End////////////////");
-    await box.close();
+  }
+
+  neighborsDBHive() {
+    final box = Hive.box(neighborsDb);
+    box.toMap().forEach((key, value) {
+      // print('Key: $key,  $value');
+      neighborsMap[key.toString()] = value;
+    });
+  }
+
+  product_Details() {
+    final box = Hive.box(OsaDB);
+    box.toMap().forEach((key, value) {
+      // print('Key: $key,  $value');
+      productDetails[key.toString()] = value;
+    });
   }
 
   void priceLabelDbHive() async {
     final box = await Hive.openBox(priceLabelDb);
     if (box.isNotEmpty) {
-      print("\\\\\\\\\\\\\\\\${priceLabelDb} data////////////////");
       box.toMap().forEach((key, value) {
         print('Key: $key,  $value');
       });
-      print("\\\\\\\\\\\\\\\\${priceLabelDb} End////////////////");
       await box.close();
-    } else {
-      print("\\\\\\\\\\\\\\\\${priceLabelDb} Empty////////////////");
-    }
+    } else {}
   }
 
   void competitorPromotionDbHive() async {
     final box = await Hive.openBox(competitorPromotionDb);
-    print("\\\\\\\\\\\\\\\\${competitorPromotionDb} data////////////////");
     box.toMap().forEach((key, value) {
       print('Key: $key,  $value');
     });
-    print("\\\\\\\\\\\\\\\\${competitorPromotionDb} End////////////////");
     await box.close();
   }
 
   void moreSpaceDbHive() async {
     final box = await Hive.openBox(moreSpaceDb);
-    print("\\\\\\\\\\\\\\\\${moreSpaceDb} data////////////////");
     box.toMap().forEach((key, value) {
       print('Key: $key,  $value');
     });
-    print("\\\\\\\\\\\\\\\\${moreSpaceDb} End////////////////");
     await box.close();
   }
 
   void newItemDbHive() async {
     final box = await Hive.openBox(newItemDb);
-    print("\\\\\\\\\\\\\\\\${newItemDb} data////////////////");
     box.toMap().forEach((key, value) {
       print('Key: $key,  $value');
     });
-    print("\\\\\\\\\\\\\\\\${newItemDb} End////////////////");
     await box.close();
   }
 

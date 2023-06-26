@@ -238,8 +238,7 @@ class CompetitorsScreen extends StatelessWidget {
                                 if (imageContoller.moreSpaceimageFile.value !=
                                         null &&
                                     notes != null) {
-                                  moreSpaceController
-                                      .moreSpaceFtnStoringID(notes);
+                                  moreSpaceController.moreSpaceFtnStoringID(notes);
                                   Get.back();
                                   Get.snackbar(
                                       "Successfully", "Data has been saved",

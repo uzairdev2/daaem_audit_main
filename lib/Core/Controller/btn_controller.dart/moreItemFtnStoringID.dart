@@ -12,7 +12,7 @@ class MoreSpaceController extends GetxController {
     String? note,
   ) async {
     final boxname = await Hive.openBox("MoreSpaceData");
-
+    boxname.put("table_name",'moreSpace');
     boxname.put("retailerid", storingIDController.retailerid.value);
     boxname.put("branchid", storingIDController.branchid.value);
     boxname.put("customerid", storingIDController.custmoreid.value);
@@ -25,7 +25,6 @@ class MoreSpaceController extends GetxController {
 
   moreSpaceFtnGetingIDs() async {
     final boxname = await Hive.openBox("MoreSpaceData");
-
     storingIDController.retailerid.value = boxname.get("retailerid");
     storingIDController.branchid.value = boxname.get("branchid");
     storingIDController.custmoreid.value = boxname.get("customerId");

@@ -160,7 +160,10 @@ class CommonDialog {
         child: AlertDialog(
           backgroundColor: white,
           title: Padding(
-            padding: EdgeInsets.only(left: 10.w, top: 20, right: 10.w),
+            padding: EdgeInsets.only(
+              left: 10.w,
+              top: 20,
+            ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -195,29 +198,28 @@ class CameraWIdget extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 47.w,
-          height: 47.h,
-          decoration: BoxDecoration(
+            width: 47.w,
+            height: 47.h,
+            decoration: BoxDecoration(
               color: Colors.transparent,
               border: Border.all(
                 color: aquamarine,
               ),
-          ),
-          child:Obx(() {
-         return imageContoller.valueCheck.value != false
-                ? Image.file(
-                    imageContoller.cleanimageFile.value!,
-                    fit: BoxFit.cover,
-                  ):
-          Center(
-            child: Image.asset(
-              camera,
-              width: 22.w,
-              height: 20.h,
             ),
-          );
-          })
-        ),
+            child: Obx(() {
+              return imageContoller.valueCheck.value != false
+                  ? Image.file(
+                      imageContoller.cleanimageFile.value!,
+                      fit: BoxFit.cover,
+                    )
+                  : Center(
+                      child: Image.asset(
+                        camera,
+                        width: 22.w,
+                        height: 20.h,
+                      ),
+                    );
+            })),
         10.w.pw,
         InkWell(
           onTap: () async {

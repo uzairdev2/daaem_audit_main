@@ -28,7 +28,8 @@ StockLevelFtnBtn stockLevelFtnBtn = Get.put(StockLevelFtnBtn());
 ImageContoller imageContoller = Get.put(ImageContoller());
 NewItemController newItemController = Get.put(NewItemController());
 MoreSpaceController moreSpaceController = Get.put(MoreSpaceController());
-OsaFtnBTn osaFtnBTn = Get.put(OsaFtnBTn());
+ProductDetailController productDetailController =
+    Get.put(ProductDetailController());
 HomeScreenController controller = Get.put(HomeScreenController());
 PlanogramFtn planogramFtn = Get.put(PlanogramFtn());
 CleaningFtnBtn cleaningFtnBtn = Get.put(CleaningFtnBtn());

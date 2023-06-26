@@ -1,11 +1,17 @@
-// ignore_for_file: file_names, unnecessary_null_comparison
+// ignore_for_file: file_names, unnecessary_null_comparison, unnecessary_import, prefer_is_empty, prefer_if_null_operators
 
+import 'package:daaem_reports/Core/Model/API,s%20Models/SecondaryModel.dart';
 import 'package:daaem_reports/Core/Utils/sizebox.dart';
 import 'package:daaem_reports/Feature/Category%20Screen.dart/category_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'dart:io';
+import '../../../Core/API,s Intergartion/API,s.dart';
 import '../../../Core/Constant/Colors/colors.dart';
 import '../../../Core/Controller/controller_detail.dart';
 import '../../../Core/Utils/Camera Widget/camera_widget.dart';
@@ -13,10 +19,78 @@ import '../../../Core/Utils/checkbox.dart';
 import '../../../Core/Utils/commonAppbar.dart';
 import '../../../Core/Utils/customButton.dart';
 
-class Secondaryplace extends StatelessWidget {
+class Secondaryplace extends StatefulWidget {
   const Secondaryplace({super.key});
+
+  @override
+  State<Secondaryplace> createState() => _SecondaryplaceState();
+}
+
+class _SecondaryplaceState extends State<Secondaryplace> {
+  List<SecondaryModel> secondaryList = [];
+  late ApiClass logPro;
+  Future<SecondaryModel?> getObjectByKey(String key) async {
+    await Hive.initFlutter();
+    final box = await Hive.openBox<SecondaryModel>('myBox');
+    final model = box.get(key);
+    box.close();
+    Hive.close();
+    return model;
+  }
+
+  Future<void> initializeSecondaryList() async {
+    for (int i = 0; i < 4; i++) {
+      var key = "$i/${logPro.selectedCategoryId}/${logPro.selectedProductId}";
+      var model = await getObjectByKey(key);
+      if (model != null) {
+        setState(() {
+          secondaryList.add(model);
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    logPro = Provider.of<ApiClass>(context);
+    initializeSecondaryList();
+    void saveDataHive(String key, SecondaryModel model) async {
+      await Hive.initFlutter();
+      if (Hive.isBoxOpen('myBox')) {
+        await Hive.box('myBox').close();
+      }
+      await Hive.openBox<SecondaryModel>('myBox');
+      final box = Hive.box<SecondaryModel>('myBox');
+      box.put(key, model);
+      box.close();
+      Hive.close();
+    }
+
+    void pickImage(int index) async {
+      final image = await ImagePicker().pickImage(source: ImageSource.camera);
+      if (image != null) {
+        setState(() {
+          if (index == 0) {
+            imageContoller.gandulaValue.value = true;
+          } else if (index == 1) {
+            imageContoller.floorValue.value = true;
+          } else if (index == 2) {
+            imageContoller.standValue.value = true;
+          } else if (index == 3) {
+            imageContoller.secondaryPromValue.value = true;
+          }
+          var model = SecondaryModel(
+              productId: logPro.selectedProductId,
+              categoryId: logPro.selectedCategoryId,
+              imagePath: Rx<File?>(File(image.path)));
+          secondaryList.insert(index, model);
+          var key =
+              "$index/${logPro.selectedCategoryId}/${logPro.selectedProductId}";
+          saveDataHive(key, model);
+        });
+      }
+    }
+
     return Scaffold(
       appBar: CommonAppBar(
         title: "Secondary place",
@@ -29,7 +103,7 @@ class Secondaryplace extends StatelessWidget {
         },
       ),
       body: Padding(
-        padding: EdgeInsets.only(left: 16.w, top: 15.h, right: 16.w),
+        padding: EdgeInsets.only(left: 14.w, top: 15.h, right: 14.w),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -66,10 +140,15 @@ class Secondaryplace extends StatelessWidget {
                               alignment: Alignment.centerLeft,
                               child: CameraWidget(
                                 buttonText: "Take a Picture for\n Gandula",
-                                imagePath: imageContoller.gandulaimageFile,
+                                imagePath: secondaryList.length >= 1
+                                    ? secondaryList[0].imagePath == null
+                                        ? imageContoller.gandulaimageFile
+                                        : secondaryList[0].imagePath
+                                    : imageContoller.gandulaimageFile,
                                 showImage: imageContoller.gandulaValue,
                                 onTap: () {
-                                  imageContoller.gandulaImage();
+                                  pickImage(0);
+                                  // imageContoller.gandulaImage();
                                 },
                               ),
                             ),
@@ -84,7 +163,7 @@ class Secondaryplace extends StatelessWidget {
                                   name: "Good",
                                   color: aquamarine,
                                   value: "good",
-                                  width: 75.w,
+                                  // width: 75.w,
                                   height: 40.h,
                                   groupValue:
                                       secondaryFtnController.gandulaValue.value,
@@ -102,7 +181,7 @@ class Secondaryplace extends StatelessWidget {
                                   name: "Bad",
                                   color: aquamarine,
                                   value: "bad",
-                                  width: 70.w,
+                                  // width: 70.w,
                                   height: 40.h,
                                   groupValue:
                                       secondaryFtnController.gandulaValue.value,
@@ -149,12 +228,16 @@ class Secondaryplace extends StatelessWidget {
                               Align(
                                 alignment: Alignment.bottomLeft,
                                 child: CameraWidget(
-                                  buttonText:
-                                      "Take a Picture for\n Floor Display",
-                                  imagePath: imageContoller.floorimageFile,
-                                  showImage: imageContoller.floorValue,
+                                  buttonText: "Take a Picture for\n Gandula",
+                                  imagePath: secondaryList.length >= 2
+                                      ? secondaryList[1].imagePath == null
+                                          ? imageContoller.gandulaimageFile
+                                          : secondaryList[1].imagePath
+                                      : imageContoller.gandulaimageFile,
+                                  showImage: imageContoller.gandulaValue,
                                   onTap: () {
-                                    imageContoller.floorImage();
+                                    pickImage(1);
+                                    // imageContoller.gandulaImage();
                                   },
                                 ),
                               ),
@@ -169,7 +252,7 @@ class Secondaryplace extends StatelessWidget {
                                     name: "Good",
                                     color: aquamarine,
                                     value: "good",
-                                    width: 75.w,
+                                    // width: 75.w,
                                     height: 40.h,
                                     groupValue:
                                         secondaryFtnController.floorValue.value,
@@ -187,7 +270,7 @@ class Secondaryplace extends StatelessWidget {
                                     name: "Bad",
                                     color: aquamarine,
                                     value: "bad",
-                                    width: 70.w,
+                                    // width: 70.w,
                                     height: 40.h,
                                     groupValue:
                                         secondaryFtnController.floorValue.value,
@@ -237,11 +320,16 @@ class Secondaryplace extends StatelessWidget {
                             Align(
                               alignment: Alignment.bottomLeft,
                               child: CameraWidget(
-                                buttonText: "Take a Picture for\n Stand",
-                                imagePath: imageContoller.standimageFile,
-                                showImage: imageContoller.standValue,
+                                buttonText: "Take a Picture for\n Gandula",
+                                imagePath: secondaryList.length >= 3
+                                    ? secondaryList[2].imagePath == null
+                                        ? imageContoller.gandulaimageFile
+                                        : secondaryList[2].imagePath
+                                    : imageContoller.gandulaimageFile,
+                                showImage: imageContoller.gandulaValue,
                                 onTap: () {
-                                  imageContoller.standImage();
+                                  pickImage(2);
+                                  // imageContoller.gandulaImage();
                                 },
                               ),
                             ),
@@ -256,7 +344,7 @@ class Secondaryplace extends StatelessWidget {
                                   name: "Good",
                                   color: aquamarine,
                                   value: "good",
-                                  width: 75.w,
+                                  // width: 75.w,
                                   height: 40.h,
                                   groupValue:
                                       secondaryFtnController.standValue.value,
@@ -274,7 +362,7 @@ class Secondaryplace extends StatelessWidget {
                                   name: "Bad",
                                   color: aquamarine,
                                   value: "bad",
-                                  width: 70.w,
+                                  // width: 70.w,
                                   height: 40.h,
                                   groupValue:
                                       secondaryFtnController.standValue.value,
@@ -321,13 +409,16 @@ class Secondaryplace extends StatelessWidget {
                             Align(
                               alignment: Alignment.bottomLeft,
                               child: CameraWidget(
-                                imagePath:
-                                    imageContoller.secondaryPromotionFile,
-                                showImage: imageContoller.secondaryPromValue,
-                                buttonText:
-                                    "Take a Picture for\n Promotional Area",
+                                buttonText: "Take a Picture for\n Gandula",
+                                imagePath: secondaryList.length >= 4
+                                    ? secondaryList[3].imagePath == null
+                                        ? imageContoller.gandulaimageFile
+                                        : secondaryList[3].imagePath
+                                    : imageContoller.gandulaimageFile,
+                                showImage: imageContoller.gandulaValue,
                                 onTap: () {
-                                  imageContoller.promoImage();
+                                  pickImage(3);
+                                  // imageContoller.gandulaImage();
                                 },
                               ),
                             ),
@@ -342,7 +433,7 @@ class Secondaryplace extends StatelessWidget {
                                   name: "Good",
                                   color: aquamarine,
                                   value: "good",
-                                  width: 75.w,
+                                  // width: 75.w,
                                   height: 40.h,
                                   groupValue:
                                       secondaryFtnController.areaValue.value,
@@ -360,7 +451,7 @@ class Secondaryplace extends StatelessWidget {
                                   name: "Bad",
                                   color: aquamarine,
                                   value: "bad",
-                                  width: 70.w,
+                                  // width: 70.w,
                                   height: 40.h,
                                   groupValue:
                                       secondaryFtnController.areaValue.value,
@@ -424,7 +515,6 @@ class Secondaryplace extends StatelessWidget {
                   imageContoller.gandulaValue.value = false;
                   imageContoller.secondaryPromValue.value = false;
                   imageContoller.standValue.value = false;
-
                   Get.snackbar("Successfully", "Data has been stored",
                       snackPosition: SnackPosition.BOTTOM,
                       backgroundColor: aquamarine);

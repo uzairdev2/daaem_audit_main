@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Core/API,s Intergartion/API,s.dart';
 import '../../Core/Controller/dropdown_controller.dart';
@@ -59,11 +60,18 @@ class _HomeScreenState extends State<HomeScreen> {
                               //call your Scond api here
                               logPro.branchList.clear();
                               logPro.againsearch();
+                              final SharedPreferences sharedPreferences =
+                                  await SharedPreferences.getInstance();
+                              String merchId = sharedPreferences
+                                  .getString("merchandiserId")
+                                  .toString();
+                              log("here is ${merchId}");
                               await logPro.getBranchData(
-                                  retailerid: item.retailerId.toString());
+                                  merchandiser_id: merchId,
+                                  retailer_id: item.retailerId.toString());
                               controller.selectedRetailer.value = "newValue";
                               storingIDController.retailerid.value =
-                                  item.retailerId.toString();
+                                  item.retailerId!;
                             },
                             value: item.retailerName,
                             child: Text(
@@ -133,22 +141,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                 .map((item) => DropdownMenuItem<String>(
                                       onTap: () async {
                                         print("here is ${item.branchId}");
-                                        log("here is ${item.coordinates}");
+                                        // log("here is ${item.coordinates}");
 
-                                        String coordinates = item.coordinates!;
-                                        List<String> coordinateList =
-                                            coordinates.split(", ");
+                                        // String coordinates = item.coordinates!;
+                                        // List<String> coordinateList =
+                                        //     coordinates.split(", ");
 
-                                        String latitude =
-                                            coordinateList[0]; // 24.746207
-                                        String longitude =
-                                            coordinateList[1]; // 46.775707
+                                        // String latitude =
+                                        //     coordinateList[0]; // 24.746207
+                                        // String longitude =
+                                        //     coordinateList[1]; // 46.775707
 
-                                        print("here is latitude $latitude");
-                                        print("here is longitude $longitude");
+                                        // print("here is latitude $latitude");
+                                        // print("here is longitude $longitude");
 
-                                        double lat = double.parse(latitude);
-                                        double long = double.parse(longitude);
+                                        // double lat = double.parse(latitude);
+                                        // double long = double.parse(longitude);
 
                                         // await checkController.getDistance(
                                         //     lat: lat,
@@ -262,6 +270,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
+                20.h.ph,
+                // CustomButton(
+                //     name: "LogOut",
+                //     ontap: () async {
+                //       SharedPreferences prefs =
+                //           await SharedPreferences.getInstance();
+                //       prefs.remove('username');
+                //       prefs.remove('merchandiserId');
+                //       Get.offAll(() => SignIn());
+                //     })
               ],
             ),
           );

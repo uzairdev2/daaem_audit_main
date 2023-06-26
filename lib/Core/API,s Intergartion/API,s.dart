@@ -6,15 +6,19 @@ import 'package:daaem_reports/Core/Model/API,s%20Models/retailer_model.dart';
 import 'package:daaem_reports/Core/Model/API,s%20Models/branch_model.dart';
 import 'package:daaem_reports/Core/Model/API,s%20Models/scan_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../Feature/Home Screen.dart/home_screen.dart';
+import '../Constant/Colors/colors.dart';
 import '../Model/API,s Models/category_model.dart';
 import '../Model/API,s Models/customer_model.dart';
 import '../Model/API,s Models/product_model.dart';
 
-import '../Routes/routes_name.dart';
+import '../Utils/customButton.dart';
+import '../Utils/customText.dart';
 
 String extractValueFromBody(String responseBody) {
   var jsonData = json.decode(responseBody);
@@ -35,6 +39,109 @@ class ApiClass with ChangeNotifier {
   var Data = "";
   List<RetailerModel> firstlist = [];
   String merchandiser_id = "";
+
+  syncData({required Map<String, dynamic> MapData}) async {
+    final url = Uri.parse(
+        'https://www.daaemsolutions.com/test/audit_api/web_api/insert/');
+
+    print("my data is  inner  $MapData");
+    Map<String, dynamic> dataMap = {};
+
+    if (MapData['table_name'] == "planogram") {
+      dataMap = {
+        "action": "planogram",
+        "retailer_id": MapData['retailerid'],
+        "customer_id": MapData['custmoreid'],
+        "category_id": MapData['categoryid'],
+        "branch_id": MapData['branchid'],
+        "planogramValue": MapData['planogramValue'],
+      };
+    } else if (MapData['table_name'] == "cleaning") {
+      dataMap = {
+        "action": "cleaning",
+        "retailer_id": MapData['retailerid'],
+        "customer_id": MapData['custmoreid'],
+        "category_id": MapData['categoryid'],
+        "branch_id": MapData['branchid'],
+        "image": MapData['imagedata'],
+        "cleaningValue": MapData['cleaningValue'],
+      };
+    } else if (MapData['table_name'] == "neighbours") {
+      dataMap = {
+        "action": "neighbours",
+        "retailer_id": MapData['retailerid'],
+        "customer_id": MapData['custmoreid'],
+        "category_id": MapData['categoryid'],
+        "branch_id": MapData['branchid'],
+        "left_id": MapData['leftDropValue'],
+        "right_id": MapData['rightDropVaalue'],
+      };
+    } else if (MapData['table_name'] == "product_detail") {
+      dataMap = {
+        "action": MapData['table_name'],
+        "retailer_id": MapData['retailerid'],
+        "customer_id": MapData['custmoreid'],
+        "category_id": MapData['categoryid'],
+        "branch_id": MapData['branchid'],
+        "product_id": MapData['productId'],
+        "osa": MapData['osa'] as String?,
+        "price_label": MapData['pricevalue'],
+        "stock_level": MapData['stockvalue'],
+        "accessable": MapData['accessible'],
+        "image": MapData['imagedata'],
+      };
+    }
+
+    // var cleanessData = {
+    //   "action": "cleaning",
+    //   "retailer_id": MapData['retailerid'],
+    //   "customer_id": MapData['custmoreid'],
+    //   "category_id": MapData['categoryid'],
+    //   "branch_id": MapData['branchid'],
+    //   "image": MapData['imagedata'],
+    //   "cleaningValue": MapData['cleaningValue'],
+    // };
+
+    // var neighborData = {
+    //   "action": "neighbours",
+    //   "retailer_id": MapData['retailerid'],
+    //   "customer_id": MapData['custmoreid'],
+    //   "category_id": MapData['categoryid'],
+    //   "branch_id": MapData['branchid'],
+    //   "left_id": MapData['leftDropValue'],
+    //   "right_id": MapData['rightDropVaalue'],
+    // };
+
+    // var productDetails = {
+    //   "action": MapData['table_data'],
+    //   "retailer_id": MapData['retailerid'],
+    //   "customer_id": MapData['custmoreid'],
+    //   "category_id": MapData['categoryid'],
+    //   "branch_id": MapData['branchid'],
+    //   "product_id": MapData['productId'],
+    //   "osa": MapData['osa'],
+    //   "price_label": MapData['pricevalue'],
+    //   "stock_level": MapData['stockvalue'],
+    //   "accessable": MapData['accessible'],
+    //   "image": MapData['imagedata'],
+    // };
+
+    var response = await http.post(
+      url,
+      // body: planogramData,
+      // body: cleanessData,
+      // body: neighborData,
+      body: dataMap,
+    );
+    if (response.statusCode == 200) {
+      print('Request status 200');
+      print("respon.body${response.body}");
+      // var responseData = json.decode(response.body);
+      // print(responseData);
+    } else {
+      print('Request failed with status: ${response.statusCode}');
+    }
+  }
 
   Future<void> setCategoryId(String id) async {
     selectedCategoryId = id;
@@ -85,9 +192,6 @@ class ApiClass with ChangeNotifier {
       'username': username,
       'password': password,
     };
-    final SharedPreferences sharedPreferences =
-        await SharedPreferences.getInstance();
-    await sharedPreferences.setString('username', username);
     String url =
         'https://www.daaemsolutions.com/test/audit_api/login/'; // Replace with your API endpoint
     http
@@ -95,19 +199,48 @@ class ApiClass with ChangeNotifier {
       Uri.parse(url),
       body: formData,
     )
-        .then((value) {
+        .then((value) async {
+      if (value.statusCode == 200) {
+        final SharedPreferences sharedPreferences =
+            await SharedPreferences.getInstance();
+        await sharedPreferences.setString('username', username);
+        Get.defaultDialog(
+            title: 'Loading...',
+            content: const CircularProgressIndicator(
+              color: black,
+              strokeWidth: 2.2,
+              backgroundColor: Colors.orange,
+            ));
+      } else {
+        Get.defaultDialog(
+          title: "error",
+          content: CustomText(
+            name: "Please enter your create username and password",
+            color: black,
+            size: 14.sp,
+            weightFont: FontWeight.w700,
+          ),
+          confirm: CustomButton(
+            name: "go back",
+            ontap: () {
+              Get.back();
+            },
+          ),
+        );
+      }
       if (value.statusCode == 200) {
         // Login successful
         print('Login successful! ${value.body}');
-
         String responseBody = value.body;
         String merchandiserId = extractValueFromBody(responseBody);
         print('Merchandiser ID: $merchandiserId');
+        final SharedPreferences sharedPreferences =
+            await SharedPreferences.getInstance();
+        await sharedPreferences.setString('merchandiserId', merchandiserId);
         merchandiser_id = merchandiserId;
 
         getRetailerData(merchandiser_id: merchandiserId).then((value) {
-          //ROUTE TO HOME
-          Get.toNamed(RoutesName.homeScreen);
+          Get.offAll(() => const HomeScreen());
         });
       } else {
         // Login failed
@@ -126,7 +259,7 @@ class ApiClass with ChangeNotifier {
       'merchandiser_id': merchandiser_id,
       'retailer_id': retailer_id,
     };
-    final url =
+    const url =
         'https://www.daaemsolutions.com/test/audit_api/branch/'; // Replace with your API endpoint
     final response = await http.post(
       Uri.parse(url),

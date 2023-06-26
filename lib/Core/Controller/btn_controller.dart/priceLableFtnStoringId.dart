@@ -27,7 +27,7 @@ class PriceLabelController extends GetxController {
   Future<void> priceLabelFtnStoringID(
       String regularPrice, String promotionalPrice) async {
     final boxname = await Hive.openBox("priceLabelData");
-
+    boxname.put("table_name",'priceLabel');
     boxname.put("retailerid", storingIDController.retailerid.value);
     boxname.put("branchid", storingIDController.branchid.value);
     boxname.put("custmoreid", storingIDController.custmoreid.value);
