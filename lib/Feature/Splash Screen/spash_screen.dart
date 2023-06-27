@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../Core/API,s Intergartion/API,s.dart';
 import '../../Core/Constant/Colors/colors.dart';
 import '../../Core/Constant/Images/images.dart';
+import '../Home Screen.dart/home_screen.dart';
 import '../Sign In/sign_in.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -32,13 +33,13 @@ class _SplashScreenState extends State<SplashScreen> {
       number = sharedPreferences.getString("username");
       merchId = sharedPreferences.getString("merchandiserId");
       print("merchandiserId_____ $merchId");
-      // if (number == null) {
+      if (number == null || merchId == null ) {
       Get.offAll(() => SignIn());
-      // } else {
-      // apiClass.getRetailerData(merchandiser_id: merchId).then((value) {
-      // Get.offAll(() => const HomeScreen());
-      // });
-      // }
+      } else {
+      apiClass.getRetailerData(merchandiser_id: merchId).then((value) {
+      Get.offAll(() => const HomeScreen());
+      });
+      }
     });
     super.didChangeDependencies();
   }

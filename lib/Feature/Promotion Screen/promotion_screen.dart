@@ -245,13 +245,17 @@ class _PromotionScreenState extends State<PromotionScreen> {
                                                         storingIDController
                                                             .priceProductID
                                                             .value,
-                                                    "priceImage": imageContoller
-                                                        .promotionalBase64Image
-                                                        .value,
                                                     "regularPrice":
                                                         regularPrice,
                                                     "promotonalPrice":
                                                         promtionalprice,
+                                                    "priceLabelValue":
+                                                        priceLabelController
+                                                            .priceValue.value,    
+                                                    "priceImage": imageContoller
+                                                        .promotionalBase64Image
+                                                        .value,
+            
                                                   }
                                                 ]);
 

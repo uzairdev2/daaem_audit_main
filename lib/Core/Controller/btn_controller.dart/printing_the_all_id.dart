@@ -29,16 +29,16 @@ class PrintIdController extends GetxController {
     });
   }
 
-  neighborsDBHive() {
-    final box = Hive.box(neighborsDb);
+  neighborsDBHive() async{
+    final box = await Hive.openBox(neighborsDb);
     box.toMap().forEach((key, value) {
       // print('Key: $key,  $value');
       neighborsMap[key.toString()] = value;
     });
   }
 
-  product_Details() {
-    final box = Hive.box(OsaDB);
+  product_Details() async {
+    final box =await Hive.openBox(OsaDB);
     box.toMap().forEach((key, value) {
       // print('Key: $key,  $value');
       productDetails[key.toString()] = value;

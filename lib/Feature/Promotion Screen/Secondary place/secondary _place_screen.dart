@@ -27,31 +27,35 @@ class Secondaryplace extends StatefulWidget {
 class _SecondaryplaceState extends State<Secondaryplace> {
   List<SecondaryModel> secondaryList = [];
   late ApiClass logPro;
-  Future<SecondaryModel?> getObjectByKey(String key) async {
-    await Hive.initFlutter();
-    final box = await Hive.openBox<SecondaryModel>('myBox');
-    final model = box.get(key);
-    box.close();
-    Hive.close();
-    return model;
-  }
+  // Future<SecondaryModel?> getObjectByKey(String key) async {
+  //   await Hive.initFlutter();
+  //   final box = await Hive.openBox<SecondaryModel>('myBox');
+  //   final model = box.get(key);
+  //   box.close();
+  //   Hive.close();
+  //   return model;
+  // }
 
-  Future<void> initializeSecondaryList() async {
-    for (int i = 0; i < 4; i++) {
-      var key = "$i/${logPro.selectedCategoryId}/${logPro.selectedProductId}";
-      var model = await getObjectByKey(key);
-      if (model != null) {
-        setState(() {
-          secondaryList.add(model);
-        });
-      }
-    }
-  }
+  // Future<void> initializeSecondaryList() async {
+  //   for (int i = 0; i < 4; i++) {
+  //     var key = "$i/${logPro.selectedCategoryId}/${logPro.selectedProductId}";
+  //     var model = await getObjectByKey(key);
+  //     if (model != null) {
+  //       setState(() {
+  //         secondaryList.add(model);
+  //       });
+  //     }
+  //   }
+  // }
+
+  List names = [];
+  List images = [];
+  List values = [];
 
   @override
   Widget build(BuildContext context) {
     logPro = Provider.of<ApiClass>(context);
-    initializeSecondaryList();
+    // initializeSecondaryList();
     void saveDataHive(String key, SecondaryModel model) async {
       await Hive.initFlutter();
       if (Hive.isBoxOpen('myBox')) {
@@ -63,31 +67,6 @@ class _SecondaryplaceState extends State<Secondaryplace> {
       box.close();
       Hive.close();
     }
-
-    // void pickImage(int index) async {
-    //   final image = await ImagePicker().pickImage(source: ImageSource.camera);
-    //   if (image != null) {
-    //     setState(() {
-    //       if (index == 0) {
-    //         imageContoller.gandulaValue.value = true;
-    //       } else if (index == 1) {
-    //         imageContoller.floorValue.value = true;
-    //       } else if (index == 2) {
-    //         imageContoller.standValue.value = true;
-    //       } else if (index == 3) {
-    //         imageContoller.secondaryPromValue.value = true;
-    //       }
-    //       var model = SecondaryModel(
-    //           productId: logPro.selectedProductId,
-    //           categoryId: logPro.selectedCategoryId,
-    //           imagePath: Rx<File?>(File(image.path)));
-    //       secondaryList.insert(index, model);
-    //       var key =
-    //           "$index/${logPro.selectedCategoryId}/${logPro.selectedProductId}";
-    //       saveDataHive(key, model);
-    //     });
-    //   }
-    // }
 
     return Scaffold(
       appBar: CommonAppBar(
@@ -119,12 +98,27 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                         value: checkController.yesValue,
                         onChanged: (value) {
                           checkController.yesValue.value = value;
+
+                          if (checkController.yesValue.value) {
+                            names.add("Gandula");
+                          } else {
+                            names.remove("Gandula");
+                          }
                         },
                       ),
                       name: "Gandula",
                       ontap: () {
                         checkController.yesValue.value =
                             !checkController.yesValue.value;
+
+                        if (checkController.yesValue.value) {
+                          names.add("Gandula");
+                        } else {
+                          names.remove("Gandula");
+                        }
+                        print("here is name" +
+                            names.toString() +
+                            names.length.toString());
                       },
                     ),
                     10.h.ph,
@@ -140,8 +134,17 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                                 buttonText: "Take a Picture for\n Gandula",
                                 imagePath: imageContoller.gandulaimageFile,
                                 showImage: imageContoller.gandulaValue,
-                                onTap: () {
-                                  imageContoller.floorImage();
+                                onTap: () async {
+                                  await imageContoller.gandulaImage();
+
+                                  if (checkController.yesValue.value) {
+                                    images.add(imageContoller.gandulaBase64Image
+                                        .toString());
+                                  } else {
+                                    images.remove(imageContoller
+                                        .gandulaBase64Image
+                                        .toString());
+                                  }
                                 },
                               ),
                             ),
@@ -152,6 +155,21 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                                   onTap: () {
                                     secondaryFtnController
                                         .handleYesButtonClick("good");
+
+                                    print(
+                                        "secondaryFtnControllergandulaValue.value ${secondaryFtnController.gandulaValue.value}");
+                                    if (secondaryFtnController
+                                            .gandulaValue.value ==
+                                        "Good") {
+                                  // if(values.length> 2) values.remove("bad");
+                                      values.add("good");
+                                    }
+                                    // else {
+                                    //   values.remove("bad");
+                                    //   values.remove("good");
+                                    // }
+                                    print(
+                                        "here is value ${secondaryFtnController.gandulaValue.value} ${values.toString()}");
                                   },
                                   name: "Good",
                                   color: aquamarine,
@@ -163,6 +181,20 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                                   onChanged: (value) {
                                     secondaryFtnController
                                         .handleYesButtonClick(value!);
+
+                                    if (secondaryFtnController
+                                            .gandulaValue.value ==
+                                        "good") {
+                                  //  if(values.length>2) values.remove("bad");
+                                      values.add("good");
+                                    }
+                                    // else {
+                                    //   values.add("bad");
+                                    //   values.add(value);
+                                    // }
+                                    print("here is value" +
+                                        value.toString() +
+                                        values.toString());
                                   },
                                 ),
                                 5.w.pw,
@@ -170,6 +202,20 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                                   onTap: () {
                                     secondaryFtnController
                                         .handleYesButtonClick("bad");
+
+                                    if (secondaryFtnController
+                                            .gandulaValue.value ==
+                                        "bad") {
+                                      // values.remove("good");
+                                      values.add("bad");
+                                    }
+                                    // else {
+
+                                    //   values.remove("good");
+                                    //   values.remove("bad");
+                                    // }
+                                    print(
+                                        "here is value ${secondaryFtnController.gandulaValue.value} ${values.toString()}");
                                   },
                                   name: "Bad",
                                   color: aquamarine,
@@ -181,6 +227,19 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                                   onChanged: (value) {
                                     secondaryFtnController
                                         .handleYesButtonClick(value!);
+
+                                    if (secondaryFtnController
+                                            .gandulaValue.value ==
+                                        "bad") {
+                                      // values.remove("good");
+                                      values.add("bad");
+                                    }
+                                    //  else {
+                                    //   values.remove("bad");
+                                    // }
+                                    print("here is ws value" +
+                                        value.toString() +
+                                        values.toString());
                                   },
                                 ),
                               ],
@@ -203,12 +262,30 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                         value: checkController.noValue,
                         onChanged: (value) {
                           checkController.noValue.value = value;
+
+                          if (checkController.noValue.value) {
+                            names.add("Floor Display");
+                          } else {
+                            names.remove("Floor Display");
+                          }
+                          print("here is name" +
+                              names.toString() +
+                              names.length.toString());
                         },
                       ),
                       name: "Floor Display",
                       ontap: () {
                         checkController.noValue.value =
                             !checkController.noValue.value;
+
+                        if (checkController.noValue.value) {
+                          names.add("Floor Display");
+                        } else {
+                          names.remove("Floor Display");
+                        }
+                        print("here is name" +
+                            names.toString() +
+                            names.length.toString());
                       },
                     ),
                     10.h.ph,
@@ -221,11 +298,20 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                               Align(
                                 alignment: Alignment.bottomLeft,
                                 child: CameraWidget(
-                                  buttonText: "Take a Picture for\n Gandula",
+                                  buttonText:
+                                      "Take a Picture for\n floor display",
                                   imagePath: imageContoller.floorimageFile,
                                   showImage: imageContoller.floorValue,
                                   onTap: () {
                                     imageContoller.floorImage();
+                                    if (checkController.noValue.value) {
+                                      images.add(imageContoller.floorBase64Image
+                                          .toString());
+                                    } else {
+                                      images.remove(imageContoller
+                                          .floorBase64Image
+                                          .toString());
+                                    }
                                   },
                                 ),
                               ),
@@ -236,6 +322,18 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                                     onTap: () {
                                       secondaryFtnController
                                           .floorHandleButtonClick("good");
+
+                                      if (secondaryFtnController
+                                              .floorValue.value ==
+                                          "good") {
+                                        values.add("good");
+                                        // values.remove("bad");
+                                      }
+
+                                      print("here is ws value" +
+                                          secondaryFtnController
+                                              .floorValue.value +
+                                          values.toString());
                                     },
                                     name: "Good",
                                     color: aquamarine,
@@ -247,6 +345,17 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                                     onChanged: (value) {
                                       secondaryFtnController
                                           .floorHandleButtonClick(value!);
+                                      if (secondaryFtnController
+                                              .floorValue.value ==
+                                          "good") {
+                                        values.add("good");
+                                        // values.remove("bad");
+                                      }
+
+                                      print("here is ws value" +
+                                          secondaryFtnController
+                                              .floorValue.value +
+                                          values.toString());
                                     },
                                   ),
                                   5.w.pw,
@@ -254,6 +363,18 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                                     onTap: () {
                                       secondaryFtnController
                                           .floorHandleButtonClick("bad");
+
+                                      if (secondaryFtnController
+                                              .floorValue.value ==
+                                          "bad") {
+                                        values.add("bad");
+                                        // values.remove("good");
+                                      }
+
+                                      print("here is ws value" +
+                                          secondaryFtnController
+                                              .floorValue.value +
+                                          values.toString());
                                     },
                                     name: "Bad",
                                     color: aquamarine,
@@ -265,6 +386,18 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                                     onChanged: (value) {
                                       secondaryFtnController
                                           .floorHandleButtonClick(value!);
+
+                                      if (secondaryFtnController
+                                              .floorValue.value ==
+                                          "bad") {
+                                        values.add("bad");
+                                        // values.remove("good");
+                                      }
+
+                                      print("here is ws value" +
+                                          secondaryFtnController
+                                              .floorValue.value +
+                                          values.toString());
                                     },
                                   ),
                                 ],
@@ -290,12 +423,23 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                         value: checkController.noVal,
                         onChanged: (value) {
                           checkController.noVal.value = value;
+
+                          if (checkController.noVal.value) {
+                            names.add("Stand");
+                          } else {
+                            names.remove("Stand");
+                          }
                         },
                       ),
                       name: "Stand",
                       ontap: () {
                         checkController.noVal.value =
                             !checkController.noVal.value;
+                        if (checkController.noVal.value) {
+                          names.add("Stand");
+                        } else {
+                          names.remove("Stand");
+                        }
                       },
                     ),
                     10.h.ph,
@@ -313,6 +457,14 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                                 showImage: imageContoller.standValue,
                                 onTap: () {
                                   imageContoller.standImage();
+                                  if (checkController.noVal.value) {
+                                    images.add(imageContoller.standBase64Image
+                                        .toString());
+                                  } else {
+                                    images.remove(imageContoller
+                                        .standBase64Image
+                                        .toString());
+                                  }
                                 },
                               ),
                             ),
@@ -323,6 +475,17 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                                   onTap: () {
                                     secondaryFtnController
                                         .standHandleButtonClick("good");
+
+                                    if (secondaryFtnController
+                                            .standValue.value ==
+                                        "good") {
+                                      values.add("good");
+                                      // values.remove("bad");
+                                    }
+                                    print("here is ws value" +
+                                        secondaryFtnController
+                                            .standValue.value +
+                                        values.toString());
                                   },
                                   name: "Good",
                                   color: aquamarine,
@@ -334,6 +497,16 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                                   onChanged: (value) {
                                     secondaryFtnController
                                         .standHandleButtonClick(value!);
+                                    if (secondaryFtnController
+                                            .standValue.value ==
+                                        "good") {
+                                      values.add("good");
+                                      // values.remove("bad");
+                                    }
+                                    print("here is ws value" +
+                                        secondaryFtnController
+                                            .standValue.value +
+                                        values.toString());
                                   },
                                 ),
                                 5.w.pw,
@@ -341,6 +514,18 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                                   onTap: () {
                                     secondaryFtnController
                                         .standHandleButtonClick("bad");
+
+                                    if (secondaryFtnController
+                                            .standValue.value ==
+                                        "bad") {
+                                      values.add("bad");
+                                      // values.remove("good");
+                                    }
+
+                                    print("here is ws value" +
+                                        secondaryFtnController
+                                            .standValue.value +
+                                        values.toString());
                                   },
                                   name: "Bad",
                                   color: aquamarine,
@@ -352,6 +537,18 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                                   onChanged: (value) {
                                     secondaryFtnController
                                         .standHandleButtonClick(value!);
+
+                                    if (secondaryFtnController
+                                            .standValue.value ==
+                                        "bad") {
+                                      values.add("bad");
+                                      // values.remove("good");
+                                    }
+
+                                    print("here is ws value" +
+                                        secondaryFtnController
+                                            .standValue.value +
+                                        values.toString());
                                   },
                                 ),
                               ],
@@ -366,7 +563,7 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                 Column(
                   children: [
                     CustomButtonCheckBox(
-                      width: 160.w,
+                      width: 164.w,
                       height: 46.h,
                       size: 12.sp,
                       color: red,
@@ -374,12 +571,23 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                         value: checkController.yesVal,
                         onChanged: (value) {
                           checkController.yesVal.value = value;
+                          if (checkController.yesVal.value) {
+                            names.add("Promotion Area");
+                          } else {
+                            names.remove("Promotion Area");
+                          }
                         },
                       ),
                       name: "Promotion Area",
                       ontap: () {
                         checkController.yesVal.value =
                             !checkController.yesVal.value;
+
+                        if (checkController.yesVal.value) {
+                          names.add("Promotion Area");
+                        } else {
+                          names.remove("Promotion Area");
+                        }
                       },
                     ),
                     10.h.ph,
@@ -397,6 +605,15 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                                 showImage: imageContoller.areavalue,
                                 onTap: () {
                                   imageContoller.promotionAreaImage();
+                                  if (checkController.yesVal.value) {
+                                    images.add(imageContoller
+                                        .promotionalBase64Image
+                                        .toString());
+                                  } else {
+                                    images.remove(imageContoller
+                                        .promotionalBase64Image
+                                        .toString());
+                                  }
                                 },
                               ),
                             ),
@@ -407,6 +624,14 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                                   onTap: () {
                                     secondaryFtnController
                                         .areaHandleButtonClick("good");
+
+                                    if (secondaryFtnController
+                                            .areaValue.value ==
+                                        "good") {
+                                      values.add("good");
+                                      // values.remove("bad");
+                                        }
+                                    print("here is ws value" + secondaryFtnController.areaValue.value + values.toString());
                                   },
                                   name: "Good",
                                   color: aquamarine,
@@ -418,6 +643,14 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                                   onChanged: (value) {
                                     secondaryFtnController
                                         .areaHandleButtonClick(value!);
+                                           if (secondaryFtnController
+                                            .areaValue.value ==
+                                        "good") {
+                                      values.add("good");
+                                      // values.remove("bad");
+                                        }
+                                    print("here is ws value" + secondaryFtnController.areaValue.value + values.toString());
+                                
                                   },
                                 ),
                                 5.w.pw,
@@ -425,6 +658,15 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                                   onTap: () {
                                     secondaryFtnController
                                         .areaHandleButtonClick("bad");
+
+                                           if (secondaryFtnController
+                                            .areaValue.value ==
+                                        "bad") {
+                                      values.add("bad");
+                                      // values.remove("good");
+                                        }
+                                    print("here is ws value" + secondaryFtnController.areaValue.value + values.toString());
+                                
                                   },
                                   name: "Bad",
                                   color: aquamarine,
@@ -436,6 +678,15 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                                   onChanged: (value) {
                                     secondaryFtnController
                                         .areaHandleButtonClick(value!);
+
+                                           if (secondaryFtnController
+                                            .areaValue.value ==
+                                        "bad") {
+                                      values.add("bad");
+                                      // values.remove("good");
+                                        }
+                                    print("here is ws value" + secondaryFtnController.areaValue.value + values.toString());
+                                
                                   },
                                 ),
                               ],
@@ -463,27 +714,27 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                           imageContoller.standValue.value != false) ||
                       (secondaryFtnController.areaValue.value != null &&
                           imageContoller.secondaryPromValue.value != false)) {
-                    secondaryFtnController.promotionSecondaryFtnStoringID([
+              
+                 for( var i = 0; i < names.length; i++){
+                   secondaryFtnController.promotionSecondaryFtnStoringID([
                       {
                         "table_name": 'promotion_secondary',
                         "retailerid": storingIDController.retailerid.value,
                         "branchid": storingIDController.branchid.value,
                         "customerid": storingIDController.custmoreid.value,
                         "categoryid  ": storingIDController.categoryid.value,
-                        "priceProductid":
-                            storingIDController.priceProductID.value,
-                        "gandulaImage": imageContoller.gandulaBase64Image.value,
-                        "gandulaValue":
-                            secondaryFtnController.gandulaValue.value,
-                        "floorValue": secondaryFtnController.floorValue.value,
-                        "floorImage": imageContoller.floorBase64Image.value,
-                        "standImage": imageContoller.standBase64Image.value,
-                        "standValue": secondaryFtnController.standValue.value,
-                        "AreaImage":
-                            imageContoller.secondaryPromotionBass64Image.value,
-                        "AreaValue": secondaryFtnController.areaPicture.value,
+                        "priceProductid": storingIDController.priceProductID.value,
+                        "name": names[i],
+                        "image": images[i],
+                        "value": values[i],
+                        
                       }
                     ]);
+                   
+                 }
+
+
+                 
                     Get.back();
                     checkController.yesVal.value = false;
                     checkController.yesValue.value = false;
@@ -506,6 +757,11 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                     //       backgroundColor: aquamarine);
                     // }
                   }
+                  // else{
+                  //   Get.snackbar("faild", "please Select GOOD/BAD and Take a Picture",
+                  //         snackPosition: SnackPosition.BOTTOM,
+                  //         backgroundColor: aquamarine);
+                  // }
                 })
           ],
         ),

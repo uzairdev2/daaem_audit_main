@@ -41,141 +41,149 @@ class _PromoScreenState extends State<PromoScreen> {
         ),
         body: Padding(
           padding: EdgeInsets.only(left: 16.w, right: 16.w),
-          child: Column(
-            children: [
-              45.h.ph,
-              CustomDropdown(
-                hint: 'Select a Product',
-                isDense: true,
-                isExpanded: true,
-                onChanged: (String? newValue) {
-                  selectedProduct = newValue;
-                  setState(() {});
-                },
-                items: logPro.productList
-                    .map((item) => DropdownMenuItem<String>(
-                          onTap: () {
-                            competitorPromotionController.productID.value =
-                                item.productId.toString();
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                45.h.ph,
+                CustomDropdown(
+                  hint: 'Select a Product',
+                  isDense: true,
+                  isExpanded: true,
+                  onChanged: (String? newValue) {
+                    selectedProduct = newValue;
+                    setState(() {});
+                  },
+                  items: logPro.productList
+                      .map((item) => DropdownMenuItem<String>(
+                            onTap: () {
+                              competitorPromotionController.productID.value =
+                                  item.productId.toString();
 
-                            imageContoller.competitorPromotionValue.value =
-                                false;
-                          },
-                          value: item.productName,
-                          child: CustomText(
-                            name: item.productName.toString(),
+                              imageContoller.competitorPromotionValue.value =
+                                  false;
+                            },
+                            value: item.productName,
+                            child: CustomText(
+                              name: item.productName.toString(),
+                            ),
+                          ))
+                      .toList(),
+                ),
+                39.h.ph,
+                Form(
+                  key: _formKey,
+                  child: Visibility(
+                    visible: selectedProduct != null,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Align(
+                          alignment: Alignment.bottomLeft,
+                          child: CameraWidget(
+                            imagePath:
+                                imageContoller.competitorPromtionImageFile,
+                            showImage: imageContoller.competitorPromotionValue,
+                            onTap: () {
+                              imageContoller.promotionScreenImage();
+                            },
                           ),
-                        ))
-                    .toList(),
-              ),
-              39.h.ph,
-              Form(
-                key: _formKey,
-                child: Visibility(
-                  visible: selectedProduct != null,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Align(
-                        alignment: Alignment.bottomLeft,
-                        child: CameraWidget(
-                          imagePath: imageContoller.competitorPromtionImageFile,
-                          showImage: imageContoller.competitorPromotionValue,
-                          onTap: () {
-                            imageContoller.promotionScreenImage();
+                        ),
+                        20.h.ph,
+                        CustomText(
+                          name: 'Regular Price',
+                          size: 18.sp,
+                          weightFont: FontWeight.w600,
+                        ),
+                        10.h.ph,
+                        CustomTextfield(
+                          hintext: 'Enter Regular Price',
+                          textType: TextInputType.number,
+                          vlid: (p0) {
+                            if (mregularPrice!.isEmpty) {
+                              return 'Please enter a value';
+                            }
+                            return null;
+                          },
+                          onchanged: (value) {
+                            mregularPrice = value;
                           },
                         ),
-                      ),
-                      20.h.ph,
-                      CustomText(
-                        name: 'Regular Price',
-                        size: 18.sp,
-                        weightFont: FontWeight.w600,
-                      ),
-                      10.h.ph,
-                      CustomTextfield(
-                        hintext: 'Enter Regular Price',
-                        textType: TextInputType.number,
-                        vlid: (p0) {
-                          if (mregularPrice!.isEmpty) {
-                            return 'Please enter a value';
-                          }
-                          return null;
-                        },
-                        onchanged: (value) {
-                          mregularPrice = value;
-                        },
-                      ),
-                      20.h.ph,
-                      CustomText(
-                        name: 'Promotion Price',
-                        size: 18.sp,
-                        weightFont: FontWeight.w600,
-                      ),
-                      10.h.ph,
-                      CustomTextfield(
-                        hintext: 'Enter Promotion Price',
-                        textType: TextInputType.number,
-                        vlid: (p0) {
-                          if (mpromtionalprice!.isEmpty) {
-                            return 'Please enter a value';
-                          }
-                          return null;
-                        },
-                        onchanged: (value) {
-                          mpromtionalprice = value;
-                        },
-                      ),
-                      20.h.ph,
-                      CustomButton(
-                        width: 320.w,
-                        height: 46.h,
-                        color: aquamarine,
-                        name: "Submit",
-                        ontap: () {
-                          if (_formKey.currentState!.validate() &&
-                              imageContoller.competitorPromotionValue.isTrue) {
-                            competitorPromotionController
-                                .competitorPromotionFtnStoringID([
-                              {
-                                "table_name": 'competitor_promotion',
-                                "retailerid":
-                                    storingIDController.retailerid.value,
-                                "branchid": storingIDController.branchid.value,
-                                "custmoreid":
-                                    storingIDController.custmoreid.value,
-                                "categoryid":
-                                    storingIDController.categoryid.value,
-                                "competitorPromotionProductid":
-                                    competitorPromotionController
-                                        .productID.value,
-                                "competitorpromtion": imageContoller
-                                    .competitorPromotionBase64.value,
-                                "regularPrice": mregularPrice,
-                                "promotonalPrice": mpromtionalprice,
-                              }
-                            ]);
-                            imageContoller.cleaningValueImage.value = false;
+                        20.h.ph,
+                        CustomText(
+                          name: 'Promotion Price',
+                          size: 18.sp,
+                          weightFont: FontWeight.w600,
+                        ),
+                        10.h.ph,
+                        CustomTextfield(
+                          hintext: 'Enter Promotion Price',
+                          textType: TextInputType.number,
+                          vlid: (p0) {
+                            if (mpromtionalprice!.isEmpty) {
+                              return 'Please enter a value';
+                            }
+                            return null;
+                          },
+                          onchanged: (value) {
+                            mpromtionalprice = value;
+                          },
+                        ),
+                        20.h.ph,
+                        CustomButton(
+                          width: 320.w,
+                          height: 46.h,
+                          color: aquamarine,
+                          name: "Submit",
+                          ontap: () {
+                            if (_formKey.currentState!.validate() &&
+                                imageContoller
+                                    .competitorPromotionValue.isTrue) {
+                              competitorPromotionController
+                                  .competitorPromotionFtnStoringID([
+                                {
+                                  "table_name": 'competitor_promotion',
+                                  "retailerid":
+                                      storingIDController.retailerid.value,
+                                  "branchid":
+                                      storingIDController.branchid.value,
+                                  "custmoreid":
+                                      storingIDController.custmoreid.value,
+                                  "categoryid":
+                                      storingIDController.categoryid.value,
+                                  "competitorPromotionProductid":
+                                      competitorPromotionController
+                                          .productID.value,
+                                  "competitorpromtion": imageContoller
+                                      .competitorPromotionBase64.value,
+                                  "regularPrice": mregularPrice,
+                                  "promotonalPrice": mpromtionalprice,
+                                }
+                              ]);
+                              imageContoller.cleaningValueImage.value = false;
 
-                            mregularPrice = "";
-                            mpromtionalprice = "";
+                              setState(() {
+                                mregularPrice = null;
+                                mpromtionalprice = null;
+                              });
 
-                            Get.snackbar("Successfully", "Data has been Saved",
-                                snackPosition: SnackPosition.BOTTOM,
-                                backgroundColor: aquamarine);
-                          } else {
-                            Get.snackbar("faild", "please Select something",
-                                snackPosition: SnackPosition.BOTTOM,
-                                backgroundColor: aquamarine);
-                          }
-                        },
-                      )
-                    ],
+                              Get.snackbar(
+                                  "Successfully", "Data has been Saved",
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  backgroundColor: aquamarine);
+                            } else {
+                              Get.snackbar("faild", "please Select something",
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  backgroundColor: aquamarine);
+                            }
+                          },
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ));
   }

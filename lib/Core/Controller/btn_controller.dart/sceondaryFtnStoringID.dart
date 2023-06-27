@@ -54,13 +54,18 @@ class SecondaryFtnController extends GetxController {
   Future<void> promotionSecondaryFtnStoringID(
       List<Map<String, dynamic>> dataList) async {
     final boxname = await Hive.openBox("promotionSecondary");
-
+  
     boxname.addAll(dataList);
 
     print("Printing all data in promotionSecondary box:");
-    for (var value in boxname.values) {
-      print(value);
-    }
-    print("this is the Promtion Secondary List ${dataList}");
+   
+
+     boxname.toMap().forEach((key, value) {
+
+    key == "image" ? print("base64image")  :  print('Key: $key,  $value');
+    });
+    print("this is the Promtion Secondary List ${dataList.length}");
+
+    await boxname.clear();
   }
 }
