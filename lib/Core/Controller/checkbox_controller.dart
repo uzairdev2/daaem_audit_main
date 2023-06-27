@@ -9,10 +9,10 @@ class CheckController extends GetxController {
   RxBool checkValue2 = false.obs;
   RxBool otherValue2 = false.obs;
   RxBool promositeValue2 = false.obs;
-  RxBool yesValue = false.obs;
-  RxBool noValue = false.obs;
-  RxBool noVal = false.obs;
-  RxBool yesVal = false.obs;
+  RxBool gandulaCheckvalue = false.obs;
+  RxBool floorCheckvalue = false.obs;
+  RxBool standCheckValue = false.obs;
+  RxBool areaCheckValue = false.obs;
   RxBool radioValue = false.obs;
   RxBool visable = false.obs;
 

@@ -233,7 +233,13 @@ class StoringIDController extends GetxController {
 /////////////////////////////// OSA ////////////////////////////////////////
   Future<void> osaFtnStoringID(List<Map<String, dynamic>> dataList) async {
     final boxname = await Hive.openBox("osaData");
+
     boxname.addAll(dataList);
+    var data = boxname.values.toList();
+    for (var item in data) {
+      // Process the item as needed
+      print(item);
+    }
   }
 
   Future<Box> openBox() async {

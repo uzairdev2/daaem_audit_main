@@ -10,10 +10,9 @@ class CompetitiorMaterialFtnController extends GetxController {
 
     boxname.addAll(dataList);
 
-    print("Printing all data in promotionSecondary box:");
+    print("Printing all data in competitor_material box:");
     for (var value in boxname.values) {
       print(value);
     }
-    print("this is the Promtion Secondary List ${dataList}");
   }
 }

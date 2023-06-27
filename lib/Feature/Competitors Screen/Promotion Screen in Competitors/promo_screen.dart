@@ -122,6 +122,9 @@ class _PromoScreenState extends State<PromoScreen> {
                           vlid: (p0) {
                             if (mpromtionalprice!.isEmpty) {
                               return 'Please enter a value';
+                            } else if (int.parse(mpromtionalprice!) >=
+                                int.parse(mregularPrice!)) {
+                              return 'Promotional value should be < Regular value';
                             }
                             return null;
                           },
@@ -166,7 +169,7 @@ class _PromoScreenState extends State<PromoScreen> {
                                 mregularPrice = null;
                                 mpromtionalprice = null;
                               });
-
+                              Get.back();
                               Get.snackbar(
                                   "Successfully", "Data has been Saved",
                                   snackPosition: SnackPosition.BOTTOM,

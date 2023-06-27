@@ -25,36 +25,12 @@ class Secondaryplace extends StatefulWidget {
 }
 
 class _SecondaryplaceState extends State<Secondaryplace> {
-  List<SecondaryModel> secondaryList = [];
-  late ApiClass logPro;
-  // Future<SecondaryModel?> getObjectByKey(String key) async {
-  //   await Hive.initFlutter();
-  //   final box = await Hive.openBox<SecondaryModel>('myBox');
-  //   final model = box.get(key);
-  //   box.close();
-  //   Hive.close();
-  //   return model;
-  // }
-
-  // Future<void> initializeSecondaryList() async {
-  //   for (int i = 0; i < 4; i++) {
-  //     var key = "$i/${logPro.selectedCategoryId}/${logPro.selectedProductId}";
-  //     var model = await getObjectByKey(key);
-  //     if (model != null) {
-  //       setState(() {
-  //         secondaryList.add(model);
-  //       });
-  //     }
-  //   }
-  // }
-
   List names = [];
   List images = [];
   List values = [];
 
   @override
   Widget build(BuildContext context) {
-    logPro = Provider.of<ApiClass>(context);
     // initializeSecondaryList();
     void saveDataHive(String key, SecondaryModel model) async {
       await Hive.initFlutter();
@@ -95,11 +71,11 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                       size: 12.sp,
                       color: red,
                       checkbox: CustomCheckBox(
-                        value: checkController.yesValue,
+                        value: checkController.gandulaCheckvalue,
                         onChanged: (value) {
-                          checkController.yesValue.value = value;
+                          checkController.gandulaCheckvalue.value = value;
 
-                          if (checkController.yesValue.value) {
+                          if (checkController.gandulaCheckvalue.value) {
                             names.add("Gandula");
                           } else {
                             names.remove("Gandula");
@@ -108,10 +84,10 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                       ),
                       name: "Gandula",
                       ontap: () {
-                        checkController.yesValue.value =
-                            !checkController.yesValue.value;
+                        checkController.gandulaCheckvalue.value =
+                            !checkController.gandulaCheckvalue.value;
 
-                        if (checkController.yesValue.value) {
+                        if (checkController.gandulaCheckvalue.value) {
                           names.add("Gandula");
                         } else {
                           names.remove("Gandula");
@@ -124,7 +100,7 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                     10.h.ph,
                     Obx(() {
                       return Visibility(
-                        visible: checkController.yesValue.value,
+                        visible: checkController.gandulaCheckvalue.value,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -137,7 +113,7 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                                 onTap: () async {
                                   await imageContoller.gandulaImage();
 
-                                  if (checkController.yesValue.value) {
+                                  if (checkController.gandulaCheckvalue.value) {
                                     images.add(imageContoller.gandulaBase64Image
                                         .toString());
                                   } else {
@@ -161,7 +137,7 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                                     if (secondaryFtnController
                                             .gandulaValue.value ==
                                         "Good") {
-                                  // if(values.length> 2) values.remove("bad");
+                                      // if(values.length> 2) values.remove("bad");
                                       values.add("good");
                                     }
                                     // else {
@@ -185,7 +161,7 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                                     if (secondaryFtnController
                                             .gandulaValue.value ==
                                         "good") {
-                                  //  if(values.length>2) values.remove("bad");
+                                      //  if(values.length>2) values.remove("bad");
                                       values.add("good");
                                     }
                                     // else {
@@ -259,11 +235,11 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                       size: 12.sp,
                       color: red,
                       checkbox: CustomCheckBox(
-                        value: checkController.noValue,
+                        value: checkController.floorCheckvalue,
                         onChanged: (value) {
-                          checkController.noValue.value = value;
+                          checkController.floorCheckvalue.value = value;
 
-                          if (checkController.noValue.value) {
+                          if (checkController.floorCheckvalue.value) {
                             names.add("Floor Display");
                           } else {
                             names.remove("Floor Display");
@@ -275,10 +251,10 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                       ),
                       name: "Floor Display",
                       ontap: () {
-                        checkController.noValue.value =
-                            !checkController.noValue.value;
+                        checkController.floorCheckvalue.value =
+                            !checkController.floorCheckvalue.value;
 
-                        if (checkController.noValue.value) {
+                        if (checkController.floorCheckvalue.value) {
                           names.add("Floor Display");
                         } else {
                           names.remove("Floor Display");
@@ -291,7 +267,7 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                     10.h.ph,
                     Obx(() {
                       return Visibility(
-                        visible: checkController.noValue.value,
+                        visible: checkController.floorCheckvalue.value,
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -304,7 +280,7 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                                   showImage: imageContoller.floorValue,
                                   onTap: () {
                                     imageContoller.floorImage();
-                                    if (checkController.noValue.value) {
+                                    if (checkController.floorCheckvalue.value) {
                                       images.add(imageContoller.floorBase64Image
                                           .toString());
                                     } else {
@@ -420,11 +396,11 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                       size: 12.sp,
                       color: red,
                       checkbox: CustomCheckBox(
-                        value: checkController.noVal,
+                        value: checkController.standCheckValue,
                         onChanged: (value) {
-                          checkController.noVal.value = value;
+                          checkController.standCheckValue.value = value;
 
-                          if (checkController.noVal.value) {
+                          if (checkController.standCheckValue.value) {
                             names.add("Stand");
                           } else {
                             names.remove("Stand");
@@ -433,9 +409,9 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                       ),
                       name: "Stand",
                       ontap: () {
-                        checkController.noVal.value =
-                            !checkController.noVal.value;
-                        if (checkController.noVal.value) {
+                        checkController.standCheckValue.value =
+                            !checkController.standCheckValue.value;
+                        if (checkController.standCheckValue.value) {
                           names.add("Stand");
                         } else {
                           names.remove("Stand");
@@ -445,7 +421,7 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                     10.h.ph,
                     Obx(() {
                       return Visibility(
-                        visible: checkController.noVal.value,
+                        visible: checkController.standCheckValue.value,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -457,7 +433,7 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                                 showImage: imageContoller.standValue,
                                 onTap: () {
                                   imageContoller.standImage();
-                                  if (checkController.noVal.value) {
+                                  if (checkController.standCheckValue.value) {
                                     images.add(imageContoller.standBase64Image
                                         .toString());
                                   } else {
@@ -568,10 +544,10 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                       size: 12.sp,
                       color: red,
                       checkbox: CustomCheckBox(
-                        value: checkController.yesVal,
+                        value: checkController.areaCheckValue,
                         onChanged: (value) {
-                          checkController.yesVal.value = value;
-                          if (checkController.yesVal.value) {
+                          checkController.areaCheckValue.value = value;
+                          if (checkController.areaCheckValue.value) {
                             names.add("Promotion Area");
                           } else {
                             names.remove("Promotion Area");
@@ -580,10 +556,10 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                       ),
                       name: "Promotion Area",
                       ontap: () {
-                        checkController.yesVal.value =
-                            !checkController.yesVal.value;
+                        checkController.areaCheckValue.value =
+                            !checkController.areaCheckValue.value;
 
-                        if (checkController.yesVal.value) {
+                        if (checkController.areaCheckValue.value) {
                           names.add("Promotion Area");
                         } else {
                           names.remove("Promotion Area");
@@ -593,7 +569,7 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                     10.h.ph,
                     Obx(() {
                       return Visibility(
-                        visible: checkController.yesVal.value,
+                        visible: checkController.areaCheckValue.value,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -605,7 +581,7 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                                 showImage: imageContoller.areavalue,
                                 onTap: () {
                                   imageContoller.promotionAreaImage();
-                                  if (checkController.yesVal.value) {
+                                  if (checkController.areaCheckValue.value) {
                                     images.add(imageContoller
                                         .promotionalBase64Image
                                         .toString());
@@ -630,8 +606,10 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                                         "good") {
                                       values.add("good");
                                       // values.remove("bad");
-                                        }
-                                    print("here is ws value" + secondaryFtnController.areaValue.value + values.toString());
+                                    }
+                                    print("here is ws value" +
+                                        secondaryFtnController.areaValue.value +
+                                        values.toString());
                                   },
                                   name: "Good",
                                   color: aquamarine,
@@ -643,14 +621,15 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                                   onChanged: (value) {
                                     secondaryFtnController
                                         .areaHandleButtonClick(value!);
-                                           if (secondaryFtnController
+                                    if (secondaryFtnController
                                             .areaValue.value ==
                                         "good") {
                                       values.add("good");
                                       // values.remove("bad");
-                                        }
-                                    print("here is ws value" + secondaryFtnController.areaValue.value + values.toString());
-                                
+                                    }
+                                    print("here is ws value" +
+                                        secondaryFtnController.areaValue.value +
+                                        values.toString());
                                   },
                                 ),
                                 5.w.pw,
@@ -659,14 +638,15 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                                     secondaryFtnController
                                         .areaHandleButtonClick("bad");
 
-                                           if (secondaryFtnController
+                                    if (secondaryFtnController
                                             .areaValue.value ==
                                         "bad") {
                                       values.add("bad");
                                       // values.remove("good");
-                                        }
-                                    print("here is ws value" + secondaryFtnController.areaValue.value + values.toString());
-                                
+                                    }
+                                    print("here is ws value" +
+                                        secondaryFtnController.areaValue.value +
+                                        values.toString());
                                   },
                                   name: "Bad",
                                   color: aquamarine,
@@ -679,14 +659,15 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                                     secondaryFtnController
                                         .areaHandleButtonClick(value!);
 
-                                           if (secondaryFtnController
+                                    if (secondaryFtnController
                                             .areaValue.value ==
                                         "bad") {
                                       values.add("bad");
                                       // values.remove("good");
-                                        }
-                                    print("here is ws value" + secondaryFtnController.areaValue.value + values.toString());
-                                
+                                    }
+                                    print("here is ws value" +
+                                        secondaryFtnController.areaValue.value +
+                                        values.toString());
                                   },
                                 ),
                               ],
@@ -714,54 +695,76 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                           imageContoller.standValue.value != false) ||
                       (secondaryFtnController.areaValue.value != null &&
                           imageContoller.secondaryPromValue.value != false)) {
-              
-                 for( var i = 0; i < names.length; i++){
-                   secondaryFtnController.promotionSecondaryFtnStoringID([
-                      {
-                        "table_name": 'promotion_secondary',
-                        "retailerid": storingIDController.retailerid.value,
-                        "branchid": storingIDController.branchid.value,
-                        "customerid": storingIDController.custmoreid.value,
-                        "categoryid  ": storingIDController.categoryid.value,
-                        "priceProductid": storingIDController.priceProductID.value,
-                        "name": names[i],
-                        "image": images[i],
-                        "value": values[i],
-                        
-                      }
-                    ]);
-                   
-                 }
+                    for (var i = 0; i < names.length; i++) {
+                      secondaryFtnController.promotionSecondaryFtnStoringID([
+                        {
+                          "table_name": 'promotion_secondary',
+                          "retailerid": storingIDController.retailerid.value,
+                          "branchid": storingIDController.branchid.value,
+                          "customerid": storingIDController.custmoreid.value,
+                          "categoryid  ": storingIDController.categoryid.value,
+                          "priceProductid":
+                              storingIDController.priceProductID.value,
+                          "name": names[i],
+                          "image": images[i],
+                          "value": values[i],
+                        }
+                      ]);
+                    }
 
-
-                 
-                    Get.back();
-                    checkController.yesVal.value = false;
-                    checkController.yesValue.value = false;
-                    checkController.noVal.value = false;
+                    names.clear();
+                    images.clear();
+                    values.clear();
+                    checkController.areaCheckValue.value = false;
+                    checkController.gandulaCheckvalue.value = false;
+                    checkController.standCheckValue.value = false;
                     secondaryFtnController.areaValue.value = "";
                     secondaryFtnController.standValue.value = "";
                     secondaryFtnController.floorValue.value = "";
                     secondaryFtnController.gandulaValue.value = "";
-                    checkController.noValue.value = false;
+                    checkController.floorCheckvalue.value = false;
                     imageContoller.floorValue.value = false;
                     imageContoller.gandulaValue.value = false;
                     imageContoller.secondaryPromValue.value = false;
                     imageContoller.standValue.value = false;
+                    Get.back();
                     Get.snackbar("Successfully", "Data has been stored",
                         snackPosition: SnackPosition.BOTTOM,
                         backgroundColor: aquamarine);
-                    // } else {
-                    //   Get.snackbar("faild", "please Select something",
-                    //       snackPosition: SnackPosition.BOTTOM,
-                    //       backgroundColor: aquamarine);
-                    // }
+                  } else if (checkController.gandulaCheckvalue.isTrue &&
+                      secondaryFtnController.gandulaValue.isEmpty &&
+                      imageContoller.gandulaBase64Image.isEmpty) {
+                    Get.snackbar("faild",
+                        "please Select GOOD/BAD and Take a Picture for Gandula",
+                        snackPosition: SnackPosition.BOTTOM,
+                        backgroundColor: aquamarine);
+                  } else if (checkController.floorCheckvalue.isTrue &&
+                      secondaryFtnController.floorValue.isEmpty &&
+                      imageContoller.floorBase64Image.isEmpty) {
+                    Get.snackbar("faild",
+                        "please Select GOOD/BAD and Take a Picture for Floor",
+                        snackPosition: SnackPosition.BOTTOM,
+                        backgroundColor: aquamarine);
+                  } else if (checkController.standCheckValue.isTrue &&
+                      secondaryFtnController.standValue.isEmpty &&
+                      imageContoller.standBase64Image.isEmpty) {
+                    Get.snackbar("faild",
+                        "please Select GOOD/BAD and Take a Picture for Stand",
+                        snackPosition: SnackPosition.BOTTOM,
+                        backgroundColor: aquamarine);
+                  } else if (checkController.areaCheckValue.isTrue &&
+                      secondaryFtnController.areaValue.isEmpty &&
+                      imageContoller.areaBase64.isEmpty) {
+                    Get.snackbar("faild",
+                        "please Select GOOD/BAD and Take a Picture for area",
+                        snackPosition: SnackPosition.BOTTOM,
+                        backgroundColor: aquamarine);
+                  } else {
+                    Get.snackbar("Failde",
+                        "data has been not saved please Select something",
+                        snackPosition: SnackPosition.BOTTOM,
+                        backgroundColor: aquamarine);
                   }
-                  // else{
-                  //   Get.snackbar("faild", "please Select GOOD/BAD and Take a Picture",
-                  //         snackPosition: SnackPosition.BOTTOM,
-                  //         backgroundColor: aquamarine);
-                  // }
                 })
           ],
         ),

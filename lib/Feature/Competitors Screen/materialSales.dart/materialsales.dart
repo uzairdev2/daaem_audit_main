@@ -1,5 +1,6 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, must_be_immutable
 
+import 'package:daaem_reports/Core/Controller/checkbox_controller.dart';
 import 'package:daaem_reports/Core/Utils/sizebox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,6 +16,8 @@ import '../../../Core/Utils/custom_textfield.dart';
 
 class MaterialSalesScreen extends StatelessWidget {
   MaterialSalesScreen({super.key});
+  List names = [];
+  List images = [];
   String notes = '';
   String materialName = '';
   @override
@@ -34,6 +37,18 @@ class MaterialSalesScreen extends StatelessWidget {
           child: InkWell(
             onTap: () {
               Get.back();
+              imageContoller.materialOtherValue.value == false;
+              imageContoller.materialPromositeValue.value == false;
+              imageContoller.materialfloorValue.value == false;
+              imageContoller.materialgandulaValue.value == false;
+              checkController.checkValue2.value == false;
+              checkController.otherValue2.value == false;
+              checkController.promositeValue2.value == false;
+              checkController.checkValue1.value == false;
+
+              notes = "";
+              materialName = "";
+              images.clear();
             },
             child: Container(
               width: 30.w,
@@ -67,6 +82,10 @@ class MaterialSalesScreen extends StatelessWidget {
                       checkbox: CustomCheckBox(
                           onChanged: (value) {
                             checkController.checkValue2.value = value;
+                            if (checkController.checkValue2.isFalse) {
+                              images.remove(imageContoller
+                                  .materialgandulaBase64Image.value);
+                            }
                           },
                           value: checkController.checkValue2),
                       name: "Gandula",
@@ -89,7 +108,18 @@ class MaterialSalesScreen extends StatelessWidget {
                                     imageContoller.materialgandulaimageFile,
                                 showImage: imageContoller.materialgandulaValue,
                                 onTap: () {
-                                  imageContoller.materialGandulaImage();
+                                  imageContoller
+                                      .materialGandulaImage()
+                                      .then((value) {
+                                    if (checkController
+                                            .gandulaCheckvalue.isTrue &&
+                                        imageContoller
+                                            .materialgandulaBase64Image
+                                            .isNotEmpty) {
+                                      images.add(imageContoller
+                                          .materialgandulaBase64Image.value);
+                                    }
+                                  });
                                 },
                               ),
                             ));
@@ -131,7 +161,16 @@ class MaterialSalesScreen extends StatelessWidget {
                                     imageContoller.materialfloorimageFile,
                                 showImage: imageContoller.materialfloorValue,
                                 onTap: () {
-                                  imageContoller.materiaFloorImage();
+                                  imageContoller
+                                      .materiaFloorImage()
+                                      .then((value) {
+                                    if (checkController.checkValue1.isTrue &&
+                                        imageContoller.materialfloorBase64Image
+                                            .isNotEmpty) {
+                                      images.add(imageContoller
+                                          .materialfloorBase64Image.value);
+                                    }
+                                  });
                                 },
                               ),
                             ));
@@ -157,6 +196,12 @@ class MaterialSalesScreen extends StatelessWidget {
                           value: checkController.otherValue2,
                           onChanged: (value) {
                             checkController.otherValue2.value = value;
+                            if (checkController.otherValue2.isFalse &&
+                                imageContoller
+                                    .materialOtherBase64Image.isNotEmpty) {
+                              images.remove(imageContoller
+                                  .materialOtherBase64Image.value);
+                            }
                           },
                         ),
                         name: "Other",
@@ -181,7 +226,16 @@ class MaterialSalesScreen extends StatelessWidget {
                                     imageContoller.materialOtherimageFile,
                                 showImage: imageContoller.materialOtherValue,
                                 onTap: () {
-                                  imageContoller.materialOtherImage();
+                                  imageContoller
+                                      .materialOtherImage()
+                                      .then((value) {
+                                    if (checkController.otherValue2.isTrue &&
+                                        imageContoller.materialOtherBase64Image
+                                            .isNotEmpty) {
+                                      images.add(imageContoller
+                                          .materialOtherBase64Image.value);
+                                    }
+                                  });
                                 },
                               ),
                             ),
@@ -202,6 +256,7 @@ class MaterialSalesScreen extends StatelessWidget {
                               height: 46.h,
                               onchanged: (value) {
                                 materialName = value;
+                                if (checkController.otherValue2.isTrue) {}
                               },
                             ),
                           ],
@@ -222,6 +277,10 @@ class MaterialSalesScreen extends StatelessWidget {
                         value: checkController.promositeValue2,
                         onChanged: (value) {
                           checkController.promositeValue2.value = value;
+                          if (checkController.promositeValue2.isFalse) {
+                            images.remove(imageContoller
+                                .materialPromositeBase64Image.value);
+                          }
                         },
                       ),
                       name: "Promo Site",
@@ -242,7 +301,20 @@ class MaterialSalesScreen extends StatelessWidget {
                                   imageContoller.materialPromositeimageFile,
                               showImage: imageContoller.materialPromositeValue,
                               onTap: () {
-                                imageContoller.materialPromositeImage();
+                                imageContoller
+                                    .materialPromositeImage()
+                                    .then((value) {
+                                  if (checkController.promositeValue2.isTrue &&
+                                      imageContoller
+                                          .materialPromositeBase64Image
+                                          .isNotEmpty) {
+                                    images.add(imageContoller
+                                        .materialPromositeBase64Image.value);
+                                  } else {
+                                    names.remove(imageContoller
+                                        .materialPromositeBase64Image.value);
+                                  }
+                                });
                               },
                             ),
                           ));
@@ -279,31 +351,82 @@ class MaterialSalesScreen extends StatelessWidget {
               color: aquamarine,
               name: "Submit",
               ontap: () {
-                if (imageContoller.materialgandulaBase64Image.isNotEmpty ||
-                    imageContoller.floorBase64Image.isEmpty ||
-                    (imageContoller.materialOtherBase64Image.isNotEmpty &&
-                        notes != null) ||
-                    imageContoller.materialPromositeBase64Image.isNotEmpty) {
-                  competitiorMaterialFtnController
-                      .competitiorMaterialFtnStoringID([
-                    {
-                      "table_name": 'Competitior_material',
-                      "retailerid": storingIDController.retailerid.value,
-                      "branchid": storingIDController.branchid.value,
-                      "customerid": storingIDController.custmoreid.value,
-                      "categoryid  ": storingIDController.categoryid.value,
-                      "competitorGandulaimage":
-                          imageContoller.materialgandulaBase64Image.value,
-                      "competitorFloorImage":
-                          imageContoller.materialfloorBase64Image.value,
-                      "competitorOrtherImage":
-                          imageContoller.materialOtherBase64Image.value,
-                      "ortherMaterialName": materialName,
-                      "competitorPromositeImage":
-                          imageContoller.materialPromositeBase64Image.value,
-                      "notes": notes,
-                    }
-                  ]);
+                if ((checkController.checkValue2.isTrue &&
+                        imageContoller.materialgandulaBase64Image.isNotEmpty) ||
+                    (checkController.checkValue1.isTrue &&
+                        imageContoller.floorBase64Image.isNotEmpty) ||
+                    (checkController.otherValue2.isTrue &&
+                        imageContoller.materialOtherBase64Image.isNotEmpty &&
+                        notes.isNotEmpty) ||
+                    (checkController.promositeValue2.isTrue &&
+                            imageContoller
+                                .materialPromositeBase64Image.isNotEmpty) &&
+                        notes.isNotEmpty) {
+                  for (var i = 0; i < images.length; i++) {
+                    print("for loop working ");
+                    competitiorMaterialFtnController
+                        .competitiorMaterialFtnStoringID([
+                      {
+                        "table_name": 'Competitior_material',
+                        "retailerid": storingIDController.retailerid.value,
+                        "branchid": storingIDController.branchid.value,
+                        "customerid": storingIDController.custmoreid.value,
+                        "categoryid  ": storingIDController.categoryid.value,
+                        "image": images[i],
+                        "ortherMaterialName": materialName,
+                        "notes": notes,
+                      }
+                    ]);
+                    print("for loop working End ");
+                  }
+
+                  Get.back();
+                  imageContoller.materialOtherValue.value = false;
+                  imageContoller.materialPromositeValue.value = false;
+                  imageContoller.materialfloorValue.value = false;
+                  imageContoller.materialgandulaValue.value = false;
+                  imageContoller.materialgandulaValue.value = false;
+                  checkController.checkValue2.value = false;
+                  checkController.otherValue2.value = false;
+                  checkController.promositeValue2.value = false;
+                  checkController.checkValue1.value = false;
+                  notes = "";
+                  materialName = "";
+                  images.clear();
+                  Get.snackbar("Successfully", "Data has been stored",
+                      snackPosition: SnackPosition.BOTTOM,
+                      backgroundColor: aquamarine);
+                  Get.back();
+                  Get.snackbar("Successfully", "Data has been stored",
+                      snackPosition: SnackPosition.BOTTOM,
+                      backgroundColor: aquamarine);
+                } else if (checkController.checkValue2.isTrue &&
+                    imageContoller.materialgandulaBase64Image.isEmpty) {
+                  Get.snackbar("Failed", "Please take a picture for Gandula",
+                      snackPosition: SnackPosition.BOTTOM,
+                      backgroundColor: aquamarine);
+                } else if (checkController.checkValue1.isTrue &&
+                    imageContoller.materialfloorBase64Image.isEmpty) {
+                  Get.snackbar("Failed", "Please take a picture for Floor",
+                      snackPosition: SnackPosition.BOTTOM,
+                      backgroundColor: aquamarine);
+                } else if (checkController.otherValue2.isTrue &&
+                    (imageContoller.materialOtherBase64Image.isEmpty ||
+                        materialName.isEmpty)) {
+                  Get.snackbar("Failed",
+                      "Please take a picture for Other and provide the name of the material",
+                      snackPosition: SnackPosition.BOTTOM,
+                      backgroundColor: aquamarine);
+                } else if (checkController.promositeValue2.isTrue &&
+                    imageContoller.materialPromositeBase64Image.isEmpty) {
+                  Get.snackbar("Failed", "Please take a picture for Promo site",
+                      snackPosition: SnackPosition.BOTTOM,
+                      backgroundColor: aquamarine);
+                } else {
+                  Get.snackbar("Failed",
+                      "Data has not been saved. Please select something",
+                      snackPosition: SnackPosition.BOTTOM,
+                      backgroundColor: aquamarine);
                 }
               },
             )

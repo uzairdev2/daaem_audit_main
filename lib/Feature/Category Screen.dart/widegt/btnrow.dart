@@ -314,23 +314,26 @@ class BtnRow extends StatelessWidget {
                           color: red,
                           name: "Submit",
                           ontap: () async {
-                            print(
-                                "stock valuee: ${productDetailController.stockVAlueYesorNO[index].value}");
                             if (productDetailController
                                         .osaVAlueYesorNO[index] !=
                                     null &&
                                 productDetailController
                                         .stockVAlueYesorNO[index] !=
                                     null) {
-                              // storingIDController.clearHiveBox("osaData");
-
-                              List<int> imageBytes = await File(
-                                      logPro.productList[index].imagePath)
-                                  .readAsBytes();
-                              String cleanBase64Image =
-                                  base64Encode(imageBytes);
-                              print(
-                                  " print clean image base 64 ${cleanBase64Image}");
+                              String cleanBase64Image = "";
+                              if (logPro.productList[index].imagePath != null &&
+                                  logPro.productList[index].imagePath
+                                      .isNotEmpty) {
+                                print(
+                                    "this work ${logPro.productList[index].imagePath.toString()}");
+                                List<int> imageBytes = await File(
+                                        logPro.productList[index].imagePath)
+                                    .readAsBytes();
+                                cleanBase64Image =
+                                    logPro.productList[index].imagePath != null
+                                        ? base64Encode(imageBytes)
+                                        : "no images";
+                              }
                               storingIDController.osaFtnStoringID([
                                 {
                                   "table_name": "product_detail",
@@ -356,22 +359,7 @@ class BtnRow extends StatelessWidget {
                                   "imagedata": cleanBase64Image,
                                 }
                               ]);
-
-                              printAllData();
-
-                              // await boxname.close();
-                              // osaFtnBTn.updateValueAtIndex(index, "yes");
-                              // print(
-                              //     "osa Value${productDetailController.osaVAlueYesorNO[index].toString()}");
-                              // print(
-                              //     "price Value${productDetailController.priceVAlueYesorNO[index].toString()}");
-                              // print(
-                              //     "stock Value${productDetailController.stockVAlueYesorNO[index].toString()}");
-                              // print(
-                              //     "access Value${productDetailController.accessVAlueYesorNO[index].toString()}");
-
                               Get.back();
-                              // osaFtnBTn.getOsaValue(index);
                               Get.snackbar("Saved", "SuccessFully",
                                   snackPosition: SnackPosition.BOTTOM,
                                   backgroundColor: Colors.white);
