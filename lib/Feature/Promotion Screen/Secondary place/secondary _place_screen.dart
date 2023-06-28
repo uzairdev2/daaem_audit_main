@@ -8,8 +8,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:provider/provider.dart';
-import '../../../Core/API,s Intergartion/API,s.dart';
 import '../../../Core/Constant/Colors/colors.dart';
 import '../../../Core/Controller/controller_detail.dart';
 import '../../../Core/Utils/Camera Widget/camera_widget.dart';

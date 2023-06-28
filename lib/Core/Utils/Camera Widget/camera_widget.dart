@@ -15,7 +15,7 @@ class CameraWidget extends StatelessWidget {
   final double borderWidth;
   final double borderRadius;
   final RxBool? showImage;
-  final Rx<File?>? imagePath;
+  final Rx<File?> imagePath;
   final String cameraIconPath;
   final String buttonText;
   final Color buttonTextColor;
@@ -33,7 +33,7 @@ class CameraWidget extends StatelessWidget {
     this.borderWidth = 1,
     this.borderRadius = 10,
     this.showImage,
-    this.imagePath,
+    required this.imagePath,
     this.cameraIconPath = 'assets/images/camera.png',
     this.buttonText = 'Take a Picture',
     this.buttonTextColor = Colors.black,
@@ -56,13 +56,14 @@ class CameraWidget extends StatelessWidget {
               color: borderColor,
               width: borderWidth,
             ),
-           // borderRadius: BorderRadius.circular(borderRadius),
+            // borderRadius: BorderRadius.circular(borderRadius),
           ),
           child: Obx(() {
-            final File ? gandulaImagePath = imagePath?.value;
-            if (gandulaImagePath != null) {
+            final file = imagePath.value;
+            // ignore: unrelated_type_equality_checks
+            if (showImage != false && file != null) {
               return Image.file(
-                gandulaImagePath,
+                file,
                 fit: BoxFit.cover,
               );
             } else {

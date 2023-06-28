@@ -64,8 +64,12 @@ class _CustomAppBarState extends State<CustomAppBar> {
               await printIdController.cleaningDbHive();
               await printIdController.neighborsDBHive();
               await printIdController.product_Details();
-              await printIdController.newItemDbHive();
+              await printIdController.priceLabelDbHive();
+              await printIdController.promotionSecondaryDbHive();
               await printIdController.competitorPromotionDbHive();
+              await printIdController.newItemDbHive();
+              await printIdController.moreSpaceDbHive();
+              await printIdController.poitnOfSaleMaterailDB();
 
               print(
                   "here is  outer data ==> ${printIdController.productDetails}");
@@ -75,16 +79,31 @@ class _CustomAppBarState extends State<CustomAppBar> {
               List convertedList = printIdController.productDetails.values
                   .map((innerMap) => innerMap.cast<String, dynamic>())
                   .toList();
-              List convertedListCM = printIdController.competitorPromotion.values
+              List convertedListPL = printIdController.priceLabel.values
                   .map((innerMap) => innerMap.cast<String, dynamic>())
                   .toList();
-              
+              List convertedListPS = printIdController.promotionSecondary.values
+                  .map((innerMap) => innerMap.cast<String, dynamic>())
+                  .toList();
+              List convertedListCM = printIdController
+                  .competitorPromotion.values
+                  .map((innerMap) => innerMap.cast<String, dynamic>())
+                  .toList();
+              List convertedListpointOFsales = printIdController
+                  .pointOfSaleMaterial.values
+                  .map((innerMap) => innerMap.cast<String, dynamic>())
+                  .toList();
+
               convertedList.add(printIdController.planogramMap);
               convertedList.add(printIdController.cleaningMap);
               convertedList.add(printIdController.neighborsMap);
+              convertedList.add(convertedList);
+              convertedList.add(convertedListPL);
+              convertedList.add(convertedListPS);
+              convertedList.add(convertedListCM);
               convertedList.add(printIdController.newitem);
-              convertedList.addAll(convertedListCM);
-              
+              convertedList.add(printIdController.moreSpace);
+              convertedList.addAll(convertedListpointOFsales);
 
               print('Converted full  List: $convertedList');
               print('Converted List length: ${convertedList.length}');
@@ -101,45 +120,4 @@ class _CustomAppBarState extends State<CustomAppBar> {
       ],
     );
   }
-
-  // planogramFtnGetingIDs() async {
-  //   final boxname = await Hive.openBox("planogramData");
-  //   storingIDController.retailerid.value = boxname.get("retailerid");
-  //   storingIDController.branchid.value = boxname.get("branchid");
-  //   storingIDController.custmoreid.value = boxname.get("custmoreid");
-  //   storingIDController.categoryid.value = boxname.get("categoryid");
-  //   print(storingIDController.branchid.value);
-  //   print(storingIDController.categoryid.value);
-  //   boxname.close();
-  // }
-
-  // sendData() async {
-  //   final planogram = await Hive.openBox("planogramData");//
-  //   final cleaning = await Hive.openBox("cleaningData");//
-  //   final Competitor = await Hive.openBox("CompetitorPromotionData");//
-  //   final newItem = await Hive.openBox("newItemData");//
-  //   final priceLabel = await Hive.openBox("priceLabelData");//
-  //
-  //   final body = {'merchandiser_id': planogram};
-  //   String url =
-  //       'https://www.daaemsolutions.com/test/audit_api/retailer/'; // Replace with your API endpoint
-  //   final response = await http.post(
-  //     Uri.parse(url),
-  //     body: body,
-  //   );
-  //
-  //   if (response.statusCode == 200) {
-  //     Data = response.body;
-  //
-  //     final List<dynamic> responseData = json.decode(response.body);
-  //
-  //
-  //     // log("here is data ${firstmodel.retailerName!.length}");
-  //   } else {
-  //     // API request failed
-  //     print('Request failed with status: ${response.statusCode}');
-  //   }
-  //
-  //
-  // }
 }

@@ -37,6 +37,11 @@ class _PromoScreenState extends State<PromoScreen> {
           title: 'Promotion',
           onBackTap: () {
             Get.back();
+            mregularPrice = null;
+            mpromtionalprice = null;
+            imageContoller.competitorPromotionValue.value = false;
+
+            print(imageContoller.competitorPromotionValue.value);
           },
         ),
         body: Padding(
@@ -163,13 +168,12 @@ class _PromoScreenState extends State<PromoScreen> {
                                   "promotonalPrice": mpromtionalprice,
                                 }
                               ]);
-                              imageContoller.cleaningValueImage.value = false;
 
-                              setState(() {
-                                mregularPrice = null;
-                                mpromtionalprice = null;
-                              });
                               Get.back();
+                              mregularPrice = null;
+                              mpromtionalprice = null;
+                              imageContoller.competitorPromotionValue.value =
+                                  false;
                               Get.snackbar(
                                   "Successfully", "Data has been Saved",
                                   snackPosition: SnackPosition.BOTTOM,
