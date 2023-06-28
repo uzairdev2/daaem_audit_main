@@ -1,7 +1,6 @@
 // ignore_for_file: must_be_immutable, unnecessary_null_comparison, unused_local_variable, avoid_print
 
 import 'dart:developer';
-
 import 'package:daaem_reports/Core/Constant/Colors/colors.dart';
 import 'package:daaem_reports/Core/Controller/controller_detail.dart';
 import 'package:daaem_reports/Core/Routes/routes_name.dart';

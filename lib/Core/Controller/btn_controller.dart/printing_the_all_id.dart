@@ -10,6 +10,8 @@ class PrintIdController extends GetxController {
   Map<String, dynamic> cleaningMap = {};
   Map<String, dynamic> neighborsMap = {};
   Map<String, dynamic> productDetails = {};
+  Map<String, dynamic> newitem = {};
+  Map<String, dynamic> competitorPromotion = {};
 
   Future<Map> planogramDbHive() async {
     final box = await Hive.openBox(planogramDb);
@@ -45,6 +47,8 @@ class PrintIdController extends GetxController {
     });
   }
 
+
+
   void priceLabelDbHive() async {
     final box = await Hive.openBox(priceLabelDb);
     if (box.isNotEmpty) {
@@ -55,10 +59,11 @@ class PrintIdController extends GetxController {
     } else {}
   }
 
-  void competitorPromotionDbHive() async {
+   competitorPromotionDbHive() async {
     final box = await Hive.openBox(competitorPromotionDb);
     box.toMap().forEach((key, value) {
       print('Key: $key,  $value');
+      competitorPromotion[key.toString()] = value;
     });
     await box.close();
   }
@@ -71,22 +76,17 @@ class PrintIdController extends GetxController {
     await box.close();
   }
 
-  void newItemDbHive() async {
+   newItemDbHive() async {
     final box = await Hive.openBox(newItemDb);
     box.toMap().forEach((key, value) {
       print('Key: $key,  $value');
+      newitem[key.toString()] = value;
     });
     await box.close();
   }
 
-  // void cleaningDbHive() async {
-  //   final box = await Hive.openBox(cleaningDb);
-  //   final allData = box.values.toList();
-  //   print("\\\\\\\\\\\\\\\\${cleaningDb} data////////////////");
-  //   for (final data in allData) {
-  //     print(data.toString());
-  //   }
-  //   print("\\\\\\\\\\\\\\\\${cleaningDb} End////////////////");
-  //   await box.close();
-  // }
+ 
+
+  
+ 
 }

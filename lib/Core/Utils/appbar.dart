@@ -64,17 +64,27 @@ class _CustomAppBarState extends State<CustomAppBar> {
               await printIdController.cleaningDbHive();
               await printIdController.neighborsDBHive();
               await printIdController.product_Details();
+              await printIdController.newItemDbHive();
+              await printIdController.competitorPromotionDbHive();
 
               print(
                   "here is  outer data ==> ${printIdController.productDetails}");
+              print(
+                  "here is  outer competitorPromotion data ==> ${printIdController.competitorPromotion}");
 
               List convertedList = printIdController.productDetails.values
                   .map((innerMap) => innerMap.cast<String, dynamic>())
                   .toList();
-
+              List convertedListCM = printIdController.competitorPromotion.values
+                  .map((innerMap) => innerMap.cast<String, dynamic>())
+                  .toList();
+              
               convertedList.add(printIdController.planogramMap);
               convertedList.add(printIdController.cleaningMap);
               convertedList.add(printIdController.neighborsMap);
+              convertedList.add(printIdController.newitem);
+              convertedList.addAll(convertedListCM);
+              
 
               print('Converted full  List: $convertedList');
               print('Converted List length: ${convertedList.length}');

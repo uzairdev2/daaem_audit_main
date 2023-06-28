@@ -90,6 +90,20 @@ class ApiClass with ChangeNotifier {
         "accessable": MapData['accessible'],
         "image": MapData['imagedata'],
       };
+    } else if(MapData['table_name'] == "newItem"){
+      dataMap = {
+        "action": MapData['table_name'],
+        "retailer_id": MapData['retailerid'],
+        "customer_id": MapData['custmoreid'],
+        "category_id": MapData['categoryid'],
+        "branch_id": MapData['branchid'],
+        "product_id": MapData['productId'],
+        "osa": MapData['osa'] as String?,
+        "price_label": MapData['pricevalue'],
+        "stock_level": MapData['stockvalue'],
+        "accessable": MapData['accessible'],
+        "image": MapData['imagedata'],
+      };
     }
 
     // var cleanessData = {
