@@ -66,6 +66,6 @@ class SecondaryFtnController extends GetxController {
     });
     print("this is the Promtion Secondary List ${dataList.length}");
 
-    await boxname.clear();
+    // await boxname.clear();
   }
 }

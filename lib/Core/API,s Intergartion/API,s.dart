@@ -41,11 +41,18 @@ class ApiClass with ChangeNotifier {
   String merchandiser_id = "";
 
   syncData({required Map<String, dynamic> MapData}) async {
+
     final url = Uri.parse(
         'https://www.daaemsolutions.com/test/audit_api/web_api/insert/');
 
     print("my data is  inner  $MapData");
+
+
+
     Map<String, dynamic> dataMap = {};
+
+
+    
 
     if (MapData['table_name'] == "planogram") {
       dataMap = {
@@ -105,41 +112,22 @@ class ApiClass with ChangeNotifier {
         "image": MapData['imagedata'],
       };
     }
+    else if(MapData['table_name'] == "promotion_price"){
+        dataMap = {
+        "action": "promotion_price",
+        "retailer_id": MapData['retailerid'],
+        "customer_id": MapData['custmoreid'],
+        "category_id": MapData['categoryid'],
+        "branch_id": MapData['branchid'],
+        "regular_price": MapData['regularPrice'],
+        "promotion_price": MapData['promotonalPrice'],
+        "price_label": MapData['priceLabelValue'],
+        "product_id": MapData['priceProductid'],
+        "priceImage": MapData['priceImage'],
+      };  
+    }
 
-    // var cleanessData = {
-    //   "action": "cleaning",
-    //   "retailer_id": MapData['retailerid'],
-    //   "customer_id": MapData['custmoreid'],
-    //   "category_id": MapData['categoryid'],
-    //   "branch_id": MapData['branchid'],
-    //   "image": MapData['imagedata'],
-    //   "cleaningValue": MapData['cleaningValue'],
-    // };
-
-    // var neighborData = {
-    //   "action": "neighbours",
-    //   "retailer_id": MapData['retailerid'],
-    //   "customer_id": MapData['custmoreid'],
-    //   "category_id": MapData['categoryid'],
-    //   "branch_id": MapData['branchid'],
-    //   "left_id": MapData['leftDropValue'],
-    //   "right_id": MapData['rightDropVaalue'],
-    // };
-
-    // var productDetails = {
-    //   "action": MapData['table_data'],
-    //   "retailer_id": MapData['retailerid'],
-    //   "customer_id": MapData['custmoreid'],
-    //   "category_id": MapData['categoryid'],
-    //   "branch_id": MapData['branchid'],
-    //   "product_id": MapData['productId'],
-    //   "osa": MapData['osa'],
-    //   "price_label": MapData['pricevalue'],
-    //   "stock_level": MapData['stockvalue'],
-    //   "accessable": MapData['accessible'],
-    //   "image": MapData['imagedata'],
-    // };
-
+  
     var response = await http.post(
       url,
       // body: planogramData,

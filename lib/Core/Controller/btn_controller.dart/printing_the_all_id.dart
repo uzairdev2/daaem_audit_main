@@ -55,7 +55,7 @@ class PrintIdController extends GetxController {
   priceLabelDbHive() async {
     final box = await Hive.openBox(priceLabelDb);
     box.toMap().forEach((key, value) {
-      // print('Key: $key,  $value');
+      print('Key: $key,  $value');
       priceLabel[key.toString()] = value;
     });
   }

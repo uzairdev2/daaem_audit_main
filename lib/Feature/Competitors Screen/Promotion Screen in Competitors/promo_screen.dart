@@ -162,10 +162,11 @@ class _PromoScreenState extends State<PromoScreen> {
                                   "competitorPromotionProductid":
                                       competitorPromotionController
                                           .productID.value,
-                                  "competitorpromtion": imageContoller
-                                      .competitorPromotionBase64.value,
-                                  "regularPrice": mregularPrice,
+                                          "regularPrice": mregularPrice,
                                   "promotonalPrice": mpromtionalprice,
+                                  "competitorpromtionimage": imageContoller
+                                      .competitorPromotionBase64.value,
+                                  
                                 }
                               ]);
 

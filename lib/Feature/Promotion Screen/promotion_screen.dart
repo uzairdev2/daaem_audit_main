@@ -228,7 +228,7 @@ class _PromotionScreenState extends State<PromotionScreen> {
                                                 priceLabelController
                                                     .priceLabelFtnStoringID([
                                                   {
-                                                    "table_name": 'priceLabel',
+                                                    "table_name": 'promotion_price',
                                                     "retailerid":
                                                         storingIDController
                                                             .retailerid.value,

@@ -60,59 +60,87 @@ class _CustomAppBarState extends State<CustomAppBar> {
             color:
                 storingIDController.isDatabaseEmpty.value == false ? grey : red,
             ontap: () async {
-              await printIdController.planogramDbHive();
-              await printIdController.cleaningDbHive();
-              await printIdController.neighborsDBHive();
-              await printIdController.product_Details();
-              await printIdController.priceLabelDbHive();
-              await printIdController.promotionSecondaryDbHive();
-              await printIdController.competitorPromotionDbHive();
-              await printIdController.newItemDbHive();
-              await printIdController.moreSpaceDbHive();
-              await printIdController.poitnOfSaleMaterailDB();
+              // await printIdController.planogramDbHive();
+              // await printIdController.cleaningDbHive();
+              // await printIdController.neighborsDBHive();
+              // await printIdController.product_Details();
 
-              print(
-                  "here is  outer data ==> ${printIdController.productDetails}");
-              print(
-                  "here is  outer competitorPromotion data ==> ${printIdController.competitorPromotion}");
+              //testing from here one by one
+               
+               //list
+              // await printIdController.priceLabelDbHive();
 
-              List convertedList = printIdController.productDetails.values
+              //list
+              // await printIdController.promotionSecondaryDbHive();
+              //list
+              // await printIdController.competitorPromotionDbHive();
+              //single data
+              // await printIdController.newItemDbHive();
+              //single data
+              // await printIdController.moreSpaceDbHive();
+              //list
+              // await printIdController.poitnOfSaleMaterailDB();
+
+              // print(
+              //     "here is  outer data ==> ${printIdController.productDetails}");
+              // print(
+              //     "here is  outer competitorPromotion data ==> ${printIdController.competitorPromotion}");
+
+              // List convertedList = printIdController.productDetails.values
+              //     .map((innerMap) => innerMap.cast<String, dynamic>())
+              //     .toList();
+              // List convertedListPL = printIdController.priceLabel.values
+              //     .map((innerMap) => innerMap.cast<String, dynamic>())
+              //     .toList();
+              // List convertedListPS = printIdController.promotionSecondary.values
+              //     .map((innerMap) => innerMap.cast<String, dynamic>())
+              //     .toList();
+              // List convertedListCM = printIdController
+              //     .competitorPromotion.values
+              //     .map((innerMap) => innerMap.cast<String, dynamic>())
+              //     .toList();
+              // List convertedListpointOFsales = printIdController
+              //     .pointOfSaleMaterial.values
+              //     .map((innerMap) => innerMap.cast<String, dynamic>())
+              //     .toList();
+
+              // convertedList.add(printIdController.planogramMap);
+              // convertedList.add(printIdController.cleaningMap);
+              // convertedList.add(printIdController.neighborsMap);
+              // convertedList.add(printIdController.newitem);
+              // convertedList.add(printIdController.moreSpace);
+              // convertedList.addAll(convertedListPL);
+              // convertedList.addAll(convertedListPS);
+              // convertedList.addAll(convertedListCM);
+              // convertedList.addAll(convertedListpointOFsales);
+
+              // print('Converted full  List: $convertedList');
+              // print('Converted List length: ${convertedList.length}');
+
+              // for (int i = 0; i < convertedList.length; i++) {
+              //   await apiData.syncData(
+              //     MapData: convertedList[i],
+              //   );
+              // }
+
+   
+
+
+   //tahir workspace 
+
+
+               await printIdController.promotionSecondaryDbHive();
+                print(
+                  "here is  outer data ==> ${printIdController.promotionSecondary}");
+                  List convertedList = printIdController.promotionSecondary.values
                   .map((innerMap) => innerMap.cast<String, dynamic>())
                   .toList();
-              List convertedListPL = printIdController.priceLabel.values
-                  .map((innerMap) => innerMap.cast<String, dynamic>())
-                  .toList();
-              List convertedListPS = printIdController.promotionSecondary.values
-                  .map((innerMap) => innerMap.cast<String, dynamic>())
-                  .toList();
-              List convertedListCM = printIdController
-                  .competitorPromotion.values
-                  .map((innerMap) => innerMap.cast<String, dynamic>())
-                  .toList();
-              List convertedListpointOFsales = printIdController
-                  .pointOfSaleMaterial.values
-                  .map((innerMap) => innerMap.cast<String, dynamic>())
-                  .toList();
-
-              convertedList.add(printIdController.planogramMap);
-              convertedList.add(printIdController.cleaningMap);
-              convertedList.add(printIdController.neighborsMap);
-              convertedList.add(convertedList);
-              convertedList.add(convertedListPL);
-              convertedList.add(convertedListPS);
-              convertedList.add(convertedListCM);
-              convertedList.add(printIdController.newitem);
-              convertedList.add(printIdController.moreSpace);
-              convertedList.addAll(convertedListpointOFsales);
-
-              print('Converted full  List: $convertedList');
-              print('Converted List length: ${convertedList.length}');
-
-              for (int i = 0; i < convertedList.length; i++) {
+                   for (int i = 0; i < convertedList.length; i++) {
                 await apiData.syncData(
                   MapData: convertedList[i],
                 );
               }
+
             },
           ),
         ),
