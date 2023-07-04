@@ -20,8 +20,7 @@ class NewItemController extends GetxController {
     boxname.put("itemName", itemName);
     boxname.put("itemPrice", itemPrice);
     boxname.put("itemWeight", itemWeight);
-    boxname.put("itemDiscription", discriptionOfitem);
-    boxname.close();
+    boxname.put("itemDescription", discriptionOfitem);
   }
 
 // Future<void> newItemFtnStoringID() async {

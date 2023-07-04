@@ -700,7 +700,7 @@ class _SecondaryplaceState extends State<Secondaryplace> {
                           "retailerid": storingIDController.retailerid.value,
                           "branchid": storingIDController.branchid.value,
                           "customerid": storingIDController.custmoreid.value,
-                          "categoryid  ": storingIDController.categoryid.value,
+                          "categoryid": storingIDController.categoryid.value,
                           "priceProductid":
                               storingIDController.priceProductID.value,
                           "name": names[i],

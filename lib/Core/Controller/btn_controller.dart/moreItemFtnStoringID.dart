@@ -18,6 +18,7 @@ class MoreSpaceController extends GetxController {
     boxname.put("customerid", storingIDController.custmoreid.value);
     boxname.put("categoryid", storingIDController.categoryid.value);
     boxname.put("note", note);
+    // boxname.put("moreSpacePicture", imageContoller.moreSpaceBase64Image.value);
     boxname.put("moreSpacePicture", imageContoller.moreSpaceBase64Image.value);
 
     boxname.close();

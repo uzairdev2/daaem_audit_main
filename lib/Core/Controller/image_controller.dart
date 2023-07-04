@@ -52,7 +52,7 @@ class ImageContoller extends GetxController {
   List<RxBool> imagevalue = [];
 
   Future<void> cleanessImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+    final image = await ImagePicker().pickImage(source: ImageSource.camera, imageQuality: 50);
     if (image != null) {
       cleanimageFile.value = File(image.path);
       update();
@@ -65,7 +65,7 @@ class ImageContoller extends GetxController {
   }
 
   Future<void> moreSpaceImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+    final image = await ImagePicker().pickImage(source: ImageSource.camera, imageQuality: 60);
     if (image != null) {
       moreSpaceimageFile.value = File(image.path);
       update();

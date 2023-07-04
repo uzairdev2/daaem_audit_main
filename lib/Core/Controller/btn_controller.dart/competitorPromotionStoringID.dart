@@ -11,5 +11,6 @@ class CompetitorPromotionController extends GetxController {
     final boxname = await Hive.openBox("CompetitorPromotionData");
     boxname.addAll(dataList);
     print("this is the CompetitorPromotionData List ${dataList}");
+    print("this is the CompetitorPromotionData List ${dataList.length}");
   }
 }

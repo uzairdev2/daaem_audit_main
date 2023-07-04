@@ -83,15 +83,14 @@ class PrintIdController extends GetxController {
       print('Key: $key,  $value');
       moreSpace[key.toString()] = value;
     });
-    await box.close();
   }
 
   newItemDbHive() async {
     final box = await Hive.openBox(newItemDb);
     box.toMap().forEach((key, value) {
       newitem[key.toString()] = value;
+    print('Key: $key,  $value');
     });
-    await box.close();
   }
 
   poitnOfSaleMaterailDB() async {

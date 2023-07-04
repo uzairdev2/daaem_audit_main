@@ -41,18 +41,12 @@ class ApiClass with ChangeNotifier {
   String merchandiser_id = "";
 
   syncData({required Map<String, dynamic> MapData}) async {
-
     final url = Uri.parse(
         'https://www.daaemsolutions.com/test/audit_api/web_api/insert/');
 
     print("my data is  inner  $MapData");
 
-
-
     Map<String, dynamic> dataMap = {};
-
-
-    
 
     if (MapData['table_name'] == "planogram") {
       dataMap = {
@@ -97,23 +91,34 @@ class ApiClass with ChangeNotifier {
         "accessable": MapData['accessible'],
         "image": MapData['imagedata'],
       };
-    } else if(MapData['table_name'] == "newItem"){
+    } else if (MapData['table_name'] == "newItem") {
       dataMap = {
-        "action": MapData['table_name'],
+        "action": "newitem",
         "retailer_id": MapData['retailerid'],
-        "customer_id": MapData['custmoreid'],
+        "customer_id": MapData['customerid'],
         "category_id": MapData['categoryid'],
         "branch_id": MapData['branchid'],
-        "product_id": MapData['productId'],
-        "osa": MapData['osa'] as String?,
-        "price_label": MapData['pricevalue'],
-        "stock_level": MapData['stockvalue'],
-        "accessable": MapData['accessible'],
-        "image": MapData['imagedata'],
+        "itemWeight": MapData['itemWeight'],
+        "itemPrice": MapData['itemPrice'],
+        "itemName": MapData['itemName'],
+        "competitor_id": "116",
+        "itemDescription": MapData['itemDiscription'],
+      };
+    } 
+    else if(MapData['table_name'] == "moreSpace"){
+      dataMap = {
+        "action": "morespace",
+        "retailer_id": MapData['retailerid'],
+        "customer_id": MapData['customerid'],
+        "category_id": MapData['categoryid'],
+        "branch_id": MapData['branchid'],
+        "note_text": MapData['note'],
+        "competitor_id": "612",
+        "image": MapData['moreSpacePicture'],
       };
     }
-    else if(MapData['table_name'] == "promotion_price"){
-        dataMap = {
+    else if (MapData['table_name'] == "promotion_price") {
+      dataMap = {
         "action": "promotion_price",
         "retailer_id": MapData['retailerid'],
         "customer_id": MapData['custmoreid'],
@@ -124,10 +129,50 @@ class ApiClass with ChangeNotifier {
         "price_label": MapData['priceLabelValue'],
         "product_id": MapData['priceProductid'],
         "priceImage": MapData['priceImage'],
-      };  
+      };
+    } 
+    //today
+    else if (MapData['table_name'] == "promotion_secondary") {
+      dataMap = {
+        "action": "promotion_secondary",
+        "retailer_id": MapData['retailerid'],
+        "branch_id": MapData['branchid'],
+        "customer_id": MapData['customerid'],
+        "category_id": MapData['categoryid  '],
+        "product_id": MapData['priceProductid'],
+        "name": MapData['name'],
+        "value": MapData['value'],
+        // "image": MapData['image'],
+        "image": "",
+      };
+    } else if (MapData['table_name'] == "competitor_promotion") {
+      dataMap = {
+        "action": "competitor_promotion",
+        "retailer_id": MapData['retailerid'],
+        "branch_id": MapData['branchid'],
+        "customer_id": MapData['custmoreid'],
+        "category_id": MapData['categoryid'],
+        "product_id": MapData['competitorPromotionProductid'],
+        "regular_price": MapData['regularPrice'],
+        "promotion_price": MapData['promotonalPrice'],
+        "competitor_id": "346",
+        "image": "",
+      };
+    } else if (MapData['table_name'] == "Competitior_material") {
+      dataMap = {
+        "action": "Competitior_material",
+        "retailerid": MapData['retailerid'],
+        "branchid": MapData['branchid'],
+        "customerid": MapData['custmoreid'],
+        "categoryid": MapData['categoryid'],
+        "otherMaterialName": MapData['otherMaterialName'],
+        "notes": MapData['notes'],
+        "image": MapData["image"],
+      };
     }
 
-  
+    print("here is data map map $dataMap");
+
     var response = await http.post(
       url,
       // body: planogramData,
