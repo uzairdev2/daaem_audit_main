@@ -161,10 +161,10 @@ class ApiClass with ChangeNotifier {
     } else if (MapData['table_name'] == "Competitior_material") {
       dataMap = {
         "action": "Competitior_material",
-        "retailerid": MapData['retailerid'],
-        "branchid": MapData['branchid'],
-        "customerid": MapData['custmoreid'],
-        "categoryid": MapData['categoryid'],
+        "retailer_id": MapData['retailerid'],
+        "branch_id": MapData['branchid'],
+        "customer_id": MapData['custmoreid'],
+        "category_id": MapData['categoryid'],
         "otherMaterialName": MapData['otherMaterialName'],
         "notes": MapData['notes'],
         "image": MapData["image"],
