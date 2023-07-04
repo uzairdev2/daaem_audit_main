@@ -1,7 +1,5 @@
 // ignore_for_file: avoid_print, must_be_immutable
 
-import 'package:daaem_reports/Core/Constant/Images/images.dart';
-import 'package:daaem_reports/Core/Controller/checkbox_controller.dart';
 import 'package:daaem_reports/Core/Utils/sizebox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

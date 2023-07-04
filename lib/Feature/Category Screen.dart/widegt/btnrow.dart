@@ -320,45 +320,90 @@ class BtnRow extends StatelessWidget {
                                 productDetailController
                                         .stockVAlueYesorNO[index] !=
                                     null) {
-                              String cleanBase64Image = "";
-                              if (logPro.productList[index].imagePath != null &&
-                                  logPro.productList[index].imagePath
-                                      .isNotEmpty) {
-                                print(
-                                    "this work ${logPro.productList[index].imagePath.toString()}");
-                                List<int> imageBytes = await File(
-                                        logPro.productList[index].imagePath)
-                                    .readAsBytes();
-                                cleanBase64Image =
-                                    logPro.productList[index].imagePath != null
-                                        ? base64Encode(imageBytes)
-                                        : "no images";
-                              }
-                              storingIDController.osaFtnStoringID([
-                                {
-                                  "table_name": "product_detail",
-                                  "retailerid":
-                                      storingIDController.retailerid.value,
-                                  "branchid":
-                                      storingIDController.branchid.value,
-                                  "custmoreid":
-                                      storingIDController.custmoreid.value,
-                                  "categoryid":
-                                      storingIDController.categoryid.value,
-                                  "productId": logPro
-                                      .productList[index].productId
-                                      .toString(),
-                                  "osa": productDetailController
-                                      .osaVAlueYesorNO[index].value,
-                                  "pricevalue": productDetailController
-                                      .priceVAlueYesorNO[index].value,
-                                  "stockvalue": productDetailController
-                                      .stockVAlueYesorNO[index].value,
-                                  "accessible": productDetailController
-                                      .accessVAlueYesorNO[index].value,
-                                  "imagedata": cleanBase64Image,
+                              if (productDetailController
+                                      .osaVAlueYesorNO[index] ==
+                                  'no') {
+                                String cleanBase64Image = "";
+                                if (logPro.productList[index].imagePath !=
+                                        null &&
+                                    logPro.productList[index].imagePath
+                                        .isNotEmpty) {
+                                  print(
+                                      "this work ${logPro.productList[index].imagePath.toString()}");
+                                  List<int> imageBytes = await File(
+                                          logPro.productList[index].imagePath)
+                                      .readAsBytes();
+                                  cleanBase64Image =
+                                      logPro.productList[index].imagePath !=
+                                              null
+                                          ? base64Encode(imageBytes)
+                                          : "no images";
                                 }
-                              ]);
+                                storingIDController.osaFtnStoringID([
+                                  {
+                                    "table_name": "product_detail",
+                                    "retailerid":
+                                        storingIDController.retailerid.value,
+                                    "branchid":
+                                        storingIDController.branchid.value,
+                                    "custmoreid":
+                                        storingIDController.custmoreid.value,
+                                    "categoryid":
+                                        storingIDController.categoryid.value,
+                                    "productId": logPro
+                                        .productList[index].productId
+                                        .toString(),
+                                    "osa": productDetailController
+                                        .osaVAlueYesorNO[index].value,
+                                    "pricevalue": "Not_available",
+                                    "stockvalue": "Not_available",
+                                    "accessible": "Not_available",
+                                    "imagedata": cleanBase64Image,
+                                  }
+                                ]);
+                              } else {
+                                String cleanBase64Image = "";
+                                if (logPro.productList[index].imagePath !=
+                                        null &&
+                                    logPro.productList[index].imagePath
+                                        .isNotEmpty) {
+                                  print(
+                                      "this work ${logPro.productList[index].imagePath.toString()}");
+                                  List<int> imageBytes = await File(
+                                          logPro.productList[index].imagePath)
+                                      .readAsBytes();
+                                  cleanBase64Image =
+                                      logPro.productList[index].imagePath !=
+                                              null
+                                          ? base64Encode(imageBytes)
+                                          : "no images";
+                                }
+                                storingIDController.osaFtnStoringID([
+                                  {
+                                    "table_name": "product_detail",
+                                    "retailerid":
+                                        storingIDController.retailerid.value,
+                                    "branchid":
+                                        storingIDController.branchid.value,
+                                    "custmoreid":
+                                        storingIDController.custmoreid.value,
+                                    "categoryid":
+                                        storingIDController.categoryid.value,
+                                    "productId": logPro
+                                        .productList[index].productId
+                                        .toString(),
+                                    "osa": productDetailController
+                                        .osaVAlueYesorNO[index].value,
+                                    "pricevalue": productDetailController
+                                        .priceVAlueYesorNO[index].value,
+                                    "stockvalue": productDetailController
+                                        .stockVAlueYesorNO[index].value,
+                                    "accessible": productDetailController
+                                        .accessVAlueYesorNO[index].value,
+                                    "imagedata": cleanBase64Image,
+                                  }
+                                ]);
+                              }
                               Get.back();
                               Get.snackbar("Saved", "SuccessFully",
                                   snackPosition: SnackPosition.BOTTOM,
