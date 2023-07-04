@@ -52,7 +52,8 @@ class ImageContoller extends GetxController {
   List<RxBool> imagevalue = [];
 
   Future<void> cleanessImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.camera, imageQuality: 50);
+    final image = await ImagePicker()
+        .pickImage(source: ImageSource.camera, imageQuality: 50);
     if (image != null) {
       cleanimageFile.value = File(image.path);
       update();
@@ -65,7 +66,8 @@ class ImageContoller extends GetxController {
   }
 
   Future<void> moreSpaceImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.camera, imageQuality: 60);
+    final image = await ImagePicker()
+        .pickImage(source: ImageSource.camera, imageQuality: 60);
     if (image != null) {
       moreSpaceimageFile.value = File(image.path);
       update();
@@ -78,7 +80,8 @@ class ImageContoller extends GetxController {
   }
 
   Future<void> gandulaImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+    final image = await ImagePicker()
+        .pickImage(source: ImageSource.camera, imageQuality: 60);
     if (image != null) {
       gandulaimageFile.value = File(image.path);
       update();
@@ -91,7 +94,8 @@ class ImageContoller extends GetxController {
   }
 
   Future<void> promotionAreaImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+    final image = await ImagePicker()
+        .pickImage(source: ImageSource.camera, imageQuality: 60);
     if (image != null) {
       areaImage.value = File(image.path);
       update();
@@ -104,7 +108,8 @@ class ImageContoller extends GetxController {
   }
 
   Future<void> promotionalImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+    final image = await ImagePicker()
+        .pickImage(source: ImageSource.camera, imageQuality: 60);
     if (image != null) {
       promotionalimageFile.value = File(image.path);
       update();
@@ -117,7 +122,8 @@ class ImageContoller extends GetxController {
   }
 
   Future<void> floorImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+    final image = await ImagePicker()
+        .pickImage(source: ImageSource.camera, imageQuality: 60);
     if (image != null) {
       floorimageFile.value = File(image.path);
       update();
@@ -130,7 +136,8 @@ class ImageContoller extends GetxController {
   }
 
   Future<void> standImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+    final image = await ImagePicker()
+        .pickImage(source: ImageSource.camera, imageQuality: 60);
     if (image != null) {
       standimageFile.value = File(image.path);
       update();
@@ -143,7 +150,8 @@ class ImageContoller extends GetxController {
   }
 
   Future<void> promoImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+    final image = await ImagePicker()
+        .pickImage(source: ImageSource.camera, imageQuality: 60);
     if (image != null) {
       secondaryPromotionFile.value = File(image.path);
       update();
@@ -156,7 +164,8 @@ class ImageContoller extends GetxController {
   }
 
   Future<void> promotionScreenImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+    final image = await ImagePicker()
+        .pickImage(source: ImageSource.camera, imageQuality: 60);
     if (image != null) {
       competitorPromtionImageFile.value = File(image.path);
       update();
@@ -170,7 +179,8 @@ class ImageContoller extends GetxController {
   }
 
   Future<void> materialImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+    final image = await ImagePicker()
+        .pickImage(source: ImageSource.camera, imageQuality: 60);
     if (image != null) {
       materialimageFile.value = File(image.path);
       update();
@@ -187,7 +197,8 @@ class ImageContoller extends GetxController {
   RxString takeBase64Image = "".obs;
 
   Future<void> takeImage(int index) async {
-    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+    final image = await ImagePicker()
+        .pickImage(source: ImageSource.camera, imageQuality: 60);
     if (image != null) {
       final capturedFile = File(image.path);
       rowImages.add(capturedFile);
@@ -213,7 +224,8 @@ class ImageContoller extends GetxController {
   RxBool materialgandulaValue = false.obs;
 
   Future<void> materialGandulaImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+    final image = await ImagePicker()
+        .pickImage(source: ImageSource.camera, imageQuality: 60);
     if (image != null) {
       materialgandulaimageFile.value = File(image.path);
       update();
@@ -230,7 +242,8 @@ class ImageContoller extends GetxController {
   RxString materialfloorBase64Image = ''.obs;
   RxBool materialfloorValue = false.obs;
   Future<void> materiaFloorImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+    final image = await ImagePicker()
+        .pickImage(source: ImageSource.camera, imageQuality: 60);
     if (image != null) {
       materialfloorimageFile.value = File(image.path);
       update();
@@ -246,7 +259,8 @@ class ImageContoller extends GetxController {
   RxString materialPromositeBase64Image = ''.obs;
   RxBool materialPromositeValue = false.obs;
   Future<void> materialPromositeImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+    final image = await ImagePicker()
+        .pickImage(source: ImageSource.camera, imageQuality: 60);
     if (image != null) {
       materialPromositeimageFile.value = File(image.path);
       update();
@@ -263,7 +277,8 @@ class ImageContoller extends GetxController {
   RxString materialOtherBase64Image = ''.obs;
   RxBool materialOtherValue = false.obs;
   Future<void> materialOtherImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+    final image = await ImagePicker()
+        .pickImage(source: ImageSource.camera, imageQuality: 60);
     if (image != null) {
       materialOtherimageFile.value = File(image.path);
       update();

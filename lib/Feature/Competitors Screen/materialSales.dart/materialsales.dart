@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print, must_be_immutable
 
+import 'package:daaem_reports/Core/Constant/Images/images.dart';
 import 'package:daaem_reports/Core/Controller/checkbox_controller.dart';
 import 'package:daaem_reports/Core/Utils/sizebox.dart';
 import 'package:flutter/material.dart';
@@ -85,6 +86,9 @@ class MaterialSalesScreen extends StatelessWidget {
                             if (checkController.checkValue2.isFalse) {
                               images.remove(imageContoller
                                   .materialgandulaBase64Image.value);
+                              names.remove("Gandula");
+                            } else {
+                              names.add("Gandula");
                             }
                           },
                           value: checkController.checkValue2),
@@ -92,6 +96,13 @@ class MaterialSalesScreen extends StatelessWidget {
                       ontap: () {
                         checkController.checkValue2.value =
                             !checkController.checkValue2.value;
+                        if (checkController.checkValue2.isFalse) {
+                          images.remove(
+                              imageContoller.materialgandulaBase64Image.value);
+                          names.remove("Gandula");
+                        } else {
+                          names.add("Gandula");
+                        }
                       },
                     ),
                     10.h.ph,
@@ -139,12 +150,26 @@ class MaterialSalesScreen extends StatelessWidget {
                         value: checkController.checkValue1,
                         onChanged: (value) {
                           checkController.checkValue1.value = value;
+                          if (checkController.checkValue2.isFalse) {
+                            images.remove(
+                                imageContoller.materialfloorBase64Image.value);
+                            names.remove("Floor Displa");
+                          } else {
+                            names.add("Floor Displa");
+                          }
                         },
                       ),
                       name: "Floor Display",
                       ontap: () {
                         checkController.checkValue1.value =
                             !checkController.checkValue1.value;
+                        if (checkController.checkValue2.isFalse) {
+                          images.remove(
+                              imageContoller.materialfloorBase64Image.value);
+                          names.remove("Floor Displa");
+                        } else {
+                          names.add("Floor Displa");
+                        }
                       },
                     ),
                     10.h.ph,
@@ -201,6 +226,9 @@ class MaterialSalesScreen extends StatelessWidget {
                                     .materialOtherBase64Image.isNotEmpty) {
                               images.remove(imageContoller
                                   .materialOtherBase64Image.value);
+                              names.remove("other");
+                            } else {
+                              names.add("other");
                             }
                           },
                         ),
@@ -208,6 +236,15 @@ class MaterialSalesScreen extends StatelessWidget {
                         ontap: () {
                           checkController.otherValue2.value =
                               !checkController.otherValue2.value;
+                          if (checkController.otherValue2.isFalse &&
+                              imageContoller
+                                  .materialOtherBase64Image.isNotEmpty) {
+                            images.remove(
+                                imageContoller.materialOtherBase64Image.value);
+                            names.remove("other");
+                          } else {
+                            names.add("other");
+                          }
                         },
                       ),
                     ),
@@ -280,6 +317,9 @@ class MaterialSalesScreen extends StatelessWidget {
                           if (checkController.promositeValue2.isFalse) {
                             images.remove(imageContoller
                                 .materialPromositeBase64Image.value);
+                            names.remove("Promo Site");
+                          } else {
+                            names.add("Promo Site");
                           }
                         },
                       ),
@@ -287,6 +327,13 @@ class MaterialSalesScreen extends StatelessWidget {
                       ontap: () {
                         checkController.promositeValue2.value =
                             !checkController.promositeValue2.value;
+                        if (checkController.promositeValue2.isFalse) {
+                          images.remove(imageContoller
+                              .materialPromositeBase64Image.value);
+                          names.remove("Promo Site");
+                        } else {
+                          names.add("Promo Site");
+                        }
                       },
                     ),
                     15.h.ph,
@@ -362,7 +409,7 @@ class MaterialSalesScreen extends StatelessWidget {
                             imageContoller
                                 .materialPromositeBase64Image.isNotEmpty) &&
                         notes.isNotEmpty) {
-                  for (var i = 0; i < images.length; i++) {
+                  for (var i = 0; i < names.length; i++) {
                     print("for loop working ");
                     competitiorMaterialFtnController
                         .competitiorMaterialFtnStoringID([
@@ -372,6 +419,7 @@ class MaterialSalesScreen extends StatelessWidget {
                         "branchid": storingIDController.branchid.value,
                         "customerid": storingIDController.custmoreid.value,
                         "categoryid  ": storingIDController.categoryid.value,
+                        "name": names[i],
                         "image": images[i],
                         "ortherMaterialName": materialName,
                         "notes": notes,

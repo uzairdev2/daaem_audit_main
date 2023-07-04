@@ -69,8 +69,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
               await printIdController.competitorPromotionDbHive();
               await printIdController.newItemDbHive();
               await printIdController.moreSpaceDbHive();
-              
-             //remining
+
+              //remining
               await printIdController.poitnOfSaleMaterailDB();
 
               print(
@@ -108,13 +108,11 @@ class _CustomAppBarState extends State<CustomAppBar> {
 
               print('Converted full  List: $convertedList');
               // print('Converted List length: ${convertedListCM.length}');
-convertedListconvertedListconvertedListconverconvertedList
-              for (int i = 0; i < convertedLiconvertedList.length; i++) {
+              for (int i = 0; i < convertedList.length; i++) {
                 await apiData.syncData(
                   MapData: printIdController.moreSpace,
                 );
               }
-
             },
           ),
         ),
