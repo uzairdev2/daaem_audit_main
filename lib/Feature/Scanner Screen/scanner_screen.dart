@@ -118,80 +118,84 @@ class _ScannerScreenState extends State<ScannerScreen> {
                           valueListenable: Boxes.getData().listenable(),
                           builder: (context, boxes, _) {
                             var data = boxes.values.toList().cast<ModelHive>();
-
-                            return Card(
-                              child: ListView.builder(
-                                  itemCount: boxes.length,
-                                  shrinkWrap: true,
-                                  itemBuilder: (context, index) {
-                                    return Column(
-                                      children: [
-                                        ListTile(
-                                          title: CustomText(
-                                              name:
-                                                  "Barcode :${data[index].barcode}"),
-                                          subtitle: CustomText(
-                                              name:
-                                                  "Quantity :${data[index].quamtitiy.toString()}"),
-                                          trailing: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              IconButton(
-                                                icon: const Icon(Icons.edit),
-                                                onPressed: () {
-                                                  // Perform edit operation for the item at this index
-                                                  scanController
-                                                      .commonDialog.value
-                                                      .showPopwithCustom(
-                                                          name: data[index]
-                                                              .barcode,
-                                                          colum: Column(
-                                                            children: [
-                                                              10.h.ph,
-                                                              CustomTextfield(
-                                                                hintext:
-                                                                    "Enter Quantity",
-                                                                height: 50.h,
-                                                                width: 200.w,
-                                                                onchanged:
-                                                                    (value) {
-                                                                  quantity =
-                                                                      value;
-                                                                },
-                                                                textType:
-                                                                    TextInputType
-                                                                        .number,
-                                                              ),
-                                                              10.h.ph,
-                                                              CustomButton(
-                                                                name: "Save",
-                                                                ontap: () {
-                                                                  _editItem(
-                                                                      index,
-                                                                      data[index]
-                                                                          .barcode,
-                                                                      quantity);
-                                                                  Get.back();
-                                                                },
-                                                              )
-                                                            ],
-                                                          ));
-                                                },
-                                              ),
-                                              IconButton(
-                                                icon: const Icon(Icons.delete),
-                                                onPressed: () {
-                                                  // Perform delete operation for the item at this index
-                                                  _deleteItem(index);
-                                                },
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    );
-                                  }),
-                            );
+                            if (data.isEmpty) {
+                              return Text("nodata");
+                            } else {
+                              return Card(
+                                child: ListView.builder(
+                                    itemCount: boxes.length,
+                                    shrinkWrap: true,
+                                    itemBuilder: (context, index) {
+                                      return Column(
+                                        children: [
+                                          ListTile(
+                                            title: CustomText(
+                                                name:
+                                                    "Barcode :${data[index].barcode}"),
+                                            subtitle: CustomText(
+                                                name:
+                                                    "Quantity :${data[index].quamtitiy.toString()}"),
+                                            trailing: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                IconButton(
+                                                  icon: const Icon(Icons.edit),
+                                                  onPressed: () {
+                                                    // Perform edit operation for the item at this index
+                                                    scanController
+                                                        .commonDialog.value
+                                                        .showPopwithCustom(
+                                                            name: data[index]
+                                                                .barcode,
+                                                            colum: Column(
+                                                              children: [
+                                                                10.h.ph,
+                                                                CustomTextfield(
+                                                                  hintext:
+                                                                      "Enter Quantity",
+                                                                  height: 50.h,
+                                                                  width: 200.w,
+                                                                  onchanged:
+                                                                      (value) {
+                                                                    quantity =
+                                                                        value;
+                                                                  },
+                                                                  textType:
+                                                                      TextInputType
+                                                                          .number,
+                                                                ),
+                                                                10.h.ph,
+                                                                CustomButton(
+                                                                  name: "Save",
+                                                                  ontap: () {
+                                                                    _editItem(
+                                                                        index,
+                                                                        data[index]
+                                                                            .barcode,
+                                                                        quantity);
+                                                                    Get.back();
+                                                                  },
+                                                                )
+                                                              ],
+                                                            ));
+                                                  },
+                                                ),
+                                                IconButton(
+                                                  icon:
+                                                      const Icon(Icons.delete),
+                                                  onPressed: () {
+                                                    // Perform delete operation for the item at this index
+                                                    _deleteItem(index);
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      );
+                                    }),
+                              );
+                            }
                           })))
                 ]))));
   }

@@ -6,8 +6,10 @@ import 'package:hive/hive.dart';
 class CompetitiorMaterialFtnController extends GetxController {
   Future<void> competitiorMaterialFtnStoringID(
       List<Map<String, dynamic>> dataList) async {
-    final boxname = await Hive.openBox("competitor_material");
+    print("Printing all data in competitor_material box:");
 
+    final boxname = await Hive.openBox("competitor_material");
+    boxname.clear();
     boxname.addAll(dataList);
 
     print("Printing all data in competitor_material box:");

@@ -244,7 +244,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         name: "Backdoor",
                         ontap: () async {
                           logPro.scanProduct.clear();
-                          await logPro.scanProducts("43", "1").then((value) {
+                          await logPro
+                              .scanProducts(
+                            // storingIDController.custmoreid.value,
+                            "43",
+                            "1",
+                            // storingIDController.branchid.value
+                          )
+                              .then((value) {
                             Get.toNamed(RoutesName.scannerScreen);
                           });
                         },

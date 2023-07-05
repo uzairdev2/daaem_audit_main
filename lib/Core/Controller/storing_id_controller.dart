@@ -6,6 +6,8 @@ import 'package:daaem_reports/Core/Controller/controller_detail.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
+import 'database_name/db_name.dart';
+
 class StoringIDController extends GetxController {
   RxString retailerid = "".obs;
   RxString branchid = "".obs;
@@ -101,17 +103,14 @@ class StoringIDController extends GetxController {
   clearBoxData() async {
     final box = await Hive.openBox('planogramData');
     final box2 = await Hive.openBox('cleaningData');
-    final box3 = await Hive.openBox('naboursData');
+    final box3 = await Hive.openBox("neighborsData");
     final box4 = await Hive.openBox('osaData');
-    final box5 = await Hive.openBox('pricingData');
-    final box6 = await Hive.openBox('stockLevelData');
-    final box7 = await Hive.openBox('accessibleData');
-    final box8 = await Hive.openBox('priceLabelData');
-    final box9 = await Hive.openBox('locationData');
-    final box10 = await Hive.openBox('promotionData');
-    final box11 = await Hive.openBox('newItemData');
-    final box12 = await Hive.openBox('moreSpaceData');
-    final box13 = await Hive.openBox('saleMaterialData');
+    final box5 = await Hive.openBox(promotionSecondarydb);
+    final box6 = await Hive.openBox(priceLabelDb);
+    final box7 = await Hive.openBox(newItemDb);
+    final box8 = await Hive.openBox(moreSpaceDb);
+    final box9 = await Hive.openBox(competitorPromotionDb);
+    final box10 = await Hive.openBox("competitor_material");
 
     box.clear();
     box2.clear();
@@ -123,9 +122,6 @@ class StoringIDController extends GetxController {
     box8.clear();
     box9.clear();
     box10.clear();
-    box11.clear();
-    box12.clear();
-    box13.clear();
 
     await box.close();
     await box2.close();
@@ -137,56 +133,8 @@ class StoringIDController extends GetxController {
     await box8.close();
     await box9.close();
     await box10.close();
-    await box11.close();
-    await box12.close();
-    await box13.close();
 
     log("clear all data");
-  }
-
-  // fixvalue() async {
-  //   final boxname = await Hive.openBox("fixvalue");
-
-  // await  boxname.put("planogramvalue", checkController.selectRadioBtnVal.value);
-  //   // boxname.put("cleanness", branchid.value);
-  // boxname.put("naboius", custmoreid.value);
-
-  // planogaramValue = boxname.get("planogram");
-  // cleanessValue.value = boxname.get("cleanness");
-  // nabiursValue.value = boxname.get("naboius");
-
-  // }
-
-  ///////////////////////////////// Planogram /////////////////////////
-  ///
-  ///
-  ///
-  ///
-
-/////////////////////// Cleaning /////////////////////////
-
-  cleaningFtnStoringID({required String imagedata}) async {
-    final boxname = await Hive.openBox("cleaningData");
-
-    boxname.put("retailerid", retailerid.value);
-    boxname.put("branchid", branchid.value);
-    boxname.put("custmoreid", custmoreid.value);
-    boxname.put("categoryid", categoryid.value);
-    boxname.put("imagedata", imagedata);
-    boxname.put(
-      "cleaningValue",
-      checkController.selectRadioBtnVal.value,
-    );
-  }
-
-  Future<void> cleaningFtnGetingID() async {
-    final boxname = await Hive.openBox("cleaningData");
-
-    retailerid.value = boxname.get("retailerid");
-    branchid.value = boxname.get("branchid");
-    custmoreid.value = boxname.get("custmoreid");
-    categoryid.value = boxname.get("categoryid");
-    cleanessValue.value = boxname.get("cleaningValue");
   }
 
 /////////////////// Neighbors //////////////////////
@@ -240,24 +188,6 @@ class StoringIDController extends GetxController {
       // Process the item as needed
       print(item);
     }
-  }
-
-  Future<Box> openBox() async {
-    final box = await Hive.openBox('osaData');
-    return box;
-  }
-
-  Future<void> osaFtnGetingID() async {
-    final box = await Hive.openBox('osaData');
-    // List dataList = [];
-    // boxname.addAll(dataList);
-    // osaList.add(box.values.first);
-    log("here is box value first ${box.values.first}");
-    log("here is box value  ${box.values}");
-    log("here is box value length ${box.values.length}");
-    osaList = box.values.toList();
-    log("here is data list $osaList");
-    log("here box ${box.length}");
   }
 
 ///////////price/////////

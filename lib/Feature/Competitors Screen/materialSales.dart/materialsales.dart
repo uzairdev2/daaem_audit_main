@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print, must_be_immutable
 
+import 'package:daaem_reports/Core/Constant/Images/images.dart';
 import 'package:daaem_reports/Core/Utils/sizebox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -81,7 +82,8 @@ class MaterialSalesScreen extends StatelessWidget {
                       checkbox: CustomCheckBox(
                           onChanged: (value) {
                             checkController.checkValue2.value = value;
-                            if (checkController.checkValue2.isFalse) {
+                            // ignore: unrelated_type_equality_checks
+                            if (checkController.checkValue2 == false) {
                               images.remove(imageContoller
                                   .materialgandulaBase64Image.value);
                               names.remove("Gandula");
@@ -98,6 +100,7 @@ class MaterialSalesScreen extends StatelessWidget {
                           images.remove(
                               imageContoller.materialgandulaBase64Image.value);
                           names.remove("Gandula");
+                          imageContoller.materialgandulaValue.value = false;
                         } else {
                           names.add("Gandula");
                         }
@@ -116,19 +119,15 @@ class MaterialSalesScreen extends StatelessWidget {
                                 imagePath:
                                     imageContoller.materialgandulaimageFile,
                                 showImage: imageContoller.materialgandulaValue,
-                                onTap: () {
-                                  imageContoller
-                                      .materialGandulaImage()
-                                      .then((value) {
-                                    if (checkController
-                                            .gandulaCheckvalue.isTrue &&
-                                        imageContoller
-                                            .materialgandulaBase64Image
-                                            .isNotEmpty) {
-                                      images.add(imageContoller
-                                          .materialgandulaBase64Image.value);
-                                    }
-                                  });
+                                onTap: () async {
+                                  await imageContoller.materialGandulaImage();
+
+                                  if (imageContoller.materialgandulaBase64Image
+                                      .value.isNotEmpty) {
+                                    images.add(imageContoller
+                                        .materialgandulaBase64Image.value);
+                                    print("working add value in list ");
+                                  }
                                 },
                               ),
                             ));
@@ -189,7 +188,9 @@ class MaterialSalesScreen extends StatelessWidget {
                                       .then((value) {
                                     if (checkController.checkValue1.isTrue &&
                                         imageContoller.materialfloorBase64Image
-                                            .isNotEmpty) {
+                                            .value.isNotEmpty) {
+                                      print("working add value in list ");
+
                                       images.add(imageContoller
                                           .materialfloorBase64Image.value);
                                     }
@@ -267,6 +268,8 @@ class MaterialSalesScreen extends StatelessWidget {
                                     if (checkController.otherValue2.isTrue &&
                                         imageContoller.materialOtherBase64Image
                                             .isNotEmpty) {
+                                      print("working add value in list ");
+
                                       images.add(imageContoller
                                           .materialOtherBase64Image.value);
                                     }
@@ -396,6 +399,8 @@ class MaterialSalesScreen extends StatelessWidget {
               color: aquamarine,
               name: "Submit",
               ontap: () {
+                print(images.length);
+                print(names.length);
                 if ((checkController.checkValue2.isTrue &&
                         imageContoller.materialgandulaBase64Image.isNotEmpty) ||
                     (checkController.checkValue1.isTrue &&
@@ -419,7 +424,6 @@ class MaterialSalesScreen extends StatelessWidget {
                         "categoryid  ": storingIDController.categoryid.value,
                         "name": names[i],
                         "image": images[i],
-                        "ortherMaterialName": materialName,
                         "notes": notes,
                       }
                     ]);
@@ -439,6 +443,7 @@ class MaterialSalesScreen extends StatelessWidget {
                   notes = "";
                   materialName = "";
                   images.clear();
+                  names.clear();
                   Get.snackbar("Successfully", "Data has been stored",
                       snackPosition: SnackPosition.BOTTOM,
                       backgroundColor: aquamarine);
