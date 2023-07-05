@@ -94,10 +94,9 @@ class PrintIdController extends GetxController {
   }
 
   poitnOfSaleMaterailDB() async {
-    final box = await Hive.openBox(newItemDb);
+    final box = await Hive.openBox(pointOfSaleMaterialDb);
     box.toMap().forEach((key, value) {
       pointOfSaleMaterial[key.toString()] = value;
     });
-    await box.close();
   }
 }
