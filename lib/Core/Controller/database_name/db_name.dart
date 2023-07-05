@@ -7,5 +7,6 @@ const OsaDB = "osaData";
 const competitorPromotionDb = "CompetitorPromotionData";
 const moreSpaceDb = "MoreSpaceData";
 const newItemDb = "newItemData";
+const pointOfSaleMaterialDb = "competitor_material";
 const priceLabelDb = "priceLabelData";
 const promotionSecondarydb = "promotionSecondary";
