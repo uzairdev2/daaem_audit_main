@@ -19,7 +19,6 @@ void main() async {
   var directory = await getApplicationDocumentsDirectory();
   Hive.init(directory.path);
   Hive.registerAdapter(ModelHiveAdapter());
-  await Hive.openBox<ModelHive>("scanData");
   runApp(const MyApp());
 }
 

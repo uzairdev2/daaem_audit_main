@@ -4,6 +4,7 @@ import 'package:daaem_reports/Core/Controller/storing_id_controller.dart';
 import 'package:get/get.dart';
 
 import 'bar_code_ftn.dart';
+import 'btn_controller.dart/backdoor_hive.dart';
 import 'btn_controller.dart/cleaningFtnStoringID.dart';
 import 'btn_controller.dart/competitor_material.dart';
 import 'btn_controller.dart/moreItemFtnStoringID.dart';
@@ -40,3 +41,4 @@ CategorySelctedController categoryController =
     Get.put(CategorySelctedController());
 ScanController scanController = Get.put(ScanController());
 StoringIDController storingIDController = Get.put(StoringIDController());
+BackDoorFtnBtn backDoorFtnBtn = Get.put(BackDoorFtnBtn());

@@ -9,13 +9,9 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../../Core/API,s Intergartion/API,s.dart';
-import '../../Core/Local DB/model.dart';
-import '../../Core/Local DB/openBox.dart';
-import '../../Core/Utils/custom_textfield.dart';
 
 class ScannerScreen extends StatefulWidget {
   const ScannerScreen({Key? key}) : super(key: key);
@@ -25,22 +21,17 @@ class ScannerScreen extends StatefulWidget {
 }
 
 class _ScannerScreenState extends State<ScannerScreen> {
-  void _deleteItem(int index) {
-    final box = Boxes.getData();
-    box.deleteAt(index);
-  }
-
-  void _editItem(int index, String barcode, String quantity) async {
-    final box = Hive.box<ModelHive>('scanData');
-    final newData = ModelHive(barcode: barcode, quamtitiy: quantity);
-    box.putAt(index, newData);
-  }
-
   var quantity = "";
+  @override
+  void initState() {
+    // TODO: implement initState
+    backDoorFtnBtn.getData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final logPro = Provider.of<ApiClass>(context);
-
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -113,90 +104,30 @@ class _ScannerScreenState extends State<ScannerScreen> {
                     ],
                   ),
                   Obx(() => Visibility(
-                      visible: categoryController.visibilityValue2.value,
-                      child: ValueListenableBuilder<Box<ModelHive>>(
-                          valueListenable: Boxes.getData().listenable(),
-                          builder: (context, boxes, _) {
-                            var data = boxes.values.toList().cast<ModelHive>();
-                            if (data.isEmpty) {
-                              return Text("nodata");
-                            } else {
-                              return Card(
-                                child: ListView.builder(
-                                    itemCount: boxes.length,
-                                    shrinkWrap: true,
-                                    itemBuilder: (context, index) {
-                                      return Column(
-                                        children: [
-                                          ListTile(
-                                            title: CustomText(
-                                                name:
-                                                    "Barcode :${data[index].barcode}"),
-                                            subtitle: CustomText(
-                                                name:
-                                                    "Quantity :${data[index].quamtitiy.toString()}"),
-                                            trailing: Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                IconButton(
-                                                  icon: const Icon(Icons.edit),
-                                                  onPressed: () {
-                                                    // Perform edit operation for the item at this index
-                                                    scanController
-                                                        .commonDialog.value
-                                                        .showPopwithCustom(
-                                                            name: data[index]
-                                                                .barcode,
-                                                            colum: Column(
-                                                              children: [
-                                                                10.h.ph,
-                                                                CustomTextfield(
-                                                                  hintext:
-                                                                      "Enter Quantity",
-                                                                  height: 50.h,
-                                                                  width: 200.w,
-                                                                  onchanged:
-                                                                      (value) {
-                                                                    quantity =
-                                                                        value;
-                                                                  },
-                                                                  textType:
-                                                                      TextInputType
-                                                                          .number,
-                                                                ),
-                                                                10.h.ph,
-                                                                CustomButton(
-                                                                  name: "Save",
-                                                                  ontap: () {
-                                                                    _editItem(
-                                                                        index,
-                                                                        data[index]
-                                                                            .barcode,
-                                                                        quantity);
-                                                                    Get.back();
-                                                                  },
-                                                                )
-                                                              ],
-                                                            ));
-                                                  },
-                                                ),
-                                                IconButton(
-                                                  icon:
-                                                      const Icon(Icons.delete),
-                                                  onPressed: () {
-                                                    // Perform delete operation for the item at this index
-                                                    _deleteItem(index);
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      );
-                                    }),
-                              );
-                            }
-                          })))
+                        visible: categoryController.visibilityValue2.value,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount:
+                              backDoorFtnBtn.convertedListpointOFsales.length,
+                          itemBuilder: (context, index) {
+                            final data =
+                                backDoorFtnBtn.convertedListpointOFsales[index];
+                            final barcode = data['barcode'];
+                            final quantity = data['quantity'];
+
+                            return ListTile(
+                              title: Text('Table Name: $barcode'),
+                              subtitle: Text('Quantity: $quantity'),
+                              trailing: IconButton(
+                                icon: const Icon(Icons.delete),
+                                onPressed: () {
+                                  // backDoorFtnBtn.bakcDoor(index);
+                                },
+                              ),
+                            );
+                          },
+                        ),
+                      ))
                 ]))));
   }
 }

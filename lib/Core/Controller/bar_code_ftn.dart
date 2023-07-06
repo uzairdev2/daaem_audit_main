@@ -14,6 +14,7 @@ import 'package:get/get.dart';
 import '../Constant/Colors/colors.dart';
 import '../Local DB/model.dart';
 import '../Local DB/openBox.dart';
+import 'btn_controller.dart/backdoor_hive.dart';
 
 class ScanController extends GetxController {
   final commonDialog = CommonDialog().obs;
@@ -88,16 +89,18 @@ class ScanController extends GetxController {
                     height: 40.h,
                     name: "submit",
                     ontap: () {
-                      final storedata = ModelHive(
-                          barcode: listCode.value, quamtitiy: quantity);
-                      final boxes = Boxes.getData();
+                      print("on tap");
 
-                      boxes.add(storedata).then((value) {
-                        print('add product successfully');
-                      }).onError((error, stackTrace) {
-                        print(error.toString());
-                      });
-                      storingIDController.scanProduct(listCode.value, quantity);
+                      backDoorFtnBtn.backDoorFtnStoringID([
+                        {
+                          "table_name": 'backDoor',
+                          "retailerid": storingIDController.retailerid.value,
+                          "branchid": storingIDController.branchid.value,
+                          "customerid": storingIDController.custmoreid.value,
+                          "quantity": quantity,
+                          "barcode": listCode.value,
+                        }
+                      ]);
                       Get.back();
                     },
                   ),

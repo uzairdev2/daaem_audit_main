@@ -7,6 +7,7 @@ import '../database_name/db_name.dart';
 
 class PrintIdController extends GetxController {
   Map<String, dynamic> planogramMap = {};
+  Map<String, dynamic> bakcDoor = {};
   Map<String, dynamic> cleaningMap = {};
   Map<String, dynamic> neighborsMap = {};
   Map<String, dynamic> productDetails = {};
@@ -89,7 +90,7 @@ class PrintIdController extends GetxController {
     final box = await Hive.openBox(newItemDb);
     box.toMap().forEach((key, value) {
       newitem[key.toString()] = value;
-    print('Key: $key,  $value');
+      print('Key: $key,  $value');
     });
   }
 
@@ -97,6 +98,13 @@ class PrintIdController extends GetxController {
     final box = await Hive.openBox(pointOfSaleMaterialDb);
     box.toMap().forEach((key, value) {
       pointOfSaleMaterial[key.toString()] = value;
+    });
+  }
+
+  backDoorlDB() async {
+    final box = await Hive.openBox("backdoorData");
+    box.toMap().forEach((key, value) {
+      bakcDoor[key.toString()] = value;
     });
   }
 }
