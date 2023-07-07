@@ -62,58 +62,72 @@ class _CustomAppBarState extends State<CustomAppBar> {
                     ? grey
                     : red,
                 ontap: () async {
-                  await printIdController.planogramDbHive();
-                  await printIdController.cleaningDbHive();
-                  await printIdController.neighborsDBHive();
-                  await printIdController.product_Details();
-                  await printIdController.priceLabelDbHive();
-                  await printIdController.promotionSecondaryDbHive();
-                  await printIdController.competitorPromotionDbHive();
-                  await printIdController.newItemDbHive();
-                  await printIdController.moreSpaceDbHive();
+                  // await printIdController.planogramDbHive();
+                  // await printIdController.cleaningDbHive();
+                  // await printIdController.neighborsDBHive();
+                  // await printIdController.product_Details();
+                  // await printIdController.priceLabelDbHive();
+                  // await printIdController.promotionSecondaryDbHive();
+                  // await printIdController.competitorPromotionDbHive();
+                  // await printIdController.newItemDbHive();
+                  // await printIdController.moreSpaceDbHive();
 
-                  //remining
-                  await printIdController.poitnOfSaleMaterailDB();
+                  // //remining
+                  // await printIdController.poitnOfSaleMaterailDB();
 
-                  print(
-                      "here is  outer data ==> ${printIdController.productDetails}");
-                  print(
-                      "here is  outer competitorPromotion data ==> ${printIdController.competitorPromotion}");
 
-                  List convertedList = printIdController.productDetails.values
-                      .map((innerMap) => innerMap.cast<String, dynamic>())
-                      .toList();
-                  List convertedListPL = printIdController.priceLabel.values
-                      .map((innerMap) => innerMap.cast<String, dynamic>())
-                      .toList();
-                  List convertedListPS = printIdController
-                      .promotionSecondary.values
-                      .map((innerMap) => innerMap.cast<String, dynamic>())
-                      .toList();
-                  List convertedListCM = printIdController
-                      .competitorPromotion.values
-                      .map((innerMap) => innerMap.cast<String, dynamic>())
-                      .toList();
-                  List convertedListpointOFsales = printIdController
-                      .pointOfSaleMaterial.values
-                      .map((innerMap) => innerMap.cast<String, dynamic>())
-                      .toList();
+await backDoorFtnBtn.getdata();
 
-                  convertedList.add(printIdController.planogramMap);
-                  convertedList.add(printIdController.cleaningMap);
-                  convertedList.add(printIdController.neighborsMap);
-                  convertedList.add(printIdController.newitem);
-                  convertedList.add(printIdController.moreSpace);
-                  convertedList.addAll(convertedListPL);
-                  convertedList.addAll(convertedListPS);
-                  convertedList.addAll(convertedListCM);
-                  convertedList.addAll(convertedListpointOFsales);
+                  // print(
+                  //     "here is  outer data ==> ${printIdController.productDetails}");
+                  // print(
+                  //     "here is  outer competitorPromotion data ==> ${printIdController.competitorPromotion}");
 
-                  print('Converted full  List: $convertedList');
+                  // List convertedList = printIdController.productDetails.values
+                  //     .map((innerMap) => innerMap.cast<String, dynamic>())
+                  //     .toList();
+                  // List convertedListPL = printIdController.priceLabel.values
+                  //     .map((innerMap) => innerMap.cast<String, dynamic>())
+                  //     .toList();
+                  // List convertedListPS = printIdController
+                  //     .promotionSecondary.values
+                  //     .map((innerMap) => innerMap.cast<String, dynamic>())
+                  //     .toList();
+                  // List convertedListCM = printIdController
+                  //     .competitorPromotion.values
+                  //     .map((innerMap) => innerMap.cast<String, dynamic>())
+                  //     .toList();
+                  // List convertedListpointOFsales = printIdController
+                  //     .pointOfSaleMaterial.values
+                  //     .map((innerMap) => innerMap.cast<String, dynamic>())
+                  //     .toList();
+
+                  // convertedList.add(printIdController.planogramMap);
+                  // convertedList.add(printIdController.cleaningMap);
+                  // convertedList.add(printIdController.neighborsMap);
+                  // convertedList.add(printIdController.newitem);
+                  // convertedList.add(printIdController.moreSpace);
+                  // convertedList.addAll(convertedListPL);
+                  // convertedList.addAll(convertedListPS);
+                  // convertedList.addAll(convertedListCM);
+                  // convertedList.addAll(convertedListpointOFsales);
+
+                  // print('Converted full  List: $convertedList');
+                  // // print('Converted List length: ${convertedListCM.length}');
+                  // for (int i = 0; i < convertedList.length; i++) {
+                  //   await apiData.syncData(
+                  //     MapData: printIdController.moreSpace,
+                  //   );
+                  // }
+
+                  List      convertedListpointOFsales = backDoorFtnBtn.backDoor.values
+        .map((innerMap) => innerMap.cast<String, dynamic>())
+        .toList();
+                  print('Converted full  List: $convertedListpointOFsales');
                   // print('Converted List length: ${convertedListCM.length}');
-                  for (int i = 0; i < convertedList.length; i++) {
+                  for (int i = 0; i < backDoorFtnBtn.convertedListpointOFsales.length; i++) {
                     await apiData.syncData(
-                      MapData: printIdController.moreSpace,
+                      MapData: backDoorFtnBtn.convertedListpointOFsales[i],
                     );
                   }
                 },

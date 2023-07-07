@@ -25,7 +25,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    backDoorFtnBtn.getData();
+    backDoorFtnBtn.getdata();
     super.initState();
   }
 

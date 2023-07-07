@@ -173,6 +173,17 @@ class ApiClass with ChangeNotifier {
         "image": MapData["image"],
       };
     }
+    else if (MapData['table_name'] == "backDoor") {
+      dataMap = {
+        "action": "backDoor",
+        "retailer_id": MapData['retailerid'],
+        "branch_id": MapData['branchid'],
+        "customer_id": MapData['customerid'],
+        "quantity":  MapData['quantity'],
+        "barcode": MapData['barcode'],
+      };
+    }
+
 
     print("here is data map map $dataMap");
 

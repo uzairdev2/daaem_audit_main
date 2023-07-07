@@ -3,26 +3,31 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:hive/hive.dart';
 
 class BackDoorFtnBtn extends GetxController {
-  Map<String, dynamic> bakcDoor = {};
+  Map<String, dynamic> backDoor = {};
 
   backDoorFtnStoringID(List<Map<String, dynamic>> dataList) async {
     final boxname = await Hive.openBox("backdoorData");
 
     boxname.addAll(dataList);
     boxname.toMap().forEach((key, value) {
-      bakcDoor[key.toString()] = value;
+      backDoor[key.toString()] = value;
     });
   }
 
   List convertedListpointOFsales = [];
-  getData() async {
-    convertedListpointOFsales = bakcDoor.values
+ String boxname = "backdoorData";
+  getdata() async {
+    final box = await Hive.openBox(boxname);
+    box.toMap().forEach((key, value) {
+      backDoor[key.toString()] = value;
+      print('Key: $key,  $value');
+    });
+
+    convertedListpointOFsales = backDoor.values
         .map((innerMap) => innerMap.cast<String, dynamic>())
         .toList();
-    bakcDoor.forEach((key, value) {
-      print("$key, $value");
-    });
   }
+
 
   // List<BackDoorData> get backDoorDataList => _box?.values.toList() ?? [];
 
